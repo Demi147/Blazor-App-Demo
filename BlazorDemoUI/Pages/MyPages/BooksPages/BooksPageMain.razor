@@ -1,0 +1,39 @@
+﻿@page "/BooksPages/Main"
+
+@using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Models
+
+@inject IBooksBussinessLogic BooksService
+
+
+<h3>Books Main page</h3>
+
+<hr />
+
+@if (booksList is null)
+{
+    <p><en>Loading...</en></p>
+}
+else
+{
+<div class="col-12">
+    @foreach (var item in booksList)
+    {
+        <div class="col-12 row">
+            <div class="col-2">
+                <NavLink href=@string.Format("/BooksPages/Main/{0}",item.Title)>@item.Title</NavLink>
+            </div>
+        </div>
+    }
+</div>
+}
+
+@code {
+
+    List<BookTest> booksList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        booksList = await BooksService.GetTestData();
+    }
+}

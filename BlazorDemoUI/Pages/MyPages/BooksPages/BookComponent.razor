@@ -1,0 +1,31 @@
+﻿@page "/BooksPages/Main/{BookTitle}"
+
+@using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Models
+
+@inject IBooksBussinessLogic BooksService
+
+
+<h4>Book</h4>
+
+<h5>Book name</h5>
+<h6>@PageBook.Title</h6>
+<h5>Book Title</h5>
+<h6>@PageBook.Description</h6>
+
+
+<NavLink href="/BooksPages/Main">Return to Books page</NavLink>
+
+@code {
+
+    [Parameter]
+    public string BookTitle { get; set; }
+
+    public BookTest PageBook;
+
+    protected async override Task OnInitializedAsync()
+    {
+        PageBook = await BooksService.GetSingleTestBook(BookTitle);
+    }
+
+}
