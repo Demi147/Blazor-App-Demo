@@ -627,11 +627,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\BlazorDemoUI\\BlazorDemoUI.csproj",
+      "projectUniqueName": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
       "projectName": "BlazorDemoUI",
-      "projectPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\BlazorDemoUI\\BlazorDemoUI.csproj",
+      "projectPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
       "packagesPath": "C:\\Users\\carel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\BlazorDemoUI\\obj\\",
+      "outputPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\BlazorDemoUI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -651,8 +651,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\DataAccessLibrary\\DataAccessLibrary.csproj": {
-              "projectPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\DataAccessLibrary\\DataAccessLibrary.csproj"
+            "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj": {
+              "projectPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj"
             }
           }
         }
@@ -683,7 +683,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
       }
     }
   }

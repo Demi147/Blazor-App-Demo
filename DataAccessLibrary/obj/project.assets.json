@@ -1081,11 +1081,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\DataAccessLibrary\\DataAccessLibrary.csproj",
+      "projectUniqueName": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
       "projectName": "DataAccessLibrary",
-      "projectPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\DataAccessLibrary\\DataAccessLibrary.csproj",
+      "projectPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
       "packagesPath": "C:\\Users\\carel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\DataAccessLibrary\\obj\\",
+      "outputPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\DataAccessLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -1145,7 +1145,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
       }
     }
   }
