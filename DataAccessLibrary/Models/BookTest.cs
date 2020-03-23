@@ -4,9 +4,28 @@ using System.Text;
 
 namespace DataAccessLibrary.Models
 {
-    public class BookTest
+    //TODO implement better book search capability
+
+    public class BookTest:TestInterface
     {
         public string Title { get; set; }
         public string Description { get; set; }
+
+        public bool isEqualTo(object _item)
+        {
+            if (_item.GetType() != typeof(BookTest))
+            {
+                throw new NotImplementedException();
+            }
+
+            BookTest x = (BookTest)_item;
+
+            if (x.Title == this.Title)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

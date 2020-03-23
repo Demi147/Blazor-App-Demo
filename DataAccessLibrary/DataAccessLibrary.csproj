@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Bussiness Logic\BooksLogic\" />
     <Folder Include="Bussiness Logic\PeopleLogic\" />
     <Folder Include="Data Access Logic\" />
   </ItemGroup>
