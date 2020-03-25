@@ -1,1 +1,0 @@
-if carel = carel then carel is carel
