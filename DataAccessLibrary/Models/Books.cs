@@ -11,8 +11,8 @@ namespace DataAccessLibrary.Models
         public string BookTitle { get; set; }
         public int BookEdition { get; set; }
         public double BookPrice { get; set; }
-        public int BookNumber { get; set; }
         public string ModuleCode { get; set; }
-
+        public string BooksInstitute { get; set; }
+        public string LocationID { get; set; }
     }
 }
