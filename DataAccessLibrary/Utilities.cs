@@ -10,8 +10,11 @@ namespace DataAccessLibrary
     }
     public enum BooksAtributes
     {
-        Title,
-        Price
+        BookTitle,
+        BookEdition,
+        BookPrice,
+        ModuleCode,
+        BooksInstitute
     }
 
     public static class Utilities

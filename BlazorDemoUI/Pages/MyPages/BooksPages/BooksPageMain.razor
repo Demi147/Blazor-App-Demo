@@ -22,7 +22,7 @@ else
     {
         <div class="col-12 row">
             <div class="col-2">
-                <NavLink href=@string.Format("/BooksPages/Main/{0}",item.Title)>@item.Title</NavLink>
+                <NavLink href=@string.Format("/BooksPages/Main/{0}",item.BookTitle)>@item.BookTitle</NavLink>
             </div>
         </div>
     }
@@ -31,10 +31,10 @@ else
 
 @code {
 
-    List<BookTest> booksList;
+    List<Books> booksList;
 
     protected override async Task OnInitializedAsync()
     {
-        booksList = await BooksService.GetTestData();
+        booksList = StaticTestData.BookTestData;
     }
 }

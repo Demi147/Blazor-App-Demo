@@ -13,6 +13,6 @@ namespace DataAccessLibrary.Models
         public double BookPrice { get; set; }
         public string ModuleCode { get; set; }
         public string BooksInstitute { get; set; }
-        public string LocationID { get; set; }
+        public int LocationID { get; set; }
     }
 }

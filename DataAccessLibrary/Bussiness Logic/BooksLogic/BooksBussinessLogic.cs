@@ -9,76 +9,118 @@ namespace DataAccessLibrary.Bussiness_Logic
 {
     public class BooksBussinessLogic : IBooksBussinessLogic
     {
-
-        List<BookTest> x = new List<BookTest> {
-        new BookTest { Title = "AAAAAAAA", Description = "AAAAAAAAAAA" },
-        new BookTest { Title = "BBBBBBBBB", Description = "BBBBBBBB" }
-        };
-
-
-        //test method for test data
-        public Task<List<BookTest>> GetTestData()
+        public List<Books> SortBooks(List<Books> _list, BooksAtributes atribute, bool accending)
         {
-            return Task.FromResult(x);
-        }
+            var x = _list;
 
-        public Task<List<BookTest>> GetAllBooks(BooksAtributes _sortBy)
-        {
-            var q = GetTestData();
-            switch (_sortBy)
+            var y = new List<Books>();
+
+            switch (atribute)
             {
-                case BooksAtributes.Title:
-                    return Task.FromResult(q.Result.OrderBy(e=>e.Title) as List<BookTest>);
+                case BooksAtributes.BookTitle:
+                    if (accending)
+                    {
+                        x = x.OrderBy(q => q.BookTitle).ToList();
+                    }
+                    else
+                    {
+                        x = x.OrderByDescending(q => q.BookTitle).ToList();
+                    }
                     break;
-                case BooksAtributes.Price:
-                    return Task.FromResult(q.Result);
+                case BooksAtributes.BookEdition:
+                    if (accending)
+                    {
+                        x = x.OrderBy(q => q.BookEdition).ToList();
+                    }
+                    else
+                    {
+                        x = x.OrderByDescending(q => q.BookEdition).ToList();
+                    }
+                    break;
+                case BooksAtributes.BookPrice:
+                    if (accending)
+                    {
+                        x = x.OrderBy(q => q.BookPrice).ToList();
+                    }
+                    else
+                    {
+                        x = x.OrderByDescending(q => q.BookPrice).ToList();
+                    }
+                    break;
+                case BooksAtributes.ModuleCode:
+                    if (accending)
+                    {
+                        x = x.OrderBy(q => q.ModuleCode).ToList();
+                    }
+                    else
+                    {
+                        x = x.OrderByDescending(q => q.ModuleCode).ToList();
+                    }
+                    break;
+                case BooksAtributes.BooksInstitute:
+                    if (accending)
+                    {
+                        x = x.OrderBy(q => q.BooksInstitute).ToList();
+                    }
+                    else
+                    {
+                        x = x.OrderByDescending(q => q.BooksInstitute).ToList();
+                    }
                     break;
                 default:
-                    return Task.FromResult(q.Result);
                     break;
             }
+
+            return x;
         }
 
-        public Task<List<BookTest>> GetAllBooks(BooksAtributes _sortBy, BooksAtributes _filterBy, string filterVar)
+        public List<Books> FilterBooks(List<Books> _list, BooksAtributes atribute, object _val)
         {
-            var q = GetTestData().Result;
+            var x = _list;
 
-            var temp = new  List<BookTest>();
+            var y = new List<Books>();
 
-            switch (_sortBy)
+            switch (atribute)
             {
-                case BooksAtributes.Title:
-                    temp = q.OrderBy(e => e.Title) as List<BookTest>;
+                case BooksAtributes.BookTitle:
+                    x = x.Where(q => q.BookTitle.ToLower().Contains(((string)_val).ToLower())).ToList();
                     break;
-                case BooksAtributes.Price:
-                    return Task.FromResult(q);
+                case BooksAtributes.BookEdition:
+                    x = x.Where(q => q.BookEdition.ToString().Contains((string)_val)).ToList();
+                    break;
+                case BooksAtributes.BookPrice:
+                    try
+                    {
+                        x = x.Where(q => q.BookPrice< int.Parse((string)_val)).ToList();
+                    }
+                    catch
+                    {
+                        break;
+                    }
+                    break;
+                case BooksAtributes.ModuleCode:
+                    x = x.Where(q => q.ModuleCode.ToLower().Contains(((string)_val).ToLower())).ToList();
+                    break;
+                case BooksAtributes.BooksInstitute:
+                    x = x.Where(q => q.BooksInstitute.ToLower().Contains(((string)_val).ToLower())).ToList();
                     break;
                 default:
-                    return Task.FromResult(q);
                     break;
             }
 
-            switch (_filterBy)
-            {
-                case BooksAtributes.Title:
-                    temp = temp.Where(e => e.Title == filterVar) as List<BookTest>;
-                    break;
-                case BooksAtributes.Price:
-                    break;
-                default:
-                    break;
-            }
-
-            return Task.FromResult(temp);
+            return x;
         }
 
-        public Task<BookTest> GetSingleTestBook(string _title)
+        public List<Books> FilterAndSort(List<Books> _list, BooksAtributes atribute, bool accending, object _val)
         {
-            if (Utilities.CheckIfContains(x,new BookTest {Title = _title }))
-            {
+            var x = FilterBooks(SortBooks(_list, atribute, accending), atribute, _val);
 
-            }
-            return Task.FromResult(x.Where(a => a.Title == _title).First());
+            return x;
+        }
+
+        static List<Books> GetBooks()
+        {
+            return StaticTestData.BookTestData;
         }
     }
 }

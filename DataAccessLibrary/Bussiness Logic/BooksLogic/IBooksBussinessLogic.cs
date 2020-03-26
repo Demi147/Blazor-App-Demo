@@ -1,12 +1,12 @@
 ﻿using DataAccessLibrary.Models;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace DataAccessLibrary.Bussiness_Logic
 {
     public interface IBooksBussinessLogic
     {
-        Task<BookTest> GetSingleTestBook(string _title);
-        Task<List<BookTest>> GetTestData();
+        List<Books> FilterAndSort(List<Books> _list, BooksAtributes atribute, bool accending, object _val);
+        List<Books> FilterBooks(List<Books> _list, BooksAtributes atribute, object _val);
+        List<Books> SortBooks(List<Books> _list, BooksAtributes atribute, bool accending);
     }
 }
