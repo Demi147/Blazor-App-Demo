@@ -14,7 +14,7 @@
 
 <h5>
     Filter Search:
-    <input type="text" name="txtFilter" placeholder="Enter text to filter" @onchange="EventArgs => { filtering(EventArgs.Value); }" />
+    <input type="text" name="txtFilter" placeholder="Enter text to filter" @oninput="EventArgs => { filtering(EventArgs.Value); }"  />
     <input type="checkbox" @onchange="EventArgs => { setAccending(EventArgs.Value); }" /> Click for Accending Order
 </h5>
 
@@ -65,6 +65,7 @@ else
 @code {
 
     List<Books> booksList;
+    List<Books> OGlist;
 
     BooksAtributes lastAtribute;
     BooksAtributes chaningAttribute;
@@ -73,9 +74,10 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        booksList = StaticTestData.BookTestData;
+        OGlist = StaticTestData.BookTestData;
         lastAtribute = BooksAtributes.BookTitle;
         chaningAttribute = BooksAtributes.ModuleCode;
+        booksList = OGlist;
 
     }
 
@@ -85,11 +87,11 @@ else
         if (FilterVal == null || FilterVal.Length == 0)
         {
 
-            booksList = BooksService.SortBooks(booksList, atribute, accending);
+            booksList = BooksService.SortBooks(OGlist, atribute, accending);
         }
         else
         {
-            booksList = BooksService.FilterAndSort(booksList, atribute, accending, FilterVal);
+            booksList = BooksService.FilterAndSort(OGlist, atribute, accending, FilterVal);
         }
 
     }
@@ -100,21 +102,10 @@ else
         sortAndFilter(lastAtribute);
     }
 
-    protected void FilterBooks(BooksAtributes atribute)
-    {
-        chaningAttribute = atribute;
-
-        if (FilterVal.Length != 0)
-        {
-            booksList = BooksService.FilterBooks(booksList, atribute, FilterVal);
-        }
-
-    }
-
     void filtering(object value)
     {
         FilterVal = (string)value;
-        FilterBooks(chaningAttribute);
+        sortAndFilter(lastAtribute);
     }
 
     void AddNav()
