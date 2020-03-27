@@ -16,7 +16,6 @@
     Filter Search:
     <input type="text" name="txtFilter" placeholder="Enter text to filter" @onchange="EventArgs => { filtering(EventArgs.Value); }" />
     <input type="checkbox" @onchange="EventArgs => { setAccending(EventArgs.Value); }" /> Click for Accending Order
-    <button type="submit" name="btnSearch" class="btn btn-primary" style="">Search</button>
 </h5>
 
 @if (booksList is null)
