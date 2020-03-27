@@ -5,36 +5,122 @@
 @using DataAccessLibrary
 
 @inject IBooksBussinessLogic BooksService
+@inject NavigationManager NavigationManager
 
+<h1>    
+    Available Book Sales
+    <button type="submit" name="btnAddNew" class="btn btn-primary" style="float: right;" @onclick="AddNav" >Add New Book</button>
+</h1>
 
-<h3>Books Main page</h3>
-
-<hr />
+<h5>
+    Filter Search:
+    <input type="text" name="txtFilter" placeholder="Enter text to filter" @onchange="EventArgs => { filtering(EventArgs.Value); }" />
+    <input type="checkbox" @onchange="EventArgs => { setAccending(EventArgs.Value); }" /> Click for Accending Order
+    <button type="submit" name="btnSearch" class="btn btn-primary" style="">Search</button>
+</h5>
 
 @if (booksList is null)
 {
     <p><en>Loading...</en></p>
+
 }
 else
 {
-<div class="col-12">
-    @foreach (var item in booksList)
-    {
-        <div class="col-12 row">
-            <div class="col-2">
-                <NavLink href=@string.Format("/BooksPages/Main/{0}",item.BookTitle)>@item.BookTitle</NavLink>
-            </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>@BooksAtributes.BookTitle</td>
+                <td>@BooksAtributes.BookEdition</td>
+                <td>@BooksAtributes.BookPrice</td>
+                <td>@BooksAtributes.ModuleCode</td>
+                <td>@BooksAtributes.BooksInstitute</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in booksList)
+            {
+                <tr>
+                    <td><NavLink href=@string.Format("/BooksPages/Main/{0}",item.BookTitle)>@item.BookTitle</NavLink></td>
+                    <td>@item.BookEdition</td>
+                    <td>@item.BookPrice</td>
+                    <td>@item.ModuleCode</td>
+                    <td>@item.BooksInstitute</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @** WERK NOG AAN DIE EEN VIR SEARCH !!!!!
+    <form asp-action="FilterBooks" method="get">
+        <div class="form-actions no-color">
+            <p>
+                Find by name: <input type="text" name="SearchString" value="" />
+                <input type="submit" value="Search" class="btn btn-default" /> |
+                <a asp-action="FilterBooks">Back to Full List</a>
+            </p>
         </div>
-    }
-</div>
+    </form>
+    **@ 
 }
 
 @code {
 
     List<Books> booksList;
 
+    BooksAtributes lastAtribute;
+    BooksAtributes chaningAttribute;
+    string FilterVal { get; set; }
+    bool accending;
+
     protected override async Task OnInitializedAsync()
     {
         booksList = StaticTestData.BookTestData;
+        lastAtribute = BooksAtributes.BookTitle;
+        chaningAttribute = BooksAtributes.ModuleCode;
+
     }
+
+    protected void sortAndFilter(BooksAtributes atribute)
+    {
+        lastAtribute = atribute;
+        if (FilterVal == null || FilterVal.Length == 0)
+        {
+
+            booksList = BooksService.SortBooks(booksList, atribute, accending);
+        }
+        else
+        {
+            booksList = BooksService.FilterAndSort(booksList, atribute, accending, FilterVal);
+        }
+
+    }
+
+    void setAccending(object value)
+    {
+        accending = (bool)value;
+        sortAndFilter(lastAtribute);
+    }
+
+    protected void FilterBooks(BooksAtributes atribute)
+    {
+        chaningAttribute = atribute;
+
+        if (FilterVal.Length != 0)
+        {
+            booksList = BooksService.FilterBooks(booksList, atribute, FilterVal);
+        }
+
+    }
+
+    void filtering(object value)
+    {
+        FilterVal = (string)value;
+        FilterBooks(chaningAttribute);
+    }
+
+    void AddNav()
+    {
+        NavigationManager.NavigateTo("/BooksPages/Main/AddBooks");
+    }
+
 }
