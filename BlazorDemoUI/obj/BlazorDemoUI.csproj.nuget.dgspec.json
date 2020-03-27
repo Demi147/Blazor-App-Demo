@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj": {}
+    "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj": {
+    "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
+        "projectUniqueName": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
         "projectName": "BlazorDemoUI",
-        "projectPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
-        "packagesPath": "C:\\Users\\Franco Bester\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\obj\\",
+        "projectPath": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
+        "packagesPath": "C:\\Users\\Carmen\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Franco Bester\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Carmen\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -27,8 +27,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj": {
-                "projectPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj"
+              "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj": {
+                "projectPath": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj"
               }
             }
           }
@@ -41,6 +41,16 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "C1.Blazor.Grid": {
+              "target": "Package",
+              "version": "[3.1.20201.445, )"
+            },
+            "C1.Blazor.Input": {
+              "target": "Package",
+              "version": "[3.1.20201.445, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -63,17 +73,17 @@
         }
       }
     },
-    "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj": {
+    "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
         "projectName": "DataAccessLibrary",
-        "projectPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
-        "packagesPath": "C:\\Users\\Franco Bester\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\obj\\",
+        "projectPath": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
+        "packagesPath": "C:\\Users\\Carmen\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Franco Bester\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Carmen\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -97,6 +107,14 @@
       "frameworks": {
         "netstandard2.0": {
           "dependencies": {
+            "C1.Blazor.Grid": {
+              "target": "Package",
+              "version": "[3.1.20201.445, )"
+            },
+            "C1.Blazor.Input": {
+              "target": "Package",
+              "version": "[3.1.20201.445, )"
+            },
             "Dapper": {
               "target": "Package",
               "version": "[2.0.30, )"
