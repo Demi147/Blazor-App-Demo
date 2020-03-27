@@ -1,0 +1,40 @@
+﻿@page "/BooksPages/Main/AddBooks"
+
+@using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Models
+@using DataAccessLibrary
+
+@inject IBooksBussinessLogic BooksService
+@inject NavigationManager NavigationManager
+
+<h1>
+    Add New Books
+    <button type="submit" name="btnAddBookLoc" class="btn btn-primary" style="float: right;" @onclick="AddNav">Submit Sale Request</button>
+</h1>
+
+<p>
+    <br>
+    Book Title: <input type="text" name="txtBookTitle" placeholder="Enter book title here" style="" />
+    <br>
+    <br />
+    Book Edition: <input type="text" name="txtBookEdition" placeholder="Enter book edition here" />
+    <br>
+    <br />
+    Book Price: <input type="text" name="txtBookPrice" placeholder="Enter book price here" />
+    <br>
+    <br />
+    Module Code: <input type="text" name="txtModuleCode" placeholder="Enter module code here" />
+    <br>
+    <br />
+    Book Institute: <input type="text" name="txtBookInstitute" placeholder="Enter book institute here" />
+</p>
+
+
+@code {
+
+    void AddNav()
+    {
+        NavigationManager.NavigateTo("/BooksPages/Main/AddBooks/Locations");
+    }
+
+}
