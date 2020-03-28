@@ -29,5 +29,12 @@ namespace DataAccessLibrary
 
             return _db.SaveData(sql, location);
         }
+
+        public Task RemoveLocation(Locations location, int iLocationID)
+        {
+            string sql = @"Delete from dbo.tblLocations Where LocationID=" + iLocationID;
+
+            return _db.SaveData(sql, location);
+        }
     }
 }
