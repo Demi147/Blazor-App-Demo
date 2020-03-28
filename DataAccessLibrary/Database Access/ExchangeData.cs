@@ -29,7 +29,14 @@ namespace DataAccessLibrary
 
             return _db.SaveData(sql, exchange);
         }
+
+        public Task RemoveExchange(Exchange exchange, int iExchangeID)
+        {
+            string sql = @"Delete from dbo.tblExchange Where ExchangeID=" + iExchangeID;
+
+            return _db.SaveData(sql, exchange);
+        }
     }
 
 }
- 
+

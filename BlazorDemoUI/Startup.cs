@@ -32,6 +32,7 @@ namespace BlazorDemoUI
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddTransient<ISqlDataAccess, SqlDataAccess>();
+            services.AddTransient<IUserData, UserData>();
             services.AddTransient<IBooksBussinessLogic, BooksBussinessLogic>();
         }
 

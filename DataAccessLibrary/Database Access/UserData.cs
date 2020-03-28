@@ -15,9 +15,24 @@ namespace DataAccessLibrary
             _db = db;
         }
 
-        public Task<List<Users>> GetUsers()
+        public Task<List<Users>> GetAllUsers()
         {
             string sql = "Select * from dbo.tblUsers";
+
+            return _db.LoadData<Users, dynamic>(sql, new { });
+        }
+
+        public Task<List<Users>> GetSingleUser(int iUserID)
+        {
+            string sql = "Select * from dbo.tblUsers where UserID =" + iUserID + "";
+
+            return _db.LoadData<Users, dynamic>(sql, new { });
+        }
+
+
+        public Task<List<Users>> GetUser_Email(string sUserEmail)
+        {
+            string sql = "Select * from dbo.tblUsers where UserEmail ='" + sUserEmail + "'";
 
             return _db.LoadData<Users, dynamic>(sql, new { });
         }
@@ -29,5 +44,17 @@ namespace DataAccessLibrary
 
             return _db.SaveData(sql, user);
         }
+
+        public Task RemoveUser(Users user)
+        {
+            string sql = @"Delete from  dbo.tblUsers Where UserID =" + user.UserID + "";
+
+            return _db.SaveData(sql, user);
+        }
+
+        //public Task UpdateUser(Users user)
+        //{
+        //    string sql =@"Update "
+        //}
     }
 }
