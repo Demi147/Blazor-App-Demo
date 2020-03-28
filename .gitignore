@@ -49,3 +49,6 @@ BlazorDemoUI/obj/project.assets.json
 BlazorDemoUI/obj/project.nuget.cache
 DataAccessLibrary/bin/Debug/netstandard2.0/DataAccessLibrary.dll
 DataAccessLibrary/bin/Debug/netstandard2.0/DataAccessLibrary.pdb
+*.dll
+.vs/BlazorDemoApp/v16/.suo
+*.pdb
