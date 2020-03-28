@@ -91,7 +91,7 @@ namespace DataAccessLibrary.Bussiness_Logic
                 case BooksAtributes.BookPrice:
                     try
                     {
-                        x = x.Where(q => q.BookPrice< int.Parse((string)_val)).ToList();
+                        x = x.Where(q => q.BookPrice < int.Parse((string)_val)).ToList();
                     }
                     catch
                     {
@@ -118,9 +118,18 @@ namespace DataAccessLibrary.Bussiness_Logic
             return x;
         }
 
-        static List<Books> GetBooks()
+        public List<Books> MultiFilter(List<Books> _list, string _val)
         {
-            return StaticTestData.BookTestData;
+            var temp = new List<Books>();
+
+            foreach (var item in _list)
+            {
+                if (item.CheckIfContains(_val))
+                {
+                    temp.Add(item);
+                }
+            }
+            return temp;
         }
     }
 }

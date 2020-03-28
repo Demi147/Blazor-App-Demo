@@ -1,4 +1,4 @@
-﻿@page "/BooksPages/Main/{BookTitle}"
+﻿@page "/BooksPages/Main/{id:int}"
 
 @using DataAccessLibrary.Bussiness_Logic
 @using DataAccessLibrary.Models
@@ -10,13 +10,26 @@
 
 <h1>Book Information</h1>
 
+@_book.SalesNumber
+@_book.BookTitle
+@_book.BookEdition
+@_book.BookPrice
+@_book.ModuleCode
+@_book.BooksInstitute
 
 <NavLink href="/BooksPages/Main">Return to Books page</NavLink>
 
 @code {
 
     [Parameter]
-    public string BookTitle { get; set; }
+    public int id { get; set; }
+
+    protected Books _book;
 
 
+
+        protected override void OnInitialized()
+        {
+            _book = StaticTestData.GetSingleBook(id);
+        }
 }

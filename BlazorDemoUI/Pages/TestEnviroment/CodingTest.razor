@@ -44,7 +44,7 @@ else
                 <input type="checkbox" @onchange="EventArgs => { setAccending(EventArgs.Value); }" /> accending
             </th>
             <th>
-                Filter Value <input type="search" @bind-value="FilterVal"/> @FilterVal  @*<InputText @bind-Value="FilterVal" @onchange="EventArgs => { sortAndFilter(lastAtribute); }"></InputText>*@
+                Filter Value <input type="search" @oninput="EventArgs => { Filter(EventArgs.Value); }"/> @FilterVal
             </th>
 
         </tr>
@@ -55,7 +55,7 @@ else
         {
         <tr>
             <th>
-                <NavLink href=@string.Format("/BooksPages/Main/{0}",item.BookTitle)>@item.BookTitle</NavLink>
+                <NavLink href=@string.Format("/BooksPages/Main/{0}",item.SalesNumber)>@item.BookTitle</NavLink>
             </th>
             <th>
                 @item.BookEdition
@@ -97,15 +97,6 @@ else
     protected void sortAndFilter(BooksAtributes _atribute)
     {
         lastAtribute = _atribute;
-        if (FilterVal==null || FilterVal.Length == 0)
-        {
-
-            booksList = BooksService.SortBooks(booksListOG, _atribute, accending);
-        }
-        else
-        {
-            booksList = BooksService.FilterAndSort(booksListOG,_atribute,accending,FilterVal);
-        }
 
     }
 
@@ -113,5 +104,11 @@ else
     {
         accending = (bool)value;
         sortAndFilter(lastAtribute);
+    }
+
+    void Filter(object _val)
+    {
+        FilterVal = _val.ToString();
+        booksList = BooksService.SortBooks(BooksService.MultiFilter(booksListOG, _val.ToString()),lastAtribute,accending);
     }
 }

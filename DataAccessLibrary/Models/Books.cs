@@ -14,5 +14,39 @@ namespace DataAccessLibrary.Models
         public string ModuleCode { get; set; }
         public string BooksInstitute { get; set; }
         public int LocationID { get; set; }
+
+        public bool CheckIfContains(string _val)
+        {
+            if (BookTitle.ToLower().Contains(_val.ToLower()))
+            {
+                return true;
+            }
+            if (BookEdition.ToString().ToLower().Contains(_val.ToLower()))
+            {
+                return true;
+            }
+            if (ModuleCode.ToLower().Contains(_val.ToLower()))
+            {
+                return true;
+            }
+            if (BooksInstitute.ToLower().Contains(_val.ToLower()))
+            {
+                return true;
+            }
+            try
+            {
+                int x = int.Parse(_val);
+                if (BookPrice<= x)
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+
+            }
+
+            return false;
+        }
     }
 }
