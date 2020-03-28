@@ -14,14 +14,28 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <InputText id="userName" @bind-Value="newUser.UserName" />
+    @*<InputText id="userName" @bind-Value="newUser.UserName" />*@
     <InputText id="userEmail" @bind-Value="newUser.UserEmail" />
-    <InputText id="userPassword" @bind-Value="newUser.UserPassword" />
+    @*<InputText id="userPassword" @bind-Value="newUser.UserPassword" />*@
 
     <button type="submit" class="btn btn-primary">Submit</button>>
 </EditForm>
 
+<h4>Search user</h4>
+<EditForm Model="@newUser">
+    @*<DataAnnotationsValidator />*@
+    <ValidationSummary />
 
+    <InputText id="userEmail" @bind-Value="newUser.UserEmail" />
+
+    <button type="reset" class="btn btn-primary" @onclick="@SearchUser">Search</button>
+</EditForm>
+
+
+
+
+<h4> Remove user </h4>
+<button type="reset" class="btn btn-primary" @onclick="@RemoveUser">Remove</button>
 
 <h4>Current user</h4>
 @if (_user is null)
@@ -43,13 +57,13 @@ else
         <tbody>
             @foreach (var user in _user)
             {
-            <tr>
-                <td>@user.UserName</td>
-                <td>@user.UserID</td>
-                <td>@user.UserEmail</td>
-                <td>@user.UserPassword</td>
-                <td>@user.IsAdmin</td>
-            </tr>
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.UserID</td>
+                    <td>@user.UserEmail</td>
+                    <td>@user.UserPassword</td>
+                    <td>@user.IsAdmin</td>
+                </tr>
             }
         </tbody>
     </table>
@@ -59,9 +73,22 @@ else
     private List<Users> _user;
     private DisplayUserModel newUser = new DisplayUserModel();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()//Working search all user function
     {
-        _user = await _db.GetUsers();
+        _user = await _db.GetAllUsers();
+    }
+
+    private async Task SearchUser()//Working searc user accordign to user email(input line 25-32)
+    {
+        try
+        {
+            string stest = newUser.UserEmail.ToString();
+            _user = await _db.GetUser_Email(stest);
+        }
+        catch (Exception ex)
+        {
+            string stest = ex.ToString();
+        }
     }
 
     private async Task InsertUser()
@@ -70,7 +97,7 @@ else
         {
             Users u = new Users
             {
-                UserID = 3,
+                UserID = 2,
                 UserName = newUser.UserName,
                 UserEmail = newUser.UserEmail,
                 UserPassword = newUser.UserPassword,
@@ -82,10 +109,34 @@ else
 
             newUser = new DisplayUserModel();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             string stest = ex.ToString();
         }
 
+    }
+
+    private async Task RemoveUser()
+    {
+        try
+        {
+            Users u = new Users
+            {
+                UserID = 2,
+                UserName = newUser.UserName,
+                UserEmail = newUser.UserEmail,
+                UserPassword = newUser.UserPassword,
+                IsAdmin = false
+            };
+            await _db.RemoveUser(u);
+
+            _user.Remove(u);
+
+            newUser = new DisplayUserModel();
+        }
+        catch (Exception ex)
+        {
+            string stest = ex.ToString();
+        }
     }
 }
