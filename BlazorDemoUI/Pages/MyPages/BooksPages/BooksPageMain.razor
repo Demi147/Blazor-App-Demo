@@ -14,7 +14,7 @@
 
 <h5>
     Filter Search:
-    <input type="text" name="txtFilter" placeholder="Enter text to filter" @oninput="EventArgs => { filtering(EventArgs.Value); }"  />
+    <input type="text" name="txtFilter" placeholder="Enter text to filter" @oninput="EventArgs => { Filter(EventArgs.Value); }"  />
     <input type="checkbox" @onchange="EventArgs => { setAccending(EventArgs.Value); }" /> Click for Accending Order
 </h5>
 
@@ -102,10 +102,10 @@ else
         sortAndFilter(lastAtribute);
     }
 
-    void filtering(object value)
+    void Filter(object _val)
     {
-        FilterVal = (string)value;
-        sortAndFilter(lastAtribute);
+        FilterVal = _val.ToString();
+        booksList = BooksService.SortBooks(BooksService.MultiFilter(OGlist, _val.ToString()), lastAtribute, accending);
     }
 
     void AddNav()
