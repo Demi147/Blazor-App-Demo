@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v3.1": {
       "BlazorDemoUI/1.0.0": {
         "dependencies": {
+          "BlazorInputFile": "0.1.0-preview-00002",
           "C1.Blazor.Grid": "3.1.20201.445",
           "C1.Blazor.Input": "3.1.20201.445",
           "DataAccessLibrary": "1.0.0",
@@ -294,6 +295,21 @@
         },
         "compile": {
           "BlazorDemoUI.dll": {}
+        }
+      },
+      "BlazorInputFile/0.1.0-preview-00002": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "3.1.1",
+          "Microsoft.AspNetCore.Components.Web": "3.1.1"
+        },
+        "runtime": {
+          "lib/netstandard2.1/BlazorInputFile.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.1/BlazorInputFile.dll": {}
         }
       },
       "C1.Blazor.Core/3.1.20201.445": {
@@ -2354,6 +2370,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "BlazorInputFile/0.1.0-preview-00002": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CEb6oLkSaKn2p2mepAjMIEabIYxsMcX0mRC16ciKPWPJCQMC/FS39C5kDySqdf6BE8/X714SDKc3fj8bI+L9Ig==",
+      "path": "blazorinputfile/0.1.0-preview-00002",
+      "hashPath": "blazorinputfile.0.1.0-preview-00002.nupkg.sha512"
     },
     "C1.Blazor.Core/3.1.20201.445": {
       "type": "package",
