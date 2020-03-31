@@ -10,6 +10,43 @@
 
 <h1>Book Information</h1>
 
+
+<h2>Book Title</h2>
+<body>
+    @_book.BookTitle
+</body>
+<br />
+<h2>Book Edition</h2>
+<body>
+    @_book.BookEdition
+</body>
+<br />
+<h2>Module Code</h2>
+<body>
+    @_book.ModuleCode
+</body>
+<br />
+<h2>Institute</h2>
+<body>
+    @_book.BooksInstitute
+</body>
+<br />
+<h2>Book Price</h2>
+<body>
+    @_book.BookPrice
+</body>
+<br />
+<h2>Book Location</h2>
+<br />
+<body>
+    @_book.LocationID
+</body>
+<h2>Book Image</h2>
+<body>
+    IMAGE HERE
+</body>
+<br />
+
 @_book.SalesNumber
 @_book.BookTitle
 @_book.BookEdition
@@ -28,8 +65,8 @@
 
 
 
-        protected override void OnInitialized()
-        {
-            _book = StaticTestData.GetSingleBook(id);
-        }
+    protected override void OnInitialized()
+    {
+        _book = StaticTestData.GetSingleBook(id);
+    }
 }
