@@ -2,6 +2,25 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "BlazorInputFile/0.1.0-preview-00002": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "3.0.0-preview9.19424.4",
+          "Microsoft.AspNetCore.Components.Web": "3.0.0-preview9.19424.4"
+        },
+        "compile": {
+          "lib/netstandard2.1/BlazorInputFile.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/BlazorInputFile.dll": {}
+        },
+        "build": {
+          "buildTransitive/BlazorInputFile.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/BlazorInputFile.props": {}
+        }
+      },
       "C1.Blazor.Core/3.1.20201.445": {
         "type": "package",
         "dependencies": {
@@ -616,6 +635,24 @@
     }
   },
   "libraries": {
+    "BlazorInputFile/0.1.0-preview-00002": {
+      "sha512": "CEb6oLkSaKn2p2mepAjMIEabIYxsMcX0mRC16ciKPWPJCQMC/FS39C5kDySqdf6BE8/X714SDKc3fj8bI+L9Ig==",
+      "type": "package",
+      "path": "blazorinputfile/0.1.0-preview-00002",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "blazorinputfile.0.1.0-preview-00002.nupkg.sha512",
+        "blazorinputfile.nuspec",
+        "build/BlazorInputFile.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/BlazorInputFile.props",
+        "buildTransitive/BlazorInputFile.props",
+        "lib/netstandard2.0/BlazorInputFile.dll",
+        "lib/netstandard2.1/BlazorInputFile.dll",
+        "staticwebassets/inputfile.js"
+      ]
+    },
     "C1.Blazor.Core/3.1.20201.445": {
       "sha512": "TR+T3znv/mIbsO56eWYnsIKXLMf2bClSr2jhndl3Tn11RqeBFmKEsNJquND0c/2roDitnhOo8QhX0YixL9Enjw==",
       "type": "package",
@@ -2466,25 +2503,26 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "BlazorInputFile >= 0.1.0-preview-00002",
       "C1.Blazor.Grid >= 3.1.20201.445",
       "C1.Blazor.Input >= 3.1.20201.445",
       "DataAccessLibrary >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Carmen\\.nuget\\packages\\": {}
+    "C:\\Users\\Franco Bester\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
+      "projectUniqueName": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
       "projectName": "BlazorDemoUI",
-      "projectPath": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
-      "packagesPath": "C:\\Users\\Carmen\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\obj\\",
+      "projectPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
+      "packagesPath": "C:\\Users\\Franco Bester\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Carmen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Franco Bester\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2497,8 +2535,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj": {
-              "projectPath": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj"
+            "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj": {
+              "projectPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj"
             }
           }
         }
@@ -2512,6 +2550,10 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "BlazorInputFile": {
+            "target": "Package",
+            "version": "[0.1.0-preview-00002, )"
+          },
           "C1.Blazor.Grid": {
             "target": "Package",
             "version": "[3.1.20201.445, )"
