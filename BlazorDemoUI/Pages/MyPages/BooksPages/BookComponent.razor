@@ -8,53 +8,47 @@
 @inject NavigationManager NavigationManager
 
 
-<h1>Book Information</h1>
+<h1>
+    Book Information
+    <button type="submit" name="btnBack" class="btn btn-primary" style="float: right;" @onclick="BackNav">Browse More Books</button>
+</h1>
 
 
-<h2>Book Title</h2>
+<h4>Book Title</h4>
 <body>
     @_book.BookTitle
 </body>
 <br />
-<h2>Book Edition</h2>
+<h4>Book Edition</h4>
 <body>
     @_book.BookEdition
 </body>
 <br />
-<h2>Module Code</h2>
+<h4>Module Code</h4>
 <body>
     @_book.ModuleCode
 </body>
 <br />
-<h2>Institute</h2>
+<h4>Institute</h4>
 <body>
     @_book.BooksInstitute
 </body>
 <br />
-<h2>Book Price</h2>
+<h4>Book Price</h4>
 <body>
     @_book.BookPrice
 </body>
 <br />
-<h2>Book Location</h2>
-<br />
+<h4>Book Location</h4>
 <body>
     @_book.LocationID
 </body>
-<h2>Book Image</h2>
+<br />
+<h4>Book Image</h4>
 <body>
     IMAGE HERE
 </body>
 <br />
-
-@_book.SalesNumber
-@_book.BookTitle
-@_book.BookEdition
-@_book.BookPrice
-@_book.ModuleCode
-@_book.BooksInstitute
-
-<NavLink href="/BooksPages/Main">Return to Books page</NavLink>
 
 @code {
 
@@ -63,10 +57,13 @@
 
     protected Books _book;
 
-
-
     protected override void OnInitialized()
     {
         _book = StaticTestData.GetSingleBook(id);
+    }
+
+    void BackNav()
+    {
+        NavigationManager.NavigateTo("/BooksPages/Main");
     }
 }
