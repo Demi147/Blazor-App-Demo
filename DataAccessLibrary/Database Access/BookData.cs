@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLibrary.Models;
+using System.Data;
+using Dapper;
 
 namespace DataAccessLibrary
 {
@@ -63,6 +65,20 @@ namespace DataAccessLibrary
             string sql = @"Delete from  dbo.tblBookSales Where SalesNumber =" + iSalesID;
 
             return _db.SaveData(sql, book);
+        }
+
+        public Task<int> Count()
+        {
+            var totalBooks = Task.FromResult(_db.Get<int>("Select count(*) from dbo.tblBookSales", null, commandType: CommandType.Text));
+
+            return totalBooks;
+        }
+
+        public Task<List<Books>> ListAll(int skip, int take, string orderby, string direction = "DESC")
+        {
+            var books = Task.FromResult(_db.GetAll<Books>($"Select * from dbo.tblBookSales Order By {orderby} {direction} Offset {skip} Rows fetch new {take} rows only;", null, commandType: CommandType.Text));
+
+            return books;
         }
     }
 }
