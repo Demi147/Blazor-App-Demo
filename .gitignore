@@ -45,9 +45,12 @@ BlazorDemoUI/obj/Debug/netcoreapp3.1/RazorDeclaration/Pages/TestEnviroment/Codin
 BlazorDemoUI/obj/Debug/netcoreapp3.1/RazorDeclaration/Pages/TestEnviroment/WALDO_CARMEN.razor.g.cs
 BlazorDemoUI/obj/Debug/netcoreapp3.1/RazorDeclaration/Shared/MainLayout.razor.g.cs
 BlazorDemoUI/obj/Debug/netcoreapp3.1/RazorDeclaration/Shared/NavMenu.razor.g.cs
+BlazorDemoUI/obj/
 DataAccessLibrary/bin/Debug/netstandard2.0/DataAccessLibrary.dll
 DataAccessLibrary/bin/Debug/netstandard2.0/DataAccessLibrary.pdb
 *.dll
 .vs/BlazorDemoApp/v16/.suo
 *.pdb
 *.cache
+.vs/BlazorDemoApp/v16/.suo
+*.v2
