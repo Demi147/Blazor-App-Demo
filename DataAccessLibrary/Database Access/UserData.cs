@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLibrary.Models;
+using System.Data;
 
 namespace DataAccessLibrary
 {
@@ -56,5 +57,19 @@ namespace DataAccessLibrary
         //{
         //    string sql =@"Update "
         //}
+
+        public Task<int> Count()
+        {
+            var totalUsers = Task.FromResult(_db.Get<int>("Select count(*) from dbo.tblUsers", null, commandType: System.Data.CommandType.Text));
+
+            return totalUsers;
+        }
+
+        public Task<List<Users>> ListAll(int skip, int take, string orderby, string direction = "DESC")
+        {
+            var users = Task.FromResult(_db.GetAll<Users>($"Select * from dbo.tblUsers Order By {orderby} {direction} Offset {skip} Rows fetch next {take} rows only;", null, commandType: CommandType.Text));
+
+            return users;
+        }
     }
 }
