@@ -39,7 +39,7 @@ else
             @foreach (var item in booksList)
             {
                 <tr>
-                    <td><NavLink href=@string.Format("/BooksPages/Main/{0}",item.BookTitle)>@item.BookTitle</NavLink></td>
+                    <td><NavLink href=@string.Format("/BooksPages/Main/{0}",item.SalesNumber)>@item.BookTitle</NavLink></td>
                     <td>@item.BookEdition</td>
                     <td>@item.BookPrice</td>
                     <td>@item.ModuleCode</td>
@@ -48,18 +48,6 @@ else
             }
         </tbody>
     </table>
-
-    @** WERK NOG AAN DIE EEN VIR SEARCH !!!!!
-    <form asp-action="FilterBooks" method="get">
-        <div class="form-actions no-color">
-            <p>
-                Find by name: <input type="text" name="SearchString" value="" />
-                <input type="submit" value="Search" class="btn btn-default" /> |
-                <a asp-action="FilterBooks">Back to Full List</a>
-            </p>
-        </div>
-    </form>
-    **@ 
 }
 
 @code {
