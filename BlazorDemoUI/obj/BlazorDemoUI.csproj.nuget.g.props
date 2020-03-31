@@ -5,7 +5,7 @@
     <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
     <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
     <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
-    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\Carmen\.nuget\packages\</NuGetPackageFolders>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\Franco Bester\.nuget\packages\</NuGetPackageFolders>
     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
     <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">5.5.0</NuGetToolVersion>
   </PropertyGroup>
@@ -18,5 +18,6 @@
     <Import Project="$(NuGetPackageRoot)c1.blazor.listview\3.1.20201.445\build\C1.Blazor.ListView.props" Condition="Exists('$(NuGetPackageRoot)c1.blazor.listview\3.1.20201.445\build\C1.Blazor.ListView.props')" />
     <Import Project="$(NuGetPackageRoot)c1.blazor.input\3.1.20201.445\build\C1.Blazor.Input.props" Condition="Exists('$(NuGetPackageRoot)c1.blazor.input\3.1.20201.445\build\C1.Blazor.Input.props')" />
     <Import Project="$(NuGetPackageRoot)c1.blazor.grid\3.1.20201.445\build\C1.Blazor.Grid.props" Condition="Exists('$(NuGetPackageRoot)c1.blazor.grid\3.1.20201.445\build\C1.Blazor.Grid.props')" />
+    <Import Project="$(NuGetPackageRoot)blazorinputfile\0.1.0-preview-00002\buildTransitive\BlazorInputFile.props" Condition="Exists('$(NuGetPackageRoot)blazorinputfile\0.1.0-preview-00002\buildTransitive\BlazorInputFile.props')" />
   </ImportGroup>
 </Project>
