@@ -42,5 +42,19 @@ namespace DataAccessLibrary
                 await connection.ExecuteAsync(sql, parameters);
             }
         }
+
+        public T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        {
+            IDbConnection _db = new SqlConnection(_config.GetConnectionString("Default"));
+
+            return _db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
+        }
+
+        public List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        {
+            IDbConnection _db = new SqlConnection(_config.GetConnectionString("Default"));
+
+            return _db.Query<T>(sp, parms, commandType: commandType).ToList();
+        }
     }
 }
