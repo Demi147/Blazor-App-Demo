@@ -2510,20 +2510,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Franco Bester\\.nuget\\packages\\": {}
+    "C:\\Users\\carel\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
+      "projectUniqueName": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
       "projectName": "BlazorDemoUI",
-      "projectPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
-      "packagesPath": "C:\\Users\\Franco Bester\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\BlazorDemoUI\\obj\\",
+      "projectPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\BlazorDemoUI\\BlazorDemoUI.csproj",
+      "packagesPath": "C:\\Users\\carel\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\BlazorDemoUI\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Franco Bester\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\carel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -2535,8 +2540,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj": {
-              "projectPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj"
+            "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj": {
+              "projectPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj"
             }
           }
         }

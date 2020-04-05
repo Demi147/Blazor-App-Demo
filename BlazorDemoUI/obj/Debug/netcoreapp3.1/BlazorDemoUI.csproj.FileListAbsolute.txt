@@ -461,3 +461,8 @@ C:\Users\Franco Bester\Desktop\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp
 C:\Users\Franco Bester\Desktop\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\Razor\_Imports.razor.g.cs
 C:\Users\Franco Bester\Desktop\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\MyPages\FileInput.razor.g.cs
 C:\Users\Franco Bester\Desktop\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\Razor\Pages\MyPages\FileInput.razor.g.cs
+C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\bin\Debug\netcoreapp3.1\BlazorInputFile.dll
+C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\MyPages\FileInput.razor.g.cs
+C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\Razor\Pages\MyPages\FileInput.razor.g.cs
+C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\TestEnviroment\CodingTest2.razor.g.cs
+C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\Razor\Pages\TestEnviroment\CodingTest2.razor.g.cs
