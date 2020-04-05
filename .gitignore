@@ -3,3 +3,5 @@
 .vs/BlazorDemoApp/v16/.suo
 *.v2
 *.pdb
+*.dll
+*.json
