@@ -8,47 +8,75 @@
 @inject NavigationManager NavigationManager
 
 
+<style>
+    .row div {
+        padding: 10px 10px;
+        border: 1px solid;
+    }
+</style>
+
 <h1>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     Book Information
     <button type="submit" name="btnBack" class="btn btn-primary" style="float: right;" @onclick="BackNav">Browse More Books</button>
 </h1>
 
+<br />
 
-<h4>Book Title</h4>
-<body>
-    @_book.BookTitle
-</body>
-<br />
-<h4>Book Edition</h4>
-<body>
-    @_book.BookEdition
-</body>
-<br />
-<h4>Module Code</h4>
-<body>
-    @_book.ModuleCode
-</body>
-<br />
-<h4>Institute</h4>
-<body>
-    @_book.BooksInstitute
-</body>
-<br />
-<h4>Book Price</h4>
-<body>
-    @_book.BookPrice
-</body>
-<br />
-<h4>Book Location</h4>
-<body>
-    @_book.LocationID
-</body>
-<br />
-<h4>Book Image</h4>
-<body>
-    IMAGE HERE
-</body>
-<br />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4" style="background: lightblue"><h4>Title</h4></div>
+        <div class="col-sm-6">@_book.BookTitle</div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-4" style="background: lightblue"><h4>Edition</h4></div>
+        <div class="col-sm-6">@_book.BookEdition</div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-4" style="background: lightblue"><h4>Module Code</h4></div>
+        <div class="col-sm-6">@_book.ModuleCode</div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-4" style="background: lightblue"><h4>Institute</h4></div>
+        <div class="col-sm-6">@_book.BooksInstitute</div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-4" style="background: lightblue"><h4>Price</h4></div>
+        <div class="col-sm-6">@_book.BookPrice</div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-4" style="background: lightblue"><h4>Location</h4></div>
+        <div class="col-sm-6">@_book.LocationID</div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-4" style="background: lightblue"><h4>Book Image</h4></div>
+        <div class="col-sm-6">
+
+            "IMAGE HERE"
+
+        </div>
+    </div>
+
+</div>
+
 
 @code {
 
