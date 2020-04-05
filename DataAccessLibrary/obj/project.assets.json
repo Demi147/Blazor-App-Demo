@@ -3188,19 +3188,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Franco Bester\\.nuget\\packages\\": {}
+    "C:\\Users\\waldo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
+      "projectUniqueName": "C:\\Users\\waldo\\OneDrive\\Documents\\1. IT\\3rd Year\\1st Semester\\CMPG 311 - Databases\\GitHub\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
       "projectName": "DataAccessLibrary",
-      "projectPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
-      "packagesPath": "C:\\Users\\Franco Bester\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Franco Bester\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\obj\\",
+      "projectPath": "C:\\Users\\waldo\\OneDrive\\Documents\\1. IT\\3rd Year\\1st Semester\\CMPG 311 - Databases\\GitHub\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
+      "packagesPath": "C:\\Users\\waldo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\waldo\\OneDrive\\Documents\\1. IT\\3rd Year\\1st Semester\\CMPG 311 - Databases\\GitHub\\Blazor-App-Demo\\DataAccessLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Franco Bester\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\waldo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3261,7 +3261,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
