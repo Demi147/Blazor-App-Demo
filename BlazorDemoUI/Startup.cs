@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using BlazorDemoUI.Data;
 using DataAccessLibrary;
 using DataAccessLibrary.Bussiness_Logic;
+using DataAccessLibrary.Bussiness_Logic.BooksLogic;
 using BlazorDemoUI.Services;
 
 namespace BlazorDemoUI
@@ -36,6 +37,7 @@ namespace BlazorDemoUI
             services.AddTransient<IUserData, UserData>();
             services.AddTransient<IBooksBussinessLogic, BooksBussinessLogic>();
             services.AddScoped<IFileUpload, FileUpload>();
+            services.AddSingleton<IBooksBuyService,BooksBuyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

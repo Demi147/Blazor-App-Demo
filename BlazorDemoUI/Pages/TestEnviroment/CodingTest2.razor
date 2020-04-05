@@ -1,11 +1,13 @@
-﻿@page "/BooksPages/Main/{id:int}"
+﻿@page "/TestEnviroment/test/{id:int}"
 
 @using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
 @using DataAccessLibrary.Models
 @using DataAccessLibrary
 
 @inject IBooksBussinessLogic BooksService
 @inject NavigationManager NavigationManager
+@inject IBooksBuyService BooksBuyService
 
 
 <h1>
@@ -17,6 +19,7 @@
 <h4>Book Title</h4>
 <body>
     @_book.BookTitle
+    @BooksBuyService.exchange.UserID
 </body>
 <br />
 <h4>Book Edition</h4>

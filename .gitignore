@@ -1,0 +1,9 @@
+
+*.config
+.vs/BlazorDemoApp/v16/.suo
+*.v2
+*.pdb
+*.dll
+*.json
+!BlazorDemoUI/bin/Debug/netcoreapp3.1/BlazorInputFile.dll
+BlazorDemoUI/bin/*
