@@ -1,11 +1,13 @@
-﻿@page "/BooksPages/Main/{id:int}/RequestPurchase"
+﻿@page "/BooksPages/Main/RequestPurchase"
 
 @using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
 @using DataAccessLibrary.Models
 @using DataAccessLibrary
 
 @inject IBooksBussinessLogic BooksService
 @inject NavigationManager NavigationManager
+@inject IBooksBuyService buyservice
 
 
 <h3>Purchase Confirmation</h3>
@@ -16,19 +18,25 @@
         Thank you for your purchase!
         Click on the OK button to browse more books.
     </p>
+
+    @_book.SalesNumber
+    @_book.BookTitle
+    @_book.BookEdition
+    @_book.BooksInstitute
+    @_book.BookPrice
+
 </body>
 <button type="submit" name="btnOk" class="btn btn-primary" style="float: left;" @onclick="BackNav">Okay</button>
 
 @code {
 
-    [Parameter]
-    public int id { get; set; }
 
     protected Books _book;
 
     protected override void OnInitialized()
     {
-        _book = StaticTestData.GetSingleBook(id);
+
+        _book = StaticTestData.GetSingleBook(buyservice.exchange.SalesNumber);
     }
 
     void BackNav()

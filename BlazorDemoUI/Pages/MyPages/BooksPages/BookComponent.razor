@@ -1,11 +1,13 @@
 ﻿@page "/BooksPages/Main/{id:int}"
 
 @using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
 @using DataAccessLibrary.Models
 @using DataAccessLibrary
 
 @inject IBooksBussinessLogic BooksService
 @inject NavigationManager NavigationManager
+@inject IBooksBuyService buyService;
 
 
 <style>
@@ -95,11 +97,12 @@
     {
         NavigationManager.NavigateTo("/BooksPages/Main");
 
-        
+
     }
 
     void NavConfirm()
     {
-        NavigationManager.NavigateTo("/BooksPages/Main/{ id: int}/RequestPurchase");
+        buyService.addSalesNumber(_book.SalesNumber);
+        NavigationManager.NavigateTo("/BooksPages/Main/RequestPurchase");
     }
 }
