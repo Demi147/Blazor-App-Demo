@@ -1,0 +1,39 @@
+﻿@page "/BooksPages/Main/{id:int}/RequestPurchase"
+
+@using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Models
+@using DataAccessLibrary
+
+@inject IBooksBussinessLogic BooksService
+@inject NavigationManager NavigationManager
+
+
+<h3>Purchase Confirmation</h3>
+<body>
+    <p>
+        This message serves as a confirmation of your purhase request.
+        You will be contacted by the Seller to set up additional purchase and collection arrangements.
+        Thank you for your purchase!
+        Click on the OK button to browse more books.
+    </p>
+</body>
+<button type="submit" name="btnOk" class="btn btn-primary" style="float: left;" @onclick="BackNav">Okay</button>
+
+@code {
+
+    [Parameter]
+    public int id { get; set; }
+
+    protected Books _book;
+
+    protected override void OnInitialized()
+    {
+        _book = StaticTestData.GetSingleBook(id);
+    }
+
+    void BackNav()
+    {
+        NavigationManager.NavigateTo("/BooksPages/Main");
+
+    }
+}
