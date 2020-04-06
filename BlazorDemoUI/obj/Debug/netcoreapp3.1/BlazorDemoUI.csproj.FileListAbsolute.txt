@@ -248,8 +248,6 @@ C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netc
 C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\BlazorDemoUI.dll
 C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\BlazorDemoUI.pdb
 C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\BlazorDemoUI.genruntimeconfig.cache
-C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\bin\Debug\netcoreapp3.1\appsettings.Development.json
-C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\bin\Debug\netcoreapp3.1\BlazorDemoUI.exe
 C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\bin\Debug\netcoreapp3.1\BlazorDemoUI.deps.json
@@ -466,3 +464,12 @@ C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netc
 C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\Razor\Pages\MyPages\FileInput.razor.g.cs
 C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\TestEnviroment\CodingTest2.razor.g.cs
 C:\Users\carel\Desktop\BlazorDemoApp\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\Razor\Pages\TestEnviroment\CodingTest2.razor.g.cs
+C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\bin\Debug\netcoreapp3.1\BlazorInputFile.dll
+C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\MyPages\FileInput.razor.g.cs
+C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\TestEnviroment\CodingTest2.razor.g.cs
+C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\Razor\Pages\MyPages\FileInput.razor.g.cs
+C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\Razor\Pages\TestEnviroment\CodingTest2.razor.g.cs
+C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\MyPages\ConfirmationPages\PurchaseConfirm.razor.g.cs
+C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\MyPages\ConfirmationPages\SaleConfirm.razor.g.cs
+C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\Razor\Pages\MyPages\ConfirmationPages\PurchaseConfirm.razor.g.cs
+C:\Users\Carmen\Desktop\Blazor-App-Demo\BlazorDemoUI\obj\Debug\netcoreapp3.1\Razor\Pages\MyPages\ConfirmationPages\SaleConfirm.razor.g.cs
