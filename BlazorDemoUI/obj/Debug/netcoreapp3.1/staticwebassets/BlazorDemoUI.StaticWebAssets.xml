@@ -4,4 +4,5 @@
   <ContentRoot BasePath="_content/C1.Blazor.Grid" Path="C:\Users\Carmen\.nuget\packages\c1.blazor.grid\3.1.20201.445\build\..\staticwebassets\" />
   <ContentRoot BasePath="_content/C1.Blazor.Input" Path="C:\Users\Carmen\.nuget\packages\c1.blazor.input\3.1.20201.445\build\..\staticwebassets\" />
   <ContentRoot BasePath="_content/C1.Blazor.ListView" Path="C:\Users\Carmen\.nuget\packages\c1.blazor.listview\3.1.20201.445\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Radzen.Blazor" Path="C:\Users\Carmen\.nuget\packages\radzen.blazor\2.5.5\build\..\staticwebassets\" />
 </StaticWebAssets>
