@@ -13,17 +13,29 @@
 <h3>Purchase Confirmation</h3>
 <body>
     <p>
-        This message serves as a confirmation of your purhase request.
+        <br />
+        This message serves as a confirmation of your purhase request for the following book:
+        <br />
+        Book Title: @_book.BookTitle
+        <br />
+        Edition: @_book.BookEdition
+        <br />
+        Price: @_book.BookPrice
+        <br />
+        Institute: @_book.BooksInstitute
+        <br />
+        Your Sales Number is @_book.SalesNumber.
+        <br />
         You will be contacted by the Seller to set up additional purchase and collection arrangements.
+        <br />
+        <br />
         Thank you for your purchase!
+        <br />
         Click on the OK button to browse more books.
+        <br />
     </p>
 
-    @_book.SalesNumber
-    @_book.BookTitle
-    @_book.BookEdition
-    @_book.BooksInstitute
-    @_book.BookPrice
+   
 
 </body>
 <button type="submit" name="btnOk" class="btn btn-primary" style="float: left;" @onclick="BackNav">Okay</button>
