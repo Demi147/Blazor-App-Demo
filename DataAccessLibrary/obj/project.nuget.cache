@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Big0l62HMCG53jrsXwmNVB2FQBQu4M7fcapiWr9PBUzMpvVrJEwRtt/66F2yTYoez9mN7J4EY3uPMMgh9PKKNQ==",
+  "dgSpecHash": "F8Mbf/rEemum/HluISGxEZ0oEqNs6NPdFKYG+iNb5Hj0CC9e3hVuWDZoA9C8AbR8+sqInSimn3I2ayWKIJORXg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Carmen\\.nuget\\packages\\blazored.sessionstorage\\1.0.11\\blazored.sessionstorage.1.0.11.nupkg.sha512",
     "C:\\Users\\Carmen\\.nuget\\packages\\c1.blazor.core\\3.1.20201.445\\c1.blazor.core.3.1.20201.445.nupkg.sha512",
     "C:\\Users\\Carmen\\.nuget\\packages\\c1.blazor.grid\\3.1.20201.445\\c1.blazor.grid.3.1.20201.445.nupkg.sha512",
     "C:\\Users\\Carmen\\.nuget\\packages\\c1.blazor.input\\3.1.20201.445\\c1.blazor.input.3.1.20201.445.nupkg.sha512",
