@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BlazorInputFile;
+using DataAccessLibrary.Models;
 using System.Threading.Tasks;
-using BlazorInputFile;
 
 namespace BlazorDemoUI.Services
 {
     public interface IFileUpload
     {
-        Task UploadAsync(IFileListEntry file);
+        Task InsertImage(Books book);
+        Task UploadAsync(IFileListEntry fileEntry);
+        byte[] UploadAsync2(IFileListEntry fileEntry);
     }
 }
