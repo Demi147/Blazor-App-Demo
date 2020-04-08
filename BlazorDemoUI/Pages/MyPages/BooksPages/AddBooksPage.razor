@@ -1,11 +1,13 @@
 ﻿@page "/BooksPages/Main/AddBooks"
 
 @using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
 @using DataAccessLibrary.Models
 @using DataAccessLibrary
 
 @inject IBooksBussinessLogic BooksService
 @inject NavigationManager navigationManager
+@inject IBooksCreateService booksAdd
 
 <h1>
     Add New Books
@@ -15,19 +17,19 @@
 
 <p>
     <br>
-    Book Title: <input type="text" name="txtBookTitle" placeholder="Enter book title here" @bind-value="title"/>
+    Book Title: <input type="text" name="txtBookTitle" placeholder="Enter book title here" @bind-value="title" />
     <br>
     <br />
-    Book Edition: <input type="text" name="txtBookEdition" placeholder="Enter book edition here" @bind-value="edition"/>
+    Book Edition: <input type="text" name="txtBookEdition" placeholder="Enter book edition here" @bind-value="edition" />
     <br>
     <br />
-    Book Price: <input type="text" name="txtBookPrice" placeholder="Enter book price here" @bind-value="price"/>
+    Book Price: <input type="text" name="txtBookPrice" placeholder="Enter book price here" @bind-value="price" />
     <br>
     <br />
-    Module Code: <input type="text" name="txtModuleCode" placeholder="Enter module code here" @bind-value="modCode"/>
+    Module Code: <input type="text" name="txtModuleCode" placeholder="Enter module code here" @bind-value="modCode" />
     <br>
     <br />
-    Book Institute: <input type="text" name="txtBookInstitute" placeholder="Enter book institute here" @bind-value="institute"/>
+    Book Institute: <input type="text" name="txtBookInstitute" placeholder="Enter book institute here" @bind-value="institute" />
     <br>
     <br />
     Book Image:
@@ -37,11 +39,22 @@
 
 @code {
 
+    List<Books> booksList;
+    List<Books> OGlist;
+
     string title { get; set; }
     int edition { get; set; }
-    decimal price { get; set; }
+    double price { get; set; }
     string modCode { get; set; }
     string institute { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        OGlist = StaticTestData.BookTestData;
+        booksList = OGlist;
+    }
+
+    
 
     void AddNav()
     {
