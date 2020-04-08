@@ -13,7 +13,7 @@
 <h5>Select Any of the below reccomeneded locations or enter your own.</h5>
 
 
-<div class="row">
+@*<div class="row">
     <div class="col-md-4">
         <label for="Country" class="control-label">Country</label>
     </div>
@@ -34,7 +34,7 @@
     <div class="col-md-4">
         <label class="control-label">Country Name: @_book.LocationID</label>
     </div>
-</div>
+</div>*@
 
 
 
@@ -50,8 +50,10 @@
 
 
 @code {
-    [Parameter]
-    public int id { get; set; }
+    //[Parameter]
+    //public int id { get; set; }
+
+
     string location { get; set; }
 
     protected Books _book;
@@ -60,7 +62,7 @@
     protected override void OnInitialized()
     {
         booksList = StaticTestData.BookTestData;
-        _book = StaticTestData.GetSingleBook(id);
+        //_book = StaticTestData.GetSingleBook(id);
     }
 
     protected async void bookClicked(ChangeEventArgs locatEvent)
