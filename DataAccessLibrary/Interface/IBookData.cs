@@ -6,14 +6,20 @@ namespace DataAccessLibrary
 {
     public interface IBookData
     {
-        Task<int> Count();
-        Task<List<Books>> GetBooks();
-        Task<List<Books>> GetSingleBook(int iSalesNumber);
+        Task<int> Count_TotalBooks();
+        Task<List<Books>> Get_BookPrice_Order(string sPriceOrder);
+        Task<List<Books>> Get_Books();
+        Task<List<Books>> Get_DatePosted(string sDateOrder);
+        Task<int> Get_LocationID_SalesNumber(int iSalesNumber);
+        Task<int> Get_SalesNumber_User_Title(int iUserId, string sBookTitle);
+        Task<List<Books>> Get_SingleBook(int iSalesNumber);
+        Task<int> Get_UserID_SalesNumber_Title(int iSalesNumber, string sBookTitle);
         Task InsertBook(Books book);
         Task<List<Books>> ListAll(int skip, int take, string orderby, string direction = "DESC");
         Task RemoveBook(Books book, int iSalesID);
         Task<List<Books>> SearchBooks_Institue(string sBookInsitute);
         Task<List<Books>> SearchBooks_ModuleCode(string sBookModuleCode);
+        Task<List<Books>> SearchBooks_PriceRange(decimal dPriceMin, decimal dPriceMax);
         Task<List<Books>> SearchBooks_Title(string sBookTitle);
     }
 }
