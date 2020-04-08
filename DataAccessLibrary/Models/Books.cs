@@ -14,6 +14,8 @@ namespace DataAccessLibrary.Models
         public string ModuleCode { get; set; }
         public string BooksInstitute { get; set; }
         public int LocationID { get; set; }
+        public DateTime DatePosted { get; set; }
+        public byte[] BookImage { get; set; }
 
         public bool CheckIfContains(string _val)
         {
@@ -36,7 +38,7 @@ namespace DataAccessLibrary.Models
             try
             {
                 int x = int.Parse(_val);
-                if (BookPrice<= x)
+                if (BookPrice <= x)
                 {
                     return true;
                 }
