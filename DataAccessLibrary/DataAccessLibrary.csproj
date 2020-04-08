@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.SessionStorage" Version="1.0.11" />
     <PackageReference Include="C1.Blazor.Grid" Version="3.1.20201.445" />
     <PackageReference Include="C1.Blazor.Input" Version="3.1.20201.445" />
     <PackageReference Include="Dapper" Version="2.0.30" />

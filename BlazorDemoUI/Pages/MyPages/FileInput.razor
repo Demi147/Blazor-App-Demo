@@ -1,18 +1,22 @@
 ﻿@page "/fileinput"
 @using BlazorDemoUI.Services
 
+@using DataAccessLibrary
+@using DataAccessLibrary.Models
+
 @inject IFileUpload fileUpload
+
 
 <h3>FileInput</h3>
 
 <InputFile OnChange="HandelFileSelected"></InputFile>
 
-@if (file != null)
-{
-    <p>Name:@file.Name </p>
-    <p>Size in Bytes:@file.Size </p>
-    <p>File type:@file.Type  </p>
-}
+@*@if (file != null)
+    {
+        <p>Name:@file.Name </p>
+        <p>Size in Bytes:@file.Size </p>
+        <p>File type:@file.Type  </p>
+    }*@
 
 @code {
     IFileListEntry file;
@@ -23,7 +27,36 @@
         if (file != null)
         {
             await fileUpload.UploadAsync(file);
+            UploadImageDb(files);
         }
+
+    }
+
+    void UploadImageDb(IFileListEntry[] files)
+    {
+        file = files.FirstOrDefault();
+
+        byte[] bImageByte = null;
+        bImageByte = fileUpload.UploadAsync2(file);
+
+        Books b = new Books
+        {
+            SalesNumber = 2,
+            UserID = 2,
+            BookTitle = "TestImage",
+            BookEdition = 2,
+            BookPrice = 14.23,
+            LocationID = 2,
+            ModuleCode = "CMPg 213",
+            BooksInstitute = "NWu",
+            DatePosted = DateTime.Today.Date,
+            BookImage = bImageByte
+
+
+
+        };
+        fileUpload.InsertImage(b);
+
     }
 
 

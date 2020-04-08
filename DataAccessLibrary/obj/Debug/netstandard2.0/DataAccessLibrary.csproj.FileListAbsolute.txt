@@ -39,7 +39,6 @@ C:\Users\Carmen\Desktop\Blazor-App-Demo\DataAccessLibrary\obj\Debug\netstandard2
 C:\Users\Carmen\Desktop\Blazor-App-Demo\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.AssemblyInfo.cs
 C:\Users\Carmen\Desktop\Blazor-App-Demo\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.dll
 C:\Users\Carmen\Desktop\Blazor-App-Demo\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.pdb
-C:\Users\Carmen\Desktop\Blazor-App-Demo\DataAccessLibrary\obj\Debug\netstandard2.0\DataAccessLibrary.csproj.CoreCompileInputs.cache
 C:\Users\Franco Bester\Desktop\Blazor-App-Demo\DataAccessLibrary\bin\Debug\netstandard2.0\DataAccessLibrary.deps.json
 C:\Users\Franco Bester\Desktop\Blazor-App-Demo\DataAccessLibrary\bin\Debug\netstandard2.0\DataAccessLibrary.dll
 C:\Users\Franco Bester\Desktop\Blazor-App-Demo\DataAccessLibrary\bin\Debug\netstandard2.0\DataAccessLibrary.pdb

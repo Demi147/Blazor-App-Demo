@@ -1,11 +1,13 @@
 ﻿@page "/BooksPages/Main/{id:int}"
 
 @using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
 @using DataAccessLibrary.Models
 @using DataAccessLibrary
 
 @inject IBooksBussinessLogic BooksService
 @inject NavigationManager NavigationManager
+@inject IBooksBuyService buyService;
 
 
 <style>
@@ -18,6 +20,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     Book Information
     <button type="submit" name="btnBack" class="btn btn-primary" style="float: right;" @onclick="BackNav">Browse More Books</button>
+    <button type="submit" name="btnPurchase" class="btn btn-primary" style="float: right;" @onclick="NavConfirm">Request Book Purchase</button>
 </h1>
 
 
@@ -85,5 +88,13 @@
     void BackNav()
     {
         NavigationManager.NavigateTo("/BooksPages/Main");
+
+
+    }
+
+    void NavConfirm()
+    {
+        buyService.addSalesNumber(_book.SalesNumber);
+        NavigationManager.NavigateTo("/BooksPages/Main/RequestPurchase");
     }
 }

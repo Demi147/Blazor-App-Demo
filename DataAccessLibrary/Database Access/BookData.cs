@@ -17,45 +17,97 @@ namespace DataAccessLibrary
             _db = db;
         }
 
-        public Task<List<Books>> GetBooks()
+        //##############################################################################################################################################################################################################
+        // Get methods for Book Data Model
+        //##############################################################################################################################################################################################################
+        public Task<List<Books>> Get_Books()
         {
-            string sql = "Select * from dbo.tblBookSales";
+            string sql = @"Select * from dbo.tblBookSales";
 
             return _db.LoadData<Books, dynamic>(sql, new { });
         }
 
-        public Task<List<Books>> GetSingleBook(int iSalesNumber)
+        public Task<List<Books>> Get_SingleBook(int iSalesNumber)
         {
-            string sql = "Select * from dbo.tblBookSales Where SalesNumber=" + iSalesNumber + "";
+            string sql = @"Select * from dbo.tblBookSales Where SalesNumber=" + iSalesNumber + "";
 
             return _db.LoadData<Books, dynamic>(sql, new { });
         }
 
+        public Task<List<Books>> Get_DatePosted(string sDateOrder)//paramter is either ASC or DESC 
+        {
+            string sql = @"Select * from dbo.tblBookSales Order By DatePosted " + sDateOrder + "";
+
+            return _db.LoadData<Books, dynamic>(sql, new { });
+        }
+
+        public Task<List<Books>> Get_BookPrice_Order(string sPriceOrder)//paramter is either ASC or DESC 
+        {
+            string sql = @"Select * from dbo.tblBookSales Order By BookPrice " + sPriceOrder + "";
+
+            return _db.LoadData<Books, dynamic>(sql, new { });
+        }
+
+        public Task<int> Get_UserID_SalesNumber_Title(int iSalesNumber, string sBookTitle)
+        {
+            var userID = Task.FromResult(_db.Get<int>($"Select UserID from dbo.tblBookSales Where SalesNumber =" + iSalesNumber + " and BookTitle Like '" + sBookTitle + "'", null, commandType: CommandType.Text));
+
+            return userID;
+        }
+
+        public Task<int> Get_SalesNumber_User_Title(int iUserId, string sBookTitle)
+        {
+            var salesNumber = Task.FromResult(_db.Get<int>($"Select SalesNumber from dbo.tblBookSales Where UserId=" + iUserId + " and BookTitle Like '" + sBookTitle + "'", null, commandType: CommandType.Text));
+
+            return salesNumber;
+        }
+
+        public Task<int> Get_LocationID_SalesNumber(int iSalesNumber)
+        {
+            var locationId = Task.FromResult(_db.Get<int>($"Select LocationId from dbo.tblBookSales", null, commandType: CommandType.Text));
+
+            return locationId;
+        }
+
+        //##############################################################################################################################################################################################################
+        //Search methods for Books Data Model
+        //##############################################################################################################################################################################################################
         public Task<List<Books>> SearchBooks_Title(string sBookTitle)
         {
-            string sql = "Select * from dbo.tblBookSales Where BookTitle Like '" + sBookTitle + "'";
+            string sql = @"Select * from dbo.tblBookSales Where BookTitle Like '" + sBookTitle + "'";
 
             return _db.LoadData<Books, dynamic>(sql, new { });
         }
 
         public Task<List<Books>> SearchBooks_ModuleCode(string sBookModuleCode)
         {
-            string sql = "Select * from dbo.tblBookSales Where BookTitle Like '" + sBookModuleCode + "'";
+            string sql = @"Select * from dbo.tblBookSales Where BookTitle Like '" + sBookModuleCode + "'";
 
             return _db.LoadData<Books, dynamic>(sql, new { });
         }
 
         public Task<List<Books>> SearchBooks_Institue(string sBookInsitute)
         {
-            string sql = "Select * from dbo.tblBookSales Where BookInstitute Like '" + sBookInsitute + "'";
+            string sql = @"Select * from dbo.tblBookSales Where BookInstitute Like '" + sBookInsitute + "'";
 
             return _db.LoadData<Books, dynamic>(sql, new { });
         }
 
+        public Task<List<Books>> SearchBooks_PriceRange(decimal dPriceMin, decimal dPriceMax)
+        {
+            string sql = @"Select * from dbo.tblBookSales Where BookPrice >= " + dPriceMin + " and BookPrice <= " + dPriceMax + "";
+
+            return _db.LoadData<Books, dynamic>(sql, new { });
+
+        }
+
+        //##############################################################################################################################################################################################################
+        //CRUD Methods for Books Data Model
+        //##############################################################################################################################################################################################################
         public Task InsertBook(Books book)
         {
-            string sql = @"Insert into dbo.tblBookSales(SalesNumber,UserID,BookTitle,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute)
-                           values(@SalesNumber,@UserID,BookTitle,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute)";
+            string sql = @"Insert into dbo.tblBookSales(SalesNumber,UserID,BookTitle,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute,DatePosted)
+                           values(@SalesNumber,@UserID,BookTitle,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute,@DatePosted)";
 
             return _db.SaveData(sql, book);
         }
@@ -67,9 +119,17 @@ namespace DataAccessLibrary
             return _db.SaveData(sql, book);
         }
 
-        public Task<int> Count()
+        //public Task UpdateUser()
+        //{
+
+        //}
+
+        //##############################################################################################################################################################################################################
+        //Other methods of Book Data Model
+        //##############################################################################################################################################################################################################
+        public Task<int> Count_TotalBooks()
         {
-            var totalBooks = Task.FromResult(_db.Get<int>("Select count(*) from dbo.tblBookSales", null, commandType: CommandType.Text));
+            var totalBooks = Task.FromResult(_db.Get<int>($"Select count(*) from dbo.tblBookSales", null, commandType: CommandType.Text));
 
             return totalBooks;
         }
@@ -80,5 +140,6 @@ namespace DataAccessLibrary
 
             return books;
         }
+
     }
 }
