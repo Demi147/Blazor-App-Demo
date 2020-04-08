@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
+      "Blazored.SessionStorage/1.0.11": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "3.0.0",
+          "Microsoft.AspNetCore.Components.Web": "3.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Blazored.SessionStorage.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Blazored.SessionStorage.dll": {}
+        }
+      },
       "C1.Blazor.Core/3.1.20201.445": {
         "type": "package",
         "dependencies": {
@@ -772,6 +785,18 @@
     }
   },
   "libraries": {
+    "Blazored.SessionStorage/1.0.11": {
+      "sha512": "qy2Erz2TtzHEYKRnnucLLzJA2Lt6myF3hZ5MAMUbLolE4ukKTJx1+OtxMrT70UA9PKtPThxtsGs2G4I11igi1w==",
+      "type": "package",
+      "path": "blazored.sessionstorage/1.0.11",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "blazored.sessionstorage.1.0.11.nupkg.sha512",
+        "blazored.sessionstorage.nuspec",
+        "lib/netstandard2.0/Blazored.SessionStorage.dll"
+      ]
+    },
     "C1.Blazor.Core/3.1.20201.445": {
       "sha512": "TR+T3znv/mIbsO56eWYnsIKXLMf2bClSr2jhndl3Tn11RqeBFmKEsNJquND0c/2roDitnhOo8QhX0YixL9Enjw==",
       "type": "package",
@@ -3179,6 +3204,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
+      "Blazored.SessionStorage >= 1.0.11",
       "C1.Blazor.Grid >= 3.1.20201.445",
       "C1.Blazor.Input >= 3.1.20201.445",
       "Dapper >= 2.0.30",
@@ -3188,25 +3214,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\carel\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\Carmen\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
+      "projectUniqueName": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
       "projectName": "DataAccessLibrary",
-      "projectPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
-      "packagesPath": "C:\\Users\\carel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\carel\\Desktop\\BlazorDemoApp\\Blazor-App-Demo\\DataAccessLibrary\\obj\\",
+      "projectPath": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\DataAccessLibrary.csproj",
+      "packagesPath": "C:\\Users\\Carmen\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Carmen\\Desktop\\Blazor-App-Demo\\DataAccessLibrary\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\carel\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\Carmen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
@@ -3229,6 +3250,10 @@
     "frameworks": {
       "netstandard2.0": {
         "dependencies": {
+          "Blazored.SessionStorage": {
+            "target": "Package",
+            "version": "[1.0.11, )"
+          },
           "C1.Blazor.Grid": {
             "target": "Package",
             "version": "[3.1.20201.445, )"
