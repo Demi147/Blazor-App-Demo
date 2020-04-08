@@ -28,7 +28,7 @@
 
     <InputText id="userEmail" @bind-Value="newUser.UserEmail" />
 
-    <button type="reset" class="btn btn-primary" @onclick="@SearchUser">Search</button>
+    <button type="reset" class="btn btn-primary">Search</button>
 </EditForm>
 
 
@@ -73,23 +73,23 @@ else
     private List<Users> _user;
     private DisplayUserModel newUser = new DisplayUserModel();
 
-    protected override async Task OnInitializedAsync()//Working search all user function
-    {
-        _user = await _db.GetAllUsers();
-    }
+    //protected override async Task OnInitializedAsync()//Working search all user function
+    //{
+    //    _user = await _db.GetAllUsers();
+    //}
 
-    private async Task SearchUser()//Working searc user accordign to user email(input line 25-32)
-    {
-        try
-        {
-            string stest = newUser.UserEmail.ToString();
-            _user = await _db.GetUser_Email(stest);
-        }
-        catch (Exception ex)
-        {
-            string stest = ex.ToString();
-        }
-    }
+    //private async Task SearchUser()//Working searc user accordign to user email(input line 25-32)
+    //{
+    //    try
+    //    {
+    //        string stest = newUser.UserEmail.ToString();
+    //        _user = await _db.GetUser_Email(stest);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        string stest = ex.ToString();
+    //    }
+    //}
 
     private async Task InsertUser()
     {
