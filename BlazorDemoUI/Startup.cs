@@ -38,6 +38,7 @@ namespace BlazorDemoUI
             services.AddTransient<IBooksBussinessLogic, BooksBussinessLogic>();
             services.AddScoped<IFileUpload, FileUpload>();
             services.AddSingleton<IBooksBuyService, BooksBuyService>();
+            
 
         }
 
