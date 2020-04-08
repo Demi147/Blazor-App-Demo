@@ -5,15 +5,25 @@
     <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
     <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
     <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
-    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\Carmen\.nuget\packages\</NuGetPackageFolders>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\Franco Bester\.nuget\packages\</NuGetPackageFolders>
     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
     <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">5.5.0</NuGetToolVersion>
   </PropertyGroup>
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
+  <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Content Include="$(NuGetPackageRoot)radzen.blazor\2.5.5\contentFiles\any\netstandard2.1\Properties\launchSettings.json" Condition="Exists('$(NuGetPackageRoot)radzen.blazor\2.5.5\contentFiles\any\netstandard2.1\Properties\launchSettings.json')">
+      <NuGetPackageId>Radzen.Blazor</NuGetPackageId>
+      <NuGetPackageVersion>2.5.5</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Private>False</Private>
+      <Link>Properties\launchSettings.json</Link>
+    </Content>
+  </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.components.analyzers\3.1.1\build\netstandard2.0\Microsoft.AspNetCore.Components.Analyzers.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.components.analyzers\3.1.1\build\netstandard2.0\Microsoft.AspNetCore.Components.Analyzers.props')" />
+    <Import Project="$(NuGetPackageRoot)radzen.blazor\2.5.5\buildTransitive\Radzen.Blazor.props" Condition="Exists('$(NuGetPackageRoot)radzen.blazor\2.5.5\buildTransitive\Radzen.Blazor.props')" />
     <Import Project="$(NuGetPackageRoot)c1.blazor.core\3.1.20201.445\build\C1.Blazor.Core.props" Condition="Exists('$(NuGetPackageRoot)c1.blazor.core\3.1.20201.445\build\C1.Blazor.Core.props')" />
     <Import Project="$(NuGetPackageRoot)c1.blazor.listview\3.1.20201.445\build\C1.Blazor.ListView.props" Condition="Exists('$(NuGetPackageRoot)c1.blazor.listview\3.1.20201.445\build\C1.Blazor.ListView.props')" />
     <Import Project="$(NuGetPackageRoot)c1.blazor.input\3.1.20201.445\build\C1.Blazor.Input.props" Condition="Exists('$(NuGetPackageRoot)c1.blazor.input\3.1.20201.445\build\C1.Blazor.Input.props')" />

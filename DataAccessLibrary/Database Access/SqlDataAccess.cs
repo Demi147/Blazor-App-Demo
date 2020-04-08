@@ -56,5 +56,18 @@ namespace DataAccessLibrary
 
             return _db.Query<T>(sp, parms, commandType: commandType).ToList();
         }
+
+        public T Update<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        {
+            T result;
+            IDbConnection _db = new SqlConnection(_config.GetConnectionString("Default"));
+
+            var tran = _db.BeginTransaction();
+
+            result = _db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
+            tran.Commit();
+
+            return result;
+        }
     }
 }

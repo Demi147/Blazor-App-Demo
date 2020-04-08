@@ -6,7 +6,7 @@ namespace DataAccessLibrary
 {
     public interface IExchangeData
     {
-        Task<List<Exchange>> GetExchanges();
+        Task<List<Exchange>> Get_AllExchanges();
         Task InsertExchange(Exchange exchange);
     }
 }

@@ -5,13 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.SessionStorage" Version="1.0.11" />
     <PackageReference Include="BlazorInputFile" Version="0.1.0-preview-00002" />
     <PackageReference Include="C1.Blazor.Grid" Version="3.1.20201.445" />
     <PackageReference Include="C1.Blazor.Input" Version="3.1.20201.445" />
+    <PackageReference Include="Radzen.Blazor" Version="2.5.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLibrary\DataAccessLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Upload\" />
   </ItemGroup>
 
 </Project>
