@@ -17,7 +17,7 @@ namespace DataAccessLibrary
                 BookEdition = 1,
                 BookPrice = 500.55,
                 ModuleCode = "ITRW 101",
-                BooksInstitute = "CUT",
+                BookInstitute = "CUT",
                 LocationID = 1
             },
             new Books
@@ -28,7 +28,7 @@ namespace DataAccessLibrary
                 BookEdition = 2,
                 BookPrice = 2000,
                 ModuleCode = "CMPG 101",
-                BooksInstitute = "NWU",
+                BookInstitute = "NWU",
                 LocationID = 1
             },
             new Books
@@ -39,7 +39,7 @@ namespace DataAccessLibrary
                 BookEdition = 3,
                 BookPrice = 500.55,
                 ModuleCode = "ITRW 101",
-                BooksInstitute = "VUT",
+                BookInstitute = "VUT",
                 LocationID = 1
             }
         };
