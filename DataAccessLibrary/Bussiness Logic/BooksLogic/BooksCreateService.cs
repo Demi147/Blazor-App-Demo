@@ -36,7 +36,7 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
         }
         public void AddBookInstitute(string _in)
         {
-            book.BooksInstitute = _in;
+            book.BookInstitute = _in;
         }
         public void AddBookLocation(int _loc)
         {
@@ -50,7 +50,7 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
             book.BookEdition = _edition;
             book.BookPrice = _price;
             book.ModuleCode = _code;
-            book.BooksInstitute = _institute;
+            book.BookInstitute = _institute;
         }
         public void AddInfo(int _user, string _title, int _edition, double _price, string _code, string _institute, int _loc)
         {
@@ -59,7 +59,7 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
             book.BookEdition = _edition;
             book.BookPrice = _price;
             book.ModuleCode = _code;
-            book.BooksInstitute = _institute;
+            book.BookInstitute = _institute;
             book.LocationID = _loc;
         }
         public void AddInfo(Books _model)
