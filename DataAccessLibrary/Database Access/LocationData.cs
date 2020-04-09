@@ -29,7 +29,7 @@ namespace DataAccessLibrary
         //##############################################################################################################################################################################################################
         public Task<List<Locations>> Get_AllLocations()
         {
-            string sql = @"Select * from db.tblLocations";
+            string sql = @"Select * from dbo.tblLocations";
 
             return _db.LoadData<Locations, dynamic>(sql, new { });
         }
