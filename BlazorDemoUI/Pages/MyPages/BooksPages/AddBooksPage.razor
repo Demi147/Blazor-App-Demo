@@ -5,14 +5,15 @@
 @using DataAccessLibrary.Models
 @using DataAccessLibrary
 
-@inject IBooksBussinessLogic BooksService
+
+@inject IBookData _db
 @inject NavigationManager navigationManager
 @*@inject IBooksCreateService booksAdd*@
 
 <h1>
     Add New Books
     <button type="submit" name="btnAddBookLoc" class="btn btn-primary" style="float: right;" @onclick="AddNav">Submit Sale Request</button>
-    <button type="submit" name="btnAddBookLoc" class="btn btn-primary" style="float: right;" @onclick="BackNav">Cancel Sale Request</button>
+    <button type="submit" name="btnCancelSale" class="btn btn-primary" style="float: right;" @onclick="BackNav">Cancel Sale Request</button>
 </h1>
 
 <p>
@@ -50,7 +51,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        OGlist = StaticTestData.BookTestData;
+        OGlist = await _db.Get_Books();
         booksList = OGlist;
     }
 
