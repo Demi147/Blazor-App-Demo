@@ -3,8 +3,9 @@
 @using DataAccessLibrary.Bussiness_Logic
 @using DataAccessLibrary.Models
 @using DataAccessLibrary
+@using BlazorDemoUI.Models
 
-@inject IBooksBussinessLogic BooksService
+@inject ILocationData _db
 @inject NavigationManager NavigationManager
 
 
@@ -13,33 +14,52 @@
 <h5>Select Any of the below reccomeneded locations or enter your own.</h5>
 
 
-@*<div class="row">
-    <div class="col-md-4">
-        <label for="Country" class="control-label">Country</label>
+@*##########################################################################################################
+    Code to display locations in combox ++++++START+++++++
+    ##########################################################################################################*@
+
+@if (locationList is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <label for="Locations" class="control-label">Select a Location:</label>
+        </div>
     </div>
-</div>
-<div class="row" style="padding-top:10px">
-    <div class="col-md-4">
-        <select class="form-control" onchange="obj.bookClicked()">
-            <option value="">-- Select Country --</option>
-            @foreach (var item in booksList)
-            {
-                <option value="@item.UserID">@item.LocationID</option>
+    <div class="row" style="padding-top:1px">
+        <div class="col-md-4">
+            <select id="selectBox" @bind="selectedLocation">
+                <option value="">-- Select Location --</option>
 
-            }
-        </select>
+                @foreach (var item in locationList)
+                {
+                    <option value="@item.Province, @item.Address, @item.City, @item.Building">
+                        @item.Province.ToString(), @item.Address.ToString(), @item.City.ToString(), @item.Building.ToString()
+                    </option>
+                }
+
+            </select>
+        </div>
     </div>
-</div>
-<div class="row" style="padding-top:50px">
-    <div class="col-md-4">
-        <label class="control-label">Country Name: @_book.LocationID</label>
+    <div class="row" style="padding-top:50px">
+        <div class="col-md-4">
+            <label class="control-label"> Location Name: @selectedLocation</label>
+        </div>
     </div>
-</div>*@
+}
+
+@*##########################################################################################################
+    Code to display locations in combox ++++++END+++++++
+    ##########################################################################################################*@
 
 
 
-<br />
-
+@*##########################################################################################################
+    Code to display controls to enter own location
+    ##########################################################################################################*@
 <div>
     Desired Transaction Location:
     <input type="text" id="txtLocation" placeholder="Enter location here" style="" />
@@ -47,27 +67,30 @@
     <button type="submit" id="btnNext" class="btn btn-primary" @onclick="NextNav" style="float: left;">Submit</button>
 </div>
 
-
-
 @code {
-    //[Parameter]
-    //public int id { get; set; }
 
+    public string selectedLocation { get; set; }
 
-    string location { get; set; }
+    private DisplayBookModel showBooks = new DisplayBookModel();
 
-    protected Books _book;
-    List<Books> booksList;
+    List<Locations> locationList;
+    List<Locations> OGlist;
 
-    protected override void OnInitialized()
+    string title { get; set; }
+    int edition { get; set; }
+    double price { get; set; }
+    string modCode { get; set; }
+    string institute { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        booksList = StaticTestData.BookTestData;
-        //_book = StaticTestData.GetSingleBook(id);
+        OGlist = await _db.Get_AllLocations();
+        locationList = OGlist;
     }
 
     protected async void bookClicked(ChangeEventArgs locatEvent)
     {
-        location = locatEvent.Value.ToString();
+        //location = locatEvent.Value.ToString();
         this.StateHasChanged();
     }
 
