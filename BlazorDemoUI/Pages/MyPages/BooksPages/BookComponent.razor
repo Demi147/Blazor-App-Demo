@@ -7,7 +7,8 @@
 
 @inject IBooksBussinessLogic BooksService
 @inject NavigationManager NavigationManager
-@inject IBooksBuyService buyService;
+@inject IBooksBuyService buyService
+@inject IBookData _db
 
 
 <style>
@@ -16,6 +17,10 @@
     }
 </style>
 
+@*##########################################################################################################
+        Code to display buttons to move fowards or go back
+    ##########################################################################################################*@
+
 <h1>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     Book Information
@@ -23,54 +28,71 @@
     <button type="submit" name="btnPurchase" class="btn btn-primary" style="float: right;" @onclick="NavConfirm">Request Book Purchase</button>
 </h1>
 
+@*##########################################################################################################
+        Code to display the table with the book +++++STARTS++++++
+    ##########################################################################################################*@
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4" style="background: lightgrey"> <h6>Title</h6></div>
-        <div class="col-sm-6">@_book.BookTitle</div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-sm-4" style="background: lightgrey"> <h6>Edition</h6></div>
-        <div class="col-sm-6">@_book.BookEdition</div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-sm-4" style="background: lightgrey"> <h6>Module Code</h6></div>
-        <div class="col-sm-6">@_book.ModuleCode</div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-sm-4" style="background: lightgrey"> <h6>Institute</h6></div>
-        <div class="col-sm-6">@_book.BooksInstitute</div>
-    </div>
+@if (_book is null)
+{
+    <p><en>Loading...</en></p>
+}
+else
+{
+    @foreach (var item in _book)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4" style="background: lightgrey"> <h6>Title</h6></div>
+                <div class="col-sm-6">@item.BookTitle</div>
+            </div>
 
 
-    <div class="row">
-        <div class="col-sm-4" style="background: lightgrey"> <h6>Price</h6></div>
-        <div class="col-sm-6">@_book.BookPrice</div>
-    </div>
+            <div class="row">
+                <div class="col-sm-4" style="background: lightgrey"> <h6>Edition</h6></div>
+                <div class="col-sm-6">@item.BookEdition</div>
+            </div>
 
 
-    <div class="row">
-        <div class="col-sm-4" style="background: lightgrey"> <h6>Location</h6></div>
-        <div class="col-sm-6">@_book.LocationID</div>
-    </div>
+            <div class="row">
+                <div class="col-sm-4" style="background: lightgrey"> <h6>Module Code</h6></div>
+                <div class="col-sm-6">@item.ModuleCode</div>
+            </div>
 
 
-    <div class="row">
-        <div class="col-sm-4" style="background: lightgrey"> <h6>Book Image</h6></div>
-        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-4" style="background: lightgrey"> <h6>Institute</h6></div>
+                <div class="col-sm-6">@item.BookInstitute</div>
+            </div>
 
-            "IMAGE HERE"
+
+            <div class="row">
+                <div class="col-sm-4" style="background: lightgrey"> <h6>Price</h6></div>
+                <div class="col-sm-6">@item.BookPrice</div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-4" style="background: lightgrey"> <h6>Location</h6></div>
+                <div class="col-sm-6">@item.LocationID</div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-4" style="background: lightgrey"> <h6>Book Image</h6></div>
+                <div class="col-sm-6">
+
+                    "IMAGE HERE"
+
+                </div>
+            </div>
 
         </div>
-    </div>
+    }
+}
 
-</div>
+@*##########################################################################################################
+        Code to display the table with the book +++++ENDS++++++
+    ##########################################################################################################*@
 
 
 @code {
@@ -78,23 +100,25 @@
     [Parameter]
     public int id { get; set; }
 
-    protected Books _book;
+    List<Books> _book;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        _book = StaticTestData.GetSingleBook(id);
+        _book = await _db.Get_SingleBook(id);
     }
+
+    //##########################################################################################################
+    //Navigation code for the buttons
+    //##########################################################################################################
 
     void BackNav()
     {
         NavigationManager.NavigateTo("/BooksPages/Main");
-
-
     }
 
     void NavConfirm()
     {
-        buyService.addSalesNumber(_book.SalesNumber);
+        //buyService.addSalesNumber(_book.SalesNumber);
         NavigationManager.NavigateTo("/BooksPages/Main/RequestPurchase");
     }
 }
