@@ -14,7 +14,8 @@ namespace DataAccessLibrary
         BookEdition,
         BookPrice,
         ModuleCode,
-        BooksInstitute
+        BooksInstitute,
+        LocationID
     }
 
     public static class Utilities
