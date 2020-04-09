@@ -9,30 +9,27 @@
 
 <h3>User Page</h3>
 
-<h4> Insert new user </h4>
+@*<h4> Insert new user </h4>
 <EditForm Model="@newUser" OnValidSubmit="@InsertUser">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    @*<InputText id="userName" @bind-Value="newUser.UserName" />*@
+    <InputText id="userName" @bind-Value="newUser.UserName" />
     <InputText id="userEmail" @bind-Value="newUser.UserEmail" />
-    @*<InputText id="userPassword" @bind-Value="newUser.UserPassword" />*@
+    <InputText id="userPassword" @bind-Value="newUser.UserPassword" />
 
     <button type="submit" class="btn btn-primary">Submit</button>>
-</EditForm>
+</EditForm>*@
 
 <h4>Search user</h4>
 <EditForm Model="@newUser">
     @*<DataAnnotationsValidator />*@
     <ValidationSummary />
 
-    <InputText id="userEmail" @bind-Value="newUser.UserEmail" />
+    <InputText id="userSearch" @bind-Value="newUser.UserEmail" @onchange="SearchUser"/>
 
-    <button type="reset" class="btn btn-primary">Search</button>
+    <button type="reset" class="btn btn-primary" @onclick ="SearchUser">Search</button>
 </EditForm>
-
-
-
 
 <h4> Remove user </h4>
 <button type="reset" class="btn btn-primary" @onclick="@RemoveUser">Remove</button>
@@ -73,23 +70,23 @@ else
     private List<Users> _user;
     private DisplayUserModel newUser = new DisplayUserModel();
 
-    //protected override async Task OnInitializedAsync()//Working search all user function
-    //{
-    //    _user = await _db.GetAllUsers();
-    //}
+    protected override async Task OnInitializedAsync()//Working search all user function
+    {
+        _user = await _db.Get_AllUsers();
+    }
 
-    //private async Task SearchUser()//Working searc user accordign to user email(input line 25-32)
-    //{
-    //    try
-    //    {
-    //        string stest = newUser.UserEmail.ToString();
-    //        _user = await _db.GetUser_Email(stest);
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        string stest = ex.ToString();
-    //    }
-    //}
+    private async Task SearchUser()//Working searc user accordign to user email(input line 25-32)
+    {
+        try
+        {
+            int stest = newUser.UserID;
+            _user = await _db.Get_SingleUser(stest);
+        }
+        catch (Exception ex)
+        {
+            string stest = ex.ToString();
+        }
+    }
 
     private async Task InsertUser()
     {
