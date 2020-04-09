@@ -34,16 +34,9 @@ namespace DataAccessLibrary
             return _db.LoadData<Books, dynamic>(sql, new { });
         }
 
-        public Task<List<Books>> Get_DatePosted(string sDateOrder)//paramter is either ASC or DESC 
+        public Task<List<Books>> Get_DatePosted(string sDateOrder)//parameter is either ASC or DESC 
         {
             string sql = @"Select * from dbo.tblBookSales Order By DatePosted " + sDateOrder + "";
-
-            return _db.LoadData<Books, dynamic>(sql, new { });
-        }
-
-        public Task<List<Books>> Get_BookPrice_Order(string sPriceOrder)//paramter is either ASC or DESC 
-        {
-            string sql = @"Select * from dbo.tblBookSales Order By BookPrice " + sPriceOrder + "";
 
             return _db.LoadData<Books, dynamic>(sql, new { });
         }
@@ -98,7 +91,13 @@ namespace DataAccessLibrary
             string sql = @"Select * from dbo.tblBookSales Where BookPrice >= " + dPriceMin + " and BookPrice <= " + dPriceMax + "";
 
             return _db.LoadData<Books, dynamic>(sql, new { });
+        }
 
+        public Task<List<Books>> Search_MultiChar(string sSearchValue)//Nuwe method vir search all characters
+        {
+            string sql = @"Select * from dbo.tblBookSales Where BookTitle Like '%" + sSearchValue + "%' or ModuleCode Like '%" + sSearchValue + "%' Or BookInstitute Like '" + sSearchValue + "'";
+
+            return _db.LoadData<Books, dynamic>(sql, new { });
         }
 
         //##############################################################################################################################################################################################################
@@ -118,6 +117,10 @@ namespace DataAccessLibrary
 
             return _db.SaveData(sql, book);
         }
+
+
+        //Check login terug a boolean, parm email password
+
 
         //public Task UpdateUser()
         //{
@@ -139,6 +142,12 @@ namespace DataAccessLibrary
             var books = Task.FromResult(_db.GetAll<Books>($"Select * from dbo.tblBookSales Order By {orderby} {direction} Offset {skip} Rows fetch new {take} rows only;", null, commandType: CommandType.Text));
 
             return books;
+        }
+
+        public Task<List<Books>> OrderPrice(string order)
+        {
+            string sql = @"Select * from dbo.tblBookSales Order By BookPrice '"+order+"' ";
+            return _db.LoadData<Books, dynamic>(sql, new { });
         }
 
     }
