@@ -60,11 +60,11 @@ namespace DataAccessLibrary.Bussiness_Logic
                 case BooksAtributes.BooksInstitute:
                     if (accending)
                     {
-                        x = x.OrderBy(q => q.BooksInstitute).ToList();
+                        x = x.OrderBy(q => q.BookInstitute).ToList();
                     }
                     else
                     {
-                        x = x.OrderByDescending(q => q.BooksInstitute).ToList();
+                        x = x.OrderByDescending(q => q.BookInstitute).ToList();
                     }
                     break;
                 default:
@@ -102,7 +102,7 @@ namespace DataAccessLibrary.Bussiness_Logic
                     x = x.Where(q => q.ModuleCode.ToLower().Contains(((string)_val).ToLower())).ToList();
                     break;
                 case BooksAtributes.BooksInstitute:
-                    x = x.Where(q => q.BooksInstitute.ToLower().Contains(((string)_val).ToLower())).ToList();
+                    x = x.Where(q => q.BookInstitute.ToLower().Contains(((string)_val).ToLower())).ToList();
                     break;
                 default:
                     break;
