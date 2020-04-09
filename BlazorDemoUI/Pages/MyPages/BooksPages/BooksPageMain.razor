@@ -3,20 +3,35 @@
 @using DataAccessLibrary.Bussiness_Logic
 @using DataAccessLibrary.Models
 @using DataAccessLibrary
+@using BlazorDemoUI.Models
 
-@inject IBooksBussinessLogic BooksService
 @inject NavigationManager NavigationManager
+@inject IBookData _db
 
-<h1>    
+@*##########################################################################################################
+    Code to display the button to add new books
+    ##########################################################################################################*@
+
+<h1>
     Available Book Sales
-    <button type="submit" name="btnAddNew" class="btn btn-primary" style="float: right;" @onclick="AddNav" >Add New Book</button>
+    <button type="submit" name="btnAddNew" class="btn btn-primary" style="float: right;" @onclick="AddNav">Add New Book</button>
 </h1>
+
+@*##########################################################################################################
+        Code for the Search TextBox and Sorting CheckBox
+    ##########################################################################################################*@
 
 <h5>
     Filter Search:
-    <input type="text" name="txtFilter" placeholder="Enter text to filter" @oninput="EventArgs => { Filter(EventArgs.Value); }"  />
-    <input type="checkbox" @onchange="EventArgs => { setAccending(EventArgs.Value); }" /> Click for Accending Order
+    <input type="text" name="txtFilter" placeholder="Enter text to filter" @bind-value="@FilterVal" />
+    <button type="submit" name="btnSearch" class="btn btn-primary" @onclick="@SearchBooks">Search Book</button>
+
+    <p style="float: right;"><input type="checkbox" id="orderCheck" @onchange="@SetAsc" /> Check the box to sort the data according to price</p>
 </h5>
+
+@*##########################################################################################################
+        Code to display the table with the books +++++STARTS++++++
+    ##########################################################################################################*@
 
 @if (booksList is null)
 {
@@ -28,11 +43,11 @@ else
     <table class="table table-striped">
         <thead>
             <tr>
-                <td>@BooksAtributes.BookTitle</td>
-                <td>@BooksAtributes.BookEdition</td>
-                <td>@BooksAtributes.BookPrice</td>
-                <td>@BooksAtributes.ModuleCode</td>
-                <td>@BooksAtributes.BooksInstitute</td>
+                <td>Book Title</td>
+                <td>Book Edition</td>
+                <td>Book Price</td>
+                <td>Module Code</td>
+                <td>Book Institute</td>
             </tr>
         </thead>
         <tbody>
@@ -43,58 +58,92 @@ else
                     <td>@item.BookEdition</td>
                     <td>@item.BookPrice</td>
                     <td>@item.ModuleCode</td>
-                    <td>@item.BooksInstitute</td>
+                    <td>@item.BookInstitute</td>
                 </tr>
             }
         </tbody>
     </table>
 }
 
+@*##########################################################################################################
+        Code to display the table with the books +++++ENDS++++++
+    ##########################################################################################################*@
+
 @code {
 
     List<Books> booksList;
     List<Books> OGlist;
 
-    BooksAtributes lastAtribute;
-    BooksAtributes chaningAttribute;
-    string FilterVal { get; set; }
-    bool accending;
+    private DisplayBookModel showBooks = new DisplayBookModel();
+
+    private string checkChange = "Not checked";
+    [Parameter] public bool isChecked { get; set; } = true;
+
+    string FilterVal { get; set; } = "";
+    string orderBy;
 
     protected override async Task OnInitializedAsync()
     {
-        OGlist = StaticTestData.BookTestData;
-        lastAtribute = BooksAtributes.BookTitle;
-        chaningAttribute = BooksAtributes.ModuleCode;
+        OGlist = await _db.Get_Books();
         booksList = OGlist;
 
     }
 
-    protected void sortAndFilter(BooksAtributes atribute)
+    //##########################################################################################################
+    //Code to search books
+    //##########################################################################################################
+
+    private async Task SearchBooks()
     {
-        lastAtribute = atribute;
-        if (FilterVal == null || FilterVal.Length == 0)
+        try
         {
+            if (FilterVal == null || FilterVal.Length == 0)
+            {
 
-            booksList = BooksService.SortBooks(OGlist, atribute, accending);
+                booksList = await _db.Get_Books();
+                //this.StateHasChanged();
+            }
+            else
+            {
+                booksList = await _db.Search_MultiChar(FilterVal);
+                //this.StateHasChanged();
+            }
         }
-        else
+        catch (Exception ex)
         {
-            booksList = BooksService.FilterAndSort(OGlist, atribute, accending, FilterVal);
+            string stest = ex.ToString();
         }
-
     }
 
-    void setAccending(object value)
+    //##########################################################################################################
+    //Code to set data to asc/desc
+    //##########################################################################################################
+
+    private async Task SetAsc()
     {
-        accending = (bool)value;
-        sortAndFilter(lastAtribute);
+        try
+        {
+            if (isChecked)
+            {
+                booksList = await _db.OrderPrice("ASC");
+                isChecked = !isChecked;
+            }
+            else
+            {
+                booksList = await _db.OrderPrice("DESC");
+                isChecked = !isChecked;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            string stest = ex.ToString();
+        }
     }
 
-    void Filter(object _val)
-    {
-        FilterVal = _val.ToString();
-        booksList = BooksService.SortBooks(BooksService.MultiFilter(OGlist, _val.ToString()), lastAtribute, accending);
-    }
+    //##########################################################################################################
+    //Code to navigate to the addBooksPage
+    //##########################################################################################################
 
     void AddNav()
     {
