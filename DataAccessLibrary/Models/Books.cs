@@ -12,7 +12,7 @@ namespace DataAccessLibrary.Models
         public int BookEdition { get; set; }
         public double BookPrice { get; set; }
         public string ModuleCode { get; set; }
-        public string BooksInstitute { get; set; }
+        public string BookInstitute { get; set; }
         public int LocationID { get; set; }
         public DateTime DatePosted { get; set; }
         public byte[] BookImage { get; set; }
@@ -31,7 +31,7 @@ namespace DataAccessLibrary.Models
             {
                 return true;
             }
-            if (BooksInstitute.ToLower().Contains(_val.ToLower()))
+            if (BookInstitute.ToLower().Contains(_val.ToLower()))
             {
                 return true;
             }
