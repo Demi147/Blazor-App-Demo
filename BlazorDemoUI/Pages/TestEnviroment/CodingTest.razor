@@ -11,71 +11,29 @@
 
 <h3>Books Main page</h3>
 
+<AuthorizeView Roles="Customer">
+    <Authorizing>
+        Validating
+    </Authorizing>
 
-<hr />
+    <Authorized>
+        Yes it works
+    </Authorized>
 
-@if (booksList is null)
-{
-    <p><en>Loading...</en></p>
-}
-else
-{
-    <hr />
-    <p>Filter By @lastAtribute</p>
+    <NotAuthorized>
+        HAHAHAHAHAHA
+    </NotAuthorized>
+</AuthorizeView>
 
-    <table class="table-striped">
-        <thead>
-            <tr>
-                <th>
-                    <button class="btn" @onclick="@(e=>sortAndFilter(BooksAtributes.BookTitle))">@BooksAtributes.BookTitle</button>
-                </th>
-                <th>
-                    <button class="btn" @onclick="@(e=>sortAndFilter(BooksAtributes.BookEdition))">@BooksAtributes.BookEdition</button>
-                </th>
-                <th>
-                    <button class="btn" @onclick="@(e=>sortAndFilter(BooksAtributes.BookPrice))">@BooksAtributes.BookPrice</button>
-                </th>
-                <th>
-                    <button class="btn" @onclick="@(e=>sortAndFilter(BooksAtributes.ModuleCode))">@BooksAtributes.ModuleCode</button>
-                </th>
-                <th>
-                    <button class="btn" @onclick="@(e=>sortAndFilter(BooksAtributes.BooksInstitute))">@BooksAtributes.BooksInstitute</button>
-                </th>
-                <th>
-                    <input type="checkbox" @onchange="EventArgs => { setAccending(EventArgs.Value); }" /> accending
-                </th>
-                <th>
-                    Filter Value <input type="search" @oninput="EventArgs => { Filter(EventArgs.Value); }" /> @FilterVal
-                </th>
-
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in booksList)
-            {
-                <tr>
-                    <th>
-                        <NavLink href=@string.Format("/TestEnviroment/test/{0}",item.SalesNumber)>@item.BookTitle</NavLink>
-                    </th>
-                    <th>
-                        @item.BookEdition
-                    </th>
-                    <th>
-                        @item.BookPrice
-                    </th>
-                    <th>
-                        @item.ModuleCode
-                    </th>
-                    <th>
-                        @item.BookInstitute
-                    </th>
-
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<p>
+    @TestValue
+</p>
+<p>
+    @EncryptedValue
+</p>
+<p>
+    @decryptValue
+</p>
 
 @code {
 
@@ -88,13 +46,14 @@ else
 
     string FilterVal { get; set; }
 
+    string TestValue = "0123456789012345678901234567980123465798";
+    string EncryptedValue;
+    string decryptValue;
+
     protected override void OnInitialized()
     {
-        booksListOG = StaticTestData.BookTestData;
-        booksList = booksListOG;
-        lastAtribute = BooksAtributes.BookTitle;
-
-        BooksBuyService.addUser(5);
+        EncryptedValue = Utilities.ExcryptPassword(TestValue);
+        decryptValue = Utilities.DecryptPassword(EncryptedValue);
     }
 
     protected void sortAndFilter(BooksAtributes _atribute)
