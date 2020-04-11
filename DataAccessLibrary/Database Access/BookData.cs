@@ -100,6 +100,12 @@ namespace DataAccessLibrary
             return _db.LoadData<Books, dynamic>(sql, new { });
         }
 
+        public Task<List<Books>> OrderPrice(string order)
+        {
+            string sql = @"Select * from dbo.tblBookSales Order By BookPrice '" + order + "' ";
+            return _db.LoadData<Books, dynamic>(sql, new { });
+        }
+
         //##############################################################################################################################################################################################################
         //CRUD Methods for Books Data Model
         //##############################################################################################################################################################################################################
@@ -142,12 +148,6 @@ namespace DataAccessLibrary
             var books = Task.FromResult(_db.GetAll<Books>($"Select * from dbo.tblBookSales Order By {orderby} {direction} Offset {skip} Rows fetch new {take} rows only;", null, commandType: CommandType.Text));
 
             return books;
-        }
-
-        public Task<List<Books>> OrderPrice(string order)
-        {
-            string sql = @"Select * from dbo.tblBookSales Order By BookPrice '"+order+"' ";
-            return _db.LoadData<Books, dynamic>(sql, new { });
         }
 
     }
