@@ -102,7 +102,7 @@ namespace DataAccessLibrary
 
         public Task<List<Books>> OrderPrice(string order)
         {
-            string sql = @"Select * from dbo.tblBookSales Order By BookPrice '" + order + "' ";
+            string sql = @"Select * from dbo.tblBookSales Order By BookPrice " + order + " ";
             return _db.LoadData<Books, dynamic>(sql, new { });
         }
 
@@ -111,8 +111,9 @@ namespace DataAccessLibrary
         //##############################################################################################################################################################################################################
         public Task InsertBook(Books book)
         {
-            string sql = @"Insert into dbo.tblBookSales(SalesNumber,UserID,BookTitle,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute,DatePosted)
-                           values(@SalesNumber,@UserID,BookTitle,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute,@DatePosted)";
+            string sql = @"SET IDENTITY_INSERT dbo.tblBookSales ON Insert into dbo.tblBookSales(SalesNumber,UserID,BookTitle,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute,DatePosted)
+                           values(@SalesNumber,@UserID,@BookTitle,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute,@DatePosted)
+                           SET IDENTITY_INSERT dbo.tblBookSales OFF ";
 
             return _db.SaveData(sql, book);
         }

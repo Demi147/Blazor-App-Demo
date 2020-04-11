@@ -44,9 +44,10 @@
         try
         {
             NavigationManager.NavigateTo("/BooksPages/Main");
+
+            _book.DatePosted = DateTime.Today.Date;
             await _db.InsertBook(_book);
             booksList = await _db.Get_Books();
-            //newBook = new DisplayBookModel();
 
         }
         catch (Exception ex)
@@ -56,10 +57,9 @@
 
     }
 
-    void BackNav()
-    {
-        _db.InsertBook(_book);
-        NavigationManager.NavigateTo("/BooksPages/Main");
-    }
+    //void BackNav()
+    //{
+    //    NavigationManager.NavigateTo("/BooksPages/Main");
+    //}
 
 }

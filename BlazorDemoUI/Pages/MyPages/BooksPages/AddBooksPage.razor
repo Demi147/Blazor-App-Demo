@@ -44,8 +44,8 @@
     List<Books> OGlist;
 
     string title { get; set; }
-    int edition { get; set; }
-    double price { get; set; }
+    string edition { get; set; }
+    string price { get; set; }
     string modCode { get; set; }
     string institute { get; set; }
 
@@ -59,7 +59,7 @@
 
     void AddNav()
     {
-        booksAdd.AddInfo(id, title, edition, price, modCode, institute); //Adding info to model
+        booksAdd.AddInfo(id, title, Convert.ToInt32(edition), Convert.ToDouble(price), modCode, institute); //Adding info to model
         navigationManager.NavigateTo("/BooksPages/Main/AddBooks/Locations");
     }
     void BackNav()

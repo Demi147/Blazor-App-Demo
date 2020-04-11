@@ -28,11 +28,26 @@
     <button type="submit" for="txtFilter" name="btnSearch" class="btn btn-primary" @onclick="@SearchBooks">Search Book</button>
 
     <p style="float: right;">
-        <input type="checkbox" id="orderCheck" @bind="@isChecked" /> Check the box to sort the data according to price
+        <input type="checkbox" id="orderCheck" @bind="@boolValue" @onclick="@SetAsc" /> Check the box to sort the data according to price
+        <br />
+        Boolvalue: @boolValue
+        <br />
     </p>
 </h5>
 
-You have checked: @(isChecked?"Yes":"No")
+@*You have checked: @(isChecked?"Yes":"No")*@
+@*##########################################################################################################
+        Code to display controls to filter according to price range
+    ##########################################################################################################*@
+
+<h5>Enter a Price range for your search</h5>
+<h5>
+    <input type="text" id="txtMinPrice" placeholder="Enter min price" @bind="@minPrice" />
+    <input type="text" id="txtMaxPrice" placeholder="Enter max price" @bind="@maxPrice" />
+    <button type="submit" name="btnPriceSearch" class="btn btn-primary" @onclick="@filterPrices">Search Prices</button>
+</h5>
+
+
 @*##########################################################################################################
         Code to display the table with the books +++++STARTS++++++
     ##########################################################################################################*@
@@ -73,6 +88,22 @@ else
         Code to display the table with the books +++++ENDS++++++
     ##########################################################################################################*@
 
+@functions
+{
+    public bool boolValue { get; set; }
+    void toggle()
+    {
+        if(boolValue)
+        {
+            boolValue = !boolValue;
+        }
+        else
+        {
+            boolValue = !boolValue;
+        }
+    }
+}
+
 @code {
 
     List<Books> booksList;
@@ -80,7 +111,10 @@ else
 
     private DisplayBookModel showBooks = new DisplayBookModel();
 
-    public bool isChecked { get; set; } = false;
+    //bool isChecked { get; set; } = false;
+
+    string minPrice { get; set; }
+    string maxPrice { get; set; }
 
     string FilterVal { get; set; } = "";
     string orderBy;
@@ -92,8 +126,9 @@ else
 
     }
 
+
     //##########################################################################################################
-    //Code to search books
+    //Code to filter data according to price range
     //##########################################################################################################
 
     private async Task SearchBooks()
@@ -117,6 +152,30 @@ else
     }
 
     //##########################################################################################################
+    //Code to search for specific books
+    //##########################################################################################################
+
+    private async Task filterPrices()
+    {
+        try
+        {
+            if ((minPrice.ToString() == null || minPrice.ToString().Length == 0) || (maxPrice.ToString() == null || maxPrice.ToString().Length == 0))
+            {
+
+                booksList = await _db.Get_Books();
+            }
+            else
+            {
+                booksList = await _db.SearchBooks_PriceRange(Convert.ToDecimal(minPrice), Convert.ToDecimal(maxPrice));
+            }
+        }
+        catch (Exception ex)
+        {
+            string stest = ex.ToString();
+        }
+    }
+
+    //##########################################################################################################
     //Code to set data to asc/desc
     //##########################################################################################################
 
@@ -124,16 +183,18 @@ else
     {
         try
         {
-            if (isChecked)
+            toggle();
+            if (boolValue == true)
             {
                 booksList = await _db.OrderPrice("ASC");
-                isChecked = !isChecked;
+                //isChecked = !isChecked;
             }
             else
             {
+                toggle();
                 booksList = await _db.Get_Books();
-                booksList = await _db.OrderPrice("DESC");
-                isChecked = !isChecked;
+                //booksList = await _db.OrderPrice("DESC");
+                //isChecked = !isChecked;
             }
 
         }
