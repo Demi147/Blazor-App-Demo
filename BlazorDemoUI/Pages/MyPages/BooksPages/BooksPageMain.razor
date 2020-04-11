@@ -7,7 +7,6 @@
 
 @inject NavigationManager NavigationManager
 @inject IBookData _db
-
 @*##########################################################################################################
     Code to display the button to add new books
     ##########################################################################################################*@
@@ -23,11 +22,16 @@
 
 <h5>
     Filter Search:
-    <input type="text" name="txtFilter" placeholder="Enter text to filter" @bind-value="@FilterVal" />
-    <button type="submit" name="btnSearch" class="btn btn-primary" @onclick="@SearchBooks">Search Book</button>
+    <input type="text" id="txtFilter" placeholder="Enter text to filter" @bind-value="@FilterVal" />
+    <button type="submit" for="txtFilter" name="btnSearch" class="btn btn-primary" @onclick="@SearchBooks">Search Book</button>
 
-    <p style="float: right;"><input type="checkbox" id="orderCheck" @onchange="@SetAsc" /> Check the box to sort the data according to price</p>
+    <p style="float: right;">
+        <input type="checkbox" id="orderCheck" @bind="@isChecked" /> Check the box to sort the data according to price
+    </p>
 </h5>
+
+You have checked: @(isChecked?"Yes":"No")
+
 
 @*##########################################################################################################
         Code to display the table with the books +++++STARTS++++++
@@ -76,8 +80,7 @@ else
 
     private DisplayBookModel showBooks = new DisplayBookModel();
 
-    private string checkChange = "Not checked";
-    [Parameter] public bool isChecked { get; set; } = true;
+    public bool isChecked { get; set; } = false;
 
     string FilterVal { get; set; } = "";
     string orderBy;
@@ -130,6 +133,7 @@ else
             }
             else
             {
+                booksList = await _db.Get_Books();
                 booksList = await _db.OrderPrice("DESC");
                 isChecked = !isChecked;
             }
