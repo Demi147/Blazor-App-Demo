@@ -47,7 +47,8 @@
 
             _book.DatePosted = DateTime.Today.Date;
             await _db.InsertBook(_book);
-            booksList = await _db.Get_Books();
+            OGlist = await _db.Get_Books();
+            booksList = OGlist;
 
         }
         catch (Exception ex)
