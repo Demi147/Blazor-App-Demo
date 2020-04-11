@@ -3,9 +3,13 @@
 @using DataAccessLibrary.Bussiness_Logic
 @using DataAccessLibrary.Models
 @using DataAccessLibrary
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
+@using BlazorDemoUI.Models
 
 @inject IBooksBussinessLogic BooksService
 @inject NavigationManager NavigationManager
+@inject IBooksCreateService booksAdd
+@inject IBookData _db
 
 <h3>Sale Confirmation</h3>
 <body>
@@ -16,19 +20,46 @@
         Click on the OK button to browse more books.
     </p>
 </body>
-<button type="submit" name="btnOkSale" class="btn btn-primary" style="float: left;" @onclick="BackNav">Okay</button>
+<button type="submit" name="btnOkSale" class="btn btn-primary" style="float: left;" @onclick="@InsertBook">Okay</button>
 
 @code {
 
-    protected override void OnInitialized()
+    Books _book;
+    List<Books> booksList;
+    List<Books> OGlist;
+    Books n;
+
+    private DisplayBookModel newBook = new DisplayBookModel();
+
+    protected override async Task OnInitializedAsync()
     {
+        OGlist = await _db.Get_Books();
+        booksList = OGlist;
+
+        _book = booksAdd.book;
+    }
+
+    private async Task InsertBook()
+    {
+        try
+        {
+            NavigationManager.NavigateTo("/BooksPages/Main");
+            await _db.InsertBook(_book);
+            booksList = await _db.Get_Books();
+            //newBook = new DisplayBookModel();
+
+        }
+        catch (Exception ex)
+        {
+            string stest = ex.ToString();
+        }
 
     }
 
     void BackNav()
     {
+        _db.InsertBook(_book);
         NavigationManager.NavigateTo("/BooksPages/Main");
-
     }
 
 }

@@ -40,7 +40,7 @@ namespace BlazorDemoUI
             services.AddTransient < ILocationData, LocationData>();
             services.AddScoped<IFileUpload, FileUpload>();
             services.AddSingleton<IBooksBuyService, BooksBuyService>();
-            
+            services.AddSingleton<IBooksCreateService, BooksCreateService>();
 
         }
 

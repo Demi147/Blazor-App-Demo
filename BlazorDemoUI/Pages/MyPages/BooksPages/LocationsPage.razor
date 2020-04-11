@@ -1,12 +1,15 @@
 ﻿@page "/BooksPages/Main/AddBooks/Locations"
 
 @using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
 @using DataAccessLibrary.Models
 @using DataAccessLibrary
+
 @using BlazorDemoUI.Models
 
 @inject ILocationData _db
 @inject NavigationManager NavigationManager
+@inject IBooksCreateService booksAdd
 
 
 <h3>Reccomended Locations for book Transaction</h3>
@@ -15,7 +18,7 @@
 
 
 @*##########################################################################################################
-    Code to display locations in combox ++++++START+++++++
+    Code to display locations in combox ++++++START+++++++ and to get location ID
     ##########################################################################################################*@
 
 @if (locationList is null)
@@ -36,12 +39,11 @@ else
 
                 @foreach (var item in locationList)
                 {
-                    <option value="@item.Province, @item.Address, @item.City, @item.Building">
+                    <option value="@item.LocationID">
                         @item.Province.ToString(), @item.Address.ToString(),
                         @item.City.ToString(), @item.Building.ToString()
                     </option>
                 }
-
             </select>
         </div>
     </div>
@@ -53,7 +55,7 @@ else
 }
 
 @*##########################################################################################################
-    Code to display locations in combox ++++++END+++++++
+    Code to display locations in combox ++++++END+++++++ and to get location ID
     ##########################################################################################################*@
 
 
@@ -72,35 +74,31 @@ else
 
 @code {
 
-    public string selectedLocation { get; set; }
-
-    private DisplayBookModel showBooks = new DisplayBookModel();
+    public int selectedLocation { get; set; }
 
     List<Locations> locationList;
     List<Locations> OGlist;
-    Locations _bookLoc;
 
-    string title { get; set; }
-    int edition { get; set; }
-    double price { get; set; }
-    string modCode { get; set; }
-    string institute { get; set; }
+    int id = 1;
 
     protected override async Task OnInitializedAsync()
     {
         OGlist = await _db.Get_AllLocations();
         locationList = OGlist;
-        _bookLoc = locationList[0];
+
+        //booksAdd.book.
+
     }
 
-    protected async void bookClicked(ChangeEventArgs locatEvent)
-    {
-        //location = locatEvent.Value.ToString();
-        this.StateHasChanged();
-    }
+    //protected async void bookClicked(ChangeEventArgs locatEvent)
+    //{
+    //    location = locatEvent.Value.ToString();
+    //    this.StateHasChanged();
+    //}
 
     void NextNav()
     {
+        booksAdd.AddBookLocation(selectedLocation);
         NavigationManager.NavigateTo("/BooksPages/Main/SaleConfirm");
 
     }

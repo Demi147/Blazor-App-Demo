@@ -1,11 +1,13 @@
 ﻿@page "/BooksPages/Main"
 
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
 @using DataAccessLibrary.Bussiness_Logic
 @using DataAccessLibrary.Models
 @using DataAccessLibrary
 @using BlazorDemoUI.Models
 
 @inject NavigationManager NavigationManager
+@inject IBooksCreateService booksAdd
 @inject IBookData _db
 @*##########################################################################################################
     Code to display the button to add new books
@@ -31,8 +33,6 @@
 </h5>
 
 You have checked: @(isChecked?"Yes":"No")
-
-
 @*##########################################################################################################
         Code to display the table with the books +++++STARTS++++++
     ##########################################################################################################*@
@@ -104,12 +104,10 @@ else
             {
 
                 booksList = await _db.Get_Books();
-                //this.StateHasChanged();
             }
             else
             {
                 booksList = await _db.Search_MultiChar(FilterVal);
-                //this.StateHasChanged();
             }
         }
         catch (Exception ex)
@@ -151,6 +149,7 @@ else
 
     void AddNav()
     {
+        booksAdd.flush(); //Reset booksAdd list
         NavigationManager.NavigateTo("/BooksPages/Main/AddBooks");
     }
 

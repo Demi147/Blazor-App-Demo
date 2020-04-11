@@ -52,7 +52,8 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
             book.ModuleCode = _code;
             book.BookInstitute = _institute;
         }
-        public void AddInfo(int _user, string _title, int _edition, double _price, string _code, string _institute, int _loc)
+
+        public void AddInfo(int _user, string _title, int _edition, double _price, int _loc, string _code, string _institute)
         {
             book.UserID = _user;
             book.BookTitle = _title;

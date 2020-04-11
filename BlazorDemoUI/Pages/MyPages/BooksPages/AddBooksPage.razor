@@ -8,7 +8,7 @@
 
 @inject IBookData _db
 @inject NavigationManager navigationManager
-@*@inject IBooksCreateService booksAdd*@
+@inject IBooksCreateService booksAdd
 
 <h1>
     Add New Books
@@ -42,7 +42,6 @@
 
     List<Books> booksList;
     List<Books> OGlist;
-    Books _book;
 
     string title { get; set; }
     int edition { get; set; }
@@ -50,15 +49,17 @@
     string modCode { get; set; }
     string institute { get; set; }
 
+    int id = 1;
+
     protected override async Task OnInitializedAsync()
     {
         OGlist = await _db.Get_Books();
-        _book = OGlist[0];
         booksList = OGlist;
     }
 
     void AddNav()
     {
+        booksAdd.AddInfo(id, title, edition, price, modCode, institute); //Adding info to model
         navigationManager.NavigateTo("/BooksPages/Main/AddBooks/Locations");
     }
     void BackNav()
