@@ -42,6 +42,7 @@
 
     List<Books> booksList;
     List<Books> OGlist;
+    Books _book;
 
     string title { get; set; }
     int edition { get; set; }
@@ -52,6 +53,7 @@
     protected override async Task OnInitializedAsync()
     {
         OGlist = await _db.Get_Books();
+        _book = OGlist[0];
         booksList = OGlist;
     }
 
