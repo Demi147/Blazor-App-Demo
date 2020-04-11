@@ -50,6 +50,8 @@
     string institute { get; set; }
 
     int id = 1;
+    //_book.DatePosted = DateTime.Today.Date;
+    DateTime datePosted = DateTime.Today.Date;
 
     protected override async Task OnInitializedAsync()
     {
@@ -59,7 +61,7 @@
 
     void AddNav()
     {
-        booksAdd.AddInfo(id, title, Convert.ToInt32(edition), Convert.ToDouble(price), modCode, institute); //Adding info to model
+        booksAdd.AddInfo(id, title, Convert.ToInt32(edition), Convert.ToDouble(price), modCode, institute, datePosted); //Adding info to model
         navigationManager.NavigateTo("/BooksPages/Main/AddBooks/Locations");
     }
     void BackNav()

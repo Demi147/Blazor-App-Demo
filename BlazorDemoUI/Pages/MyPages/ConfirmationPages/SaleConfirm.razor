@@ -44,8 +44,6 @@
         try
         {
             NavigationManager.NavigateTo("/BooksPages/Main");
-
-            _book.DatePosted = DateTime.Today.Date;
             await _db.InsertBook(_book);
             OGlist = await _db.Get_Books();
             booksList = OGlist;
