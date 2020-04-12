@@ -34,7 +34,7 @@ else
     </div>
     <div class="row" style="padding-top:1px">
         <div class="col-md-4">
-            <select id="selectBox" @bind="selectedLocation">
+            <select id="selectBox" @bind="selectedLocation" @onclick="@disableControls">
                 <option value="">-- Select Location --</option>
 
                 @foreach (var item in locationList)
@@ -61,16 +61,31 @@ else
 
 
 @*##########################################################################################################
-    Code to display controls to enter own location
+    Code to display controls to enter own location (FIELDSET IS USED TO DISABLE CONTROLS IF COMBOBOX IS USED)
     ##########################################################################################################*@
 
-<div class="row" style="padding-top:50px">
+<fieldset disabled=@isTrue>
     <h6>Desired Transaction Location:</h6>
-    <input type="text" id="txtLocation" placeholder="Enter location here" style="" />
+    Enter Province: <input type="text" id="txtProvince" placeholder="Enter Province here" style="" />
     <br />
-    <button type="submit" id="btnNext" class="btn btn-primary" @onclick="NextNav" style="float: left;">Submit</button>
-</div>
+    <br />
+    Enter Physical Adress: <input type="text" id="txtPhysAdres" placeholder="Enter Physical Address here" style="" />
+    <br />
+    <br />
+    Enter City: <input type="text" id="txtCity" placeholder="Enter City here" style="" />
+    <br />
+    <br />
+    Enter Transaction Building: <input type="text" id="txtBuilding" placeholder="Enter Building here" style="" />
+    <br />
+    <br />
+</fieldset>
 
+<button type="submit" id="btnNext" class="btn btn-primary" @onclick="NextNav" style="float: left;">Submit</button>
+
+
+@*##########################################################################################################
+    Start of c# code
+    ##########################################################################################################*@
 
 @code {
 
@@ -79,22 +94,31 @@ else
     List<Locations> locationList;
     List<Locations> OGlist;
 
+    bool isTrue { get; set; } = false;
+
     int id = 1;
 
     protected override async Task OnInitializedAsync()
     {
         OGlist = await _db.Get_AllLocations();
         locationList = OGlist;
-
-        //booksAdd.book.
-
     }
 
-    //protected async void bookClicked(ChangeEventArgs locatEvent)
-    //{
-    //    location = locatEvent.Value.ToString();
-    //    this.StateHasChanged();
-    //}
+    //##########################################################################################################
+    //Code to disable controls to enter own adress when one has been chosen
+    //##########################################################################################################
+
+    public void disableControls()
+    {
+        if (selectedLocation < 0)
+        {
+            isTrue = false;
+        }
+        else
+        {
+            isTrue = true;
+        }
+    }
 
     void NextNav()
     {

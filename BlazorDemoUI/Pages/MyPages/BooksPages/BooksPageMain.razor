@@ -30,8 +30,8 @@
     <p style="float: right;">
         <input type="checkbox" id="orderCheck" @bind="@boolValue" @onclick="@SetAsc" /> Check the box to sort the data according to price
         @*<br />
-        Boolvalue: @boolValue
-        <br />*@
+            Boolvalue: @boolValue
+            <br />*@
     </p>
 </h5>
 
@@ -93,7 +93,7 @@ else
     public bool boolValue { get; set; }
     void toggle()
     {
-        if(boolValue)
+        if (boolValue)
         {
             boolValue = !boolValue;
         }
@@ -103,6 +103,10 @@ else
         }
     }
 }
+
+@*##########################################################################################################
+    Start of c# code
+    ##########################################################################################################*@
 
 @code {
 
@@ -143,6 +147,7 @@ else
             else
             {
                 booksList = await _db.Search_MultiChar(FilterVal);
+                FilterVal = "";
             }
         }
         catch (Exception ex)
@@ -167,6 +172,8 @@ else
             else
             {
                 booksList = await _db.SearchBooks_PriceRange(Convert.ToDecimal(minPrice), Convert.ToDecimal(maxPrice));
+                minPrice = "";
+                maxPrice = "";
             }
         }
         catch (Exception ex)
