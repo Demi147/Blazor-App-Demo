@@ -24,8 +24,8 @@
 <h1>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     Book Information
-    <button type="submit" name="btnBack" class="btn btn-primary" style="float: right;" @onclick="BackNav">Browse More Books</button>
-    <button type="submit" name="btnPurchase" class="btn btn-primary" style="float: right;" @onclick="NavConfirm">Request Book Purchase</button>
+    <button type="submit" name="btnBack" class="btn btn-outline-info" style="float: right;" @onclick="BackNav">Browse More Books</button>
+    <button type="submit" name="btnPurchase" class="btn btn-outline-info" style="float: right;" @onclick="NavConfirm">Request Book Purchase</button>
 </h1>
 
 @*##########################################################################################################
@@ -40,53 +40,91 @@ else
 {
     @foreach (var item in _book)
     {
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4" style="background: lightgrey"> <h6>Title</h6></div>
-                <div class="col-sm-6">@item.BookTitle</div>
-            </div>
+        @*##########################################################################################################
+                Table 1
+            ##########################################################################################################*@
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Edition</th>
+                    <th>Price</th>
+                    <th>Module Code</th>
+                    <th>Institute</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@item.BookTitle</td>
+                    <td>@item.BookEdition</td>
+                    <td>@item.BookPrice</td>
+                    <td>@item.ModuleCode</td>
+                    <td>@item.BookInstitute</td>
+                </tr>
+            </tbody>
+        </table>
 
+        <br />
 
-            <div class="row">
-                <div class="col-sm-4" style="background: lightgrey"> <h6>Edition</h6></div>
-                <div class="col-sm-6">@item.BookEdition</div>
-            </div>
+        @*##########################################################################################################
+                Table 2
+            ##########################################################################################################*@
+        <table class="table table-hover table-responsive ">
+            <thead class="thead-light">
+                <tr>
+                    <th>Title</th>
+                    <td>@item.BookTitle</td>
+                </tr>
+                <tr>
+                    <th>Edition</th>
+                    <td>@item.BookEdition</td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td>@item.BookPrice</td>
+                </tr>
+                <tr>
+                    <th>Module Code</th>
+                    <td>@item.ModuleCode</td>
+                </tr>
+                <tr>
+                    <th>Institute</th>
+                    <td>@item.BookInstitute</td>
+                </tr>
+            </thead>
+        </table>
 
+        <br />
 
-            <div class="row">
-                <div class="col-sm-4" style="background: lightgrey"> <h6>Module Code</h6></div>
-                <div class="col-sm-6">@item.ModuleCode</div>
-            </div>
+        @*##########################################################################################################
+                Table 3
+            ##########################################################################################################*@
+        <table class="table table-hover  " >
 
+            <tbody class="thead-light">
+                <tr class="row">
 
-            <div class="row">
-                <div class="col-sm-4" style="background: lightgrey"> <h6>Institute</h6></div>
-                <div class="col-sm-6">@item.BookInstitute</div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-sm-4" style="background: lightgrey"> <h6>Price</h6></div>
-                <div class="col-sm-6">@item.BookPrice</div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-sm-4" style="background: lightgrey"> <h6>Location</h6></div>
-                <div class="col-sm-6">@item.LocationID</div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-sm-4" style="background: lightgrey"> <h6>Book Image</h6></div>
-                <div class="col-sm-6">
-
-                    "IMAGE HERE"
-
-                </div>
-            </div>
-
-        </div>
+                    <th class="col-1">Title</th>
+                    <td class="col-3">@item.BookTitle</td>
+                </tr>
+                <tr class="row">
+                    <th class="col-1">Edition</th>
+                    <td class="col-3">@item.BookEdition</td>
+                </tr>
+                <tr class="row">
+                    <th class="col-1">Price</th>
+                    <td class="col-3">@item.BookPrice</td>
+                </tr>
+                <tr class="row">
+                    <th class="col-1">Module Code</th>
+                    <td class="col-3">@item.ModuleCode</td>
+                </tr>
+                <tr class="row">
+                    <th class="col-1">Institute</th>
+                    <td class="col-3">@item.BookInstitute</td>
+                </tr>
+            </tbody>
+        </table>
     }
 }
 
