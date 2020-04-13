@@ -13,61 +13,94 @@ namespace DataAccessLibrary
     public class SqlDataAccess : ISqlDataAccess
     {
         private readonly IConfiguration _config;
-
+        private string sError;
         public string ConnectionString { get; set; } = "Default";
 
         public SqlDataAccess(IConfiguration config)
         {
-            _config = config;
+            try
+            {
+                _config = config;
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+            }
+
         }
 
         public async Task<List<T>> LoadData<T, U>(string sql, U parameters)
         {
-            string connectionstring = _config.GetConnectionString(ConnectionString);
-
-            using (IDbConnection connection = new SqlConnection(connectionstring))
+            try
             {
-                var data = await connection.QueryAsync<T>(sql, parameters);
+                string connectionstring = _config.GetConnectionString(ConnectionString);
 
-                return data.ToList();
+                using (IDbConnection connection = new SqlConnection(connectionstring))
+                {
+                    var data = await connection.QueryAsync<T>(sql, parameters);
+
+                    return data.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
             }
         }
 
         public async Task SaveData<T>(string sql, T parameters)
         {
-            string connectionstring = _config.GetConnectionString(ConnectionString);
-
-            using (IDbConnection connection = new SqlConnection(connectionstring))
+            try
             {
-                await connection.ExecuteAsync(sql, parameters);
+                string connectionstring = _config.GetConnectionString(ConnectionString);
+
+                using (IDbConnection connection = new SqlConnection(connectionstring))
+                {
+                    await connection.ExecuteAsync(sql, parameters);
+                }
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
             }
         }
 
         public T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            IDbConnection _db = new SqlConnection(_config.GetConnectionString("Default"));
+            try
+            {
+                IDbConnection _db = new SqlConnection(_config.GetConnectionString("Default"));
+                if (_db.State == ConnectionState.Closed)
+                {
+                    _db.Open();
+                }
 
-            return _db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
+                return _db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return default(T);
+            }
         }
 
         public List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            IDbConnection _db = new SqlConnection(_config.GetConnectionString("Default"));
-
-            return _db.Query<T>(sp, parms, commandType: commandType).ToList();
-        }
-
-        public T Update<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
-        {
-            T result;
-            IDbConnection _db = new SqlConnection(_config.GetConnectionString("Default"));
-
-            var tran = _db.BeginTransaction();
-
-            result = _db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
-            tran.Commit();
-
-            return result;
+            try
+            {
+                IDbConnection _db = new SqlConnection(_config.GetConnectionString("Default"));
+                if (_db.State == ConnectionState.Closed)
+                {
+                    _db.Open();
+                }
+                return _db.Query<T>(sp, parms, commandType: commandType).ToList();
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
         }
     }
 }

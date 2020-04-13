@@ -9,8 +9,6 @@
 @inject NavigationManager NavigationManager
 @inject IBooksCreateService booksAdd
 @inject IBookData _db
-
-
 @*##########################################################################################################
     Code to display the button to add new books
     ##########################################################################################################*@
@@ -103,7 +101,7 @@ else
 }
 
 @*##########################################################################################################
-        Pagination Code - currently only fot display purposes 
+        Pagination Code - currently only fot display purposes
     ##########################################################################################################*@
 
 
@@ -139,6 +137,7 @@ else
     Start of c# code
     ##########################################################################################################*@
 
+
 @code {
 
     List<Books> booksList;
@@ -160,7 +159,6 @@ else
         booksList = OGlist;
 
     }
-
 
     //##########################################################################################################
     //Code to filter data according to price range
@@ -222,23 +220,22 @@ else
         try
         {
             toggle();
-            if (boolValue == true)
+            if(boolValue == true)
             {
-                booksList = await _db.OrderPrice("ASC");
+                booksList = await _db.OrderBooks_Price("DESC");
                 //isChecked = !isChecked;
             }
             else
             {
                 toggle();
                 booksList = await _db.Get_Books();
-                //booksList = await _db.OrderPrice("DESC");
+                //booksList = await _db.OrderBooks_Price("DESC");
                 //isChecked = !isChecked;
             }
-
         }
-        catch (Exception ex)
+        catch(Exception ex)
         {
-            string stest = ex.ToString();
+            string sError = ex.ToString();
         }
     }
 
@@ -251,5 +248,4 @@ else
         booksAdd.flush(); //Reset booksAdd list
         NavigationManager.NavigateTo("/BooksPages/Main/AddBooks");
     }
-
 }

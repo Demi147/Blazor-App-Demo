@@ -9,19 +9,28 @@ namespace DataAccessLibrary
     public class ExchangeData : IExchangeData
     {
         private readonly ISqlDataAccess _db;
-
+        private string sError = "";
         public ExchangeData(ISqlDataAccess db)
         {
             _db = db;
         }
+
         //##############################################################################################################################################################################################################
         //Get methods for Exchange Data Model
         //##############################################################################################################################################################################################################
         public Task<List<Exchange>> Get_AllExchanges()
         {
-            string sql = "Select * from dbo.tblExchange";
+            try
+            {
+                string sql = "Select * from dbo.tblExchange";
 
-            return _db.LoadData<Exchange, dynamic>(sql, new { });
+                return _db.LoadData<Exchange, dynamic>(sql, new { });
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
         }
 
         //##############################################################################################################################################################################################################
@@ -29,18 +38,54 @@ namespace DataAccessLibrary
         //##############################################################################################################################################################################################################
         public Task InsertExchange(Exchange exchange)
         {
-            string sql = @"Insert into dbo.tblExchange(ExchangeID,UserID,SalesNumber)
+            try
+            {
+                string sql = @"Insert into dbo.tblExchange(ExchangeID,UserID,SalesNumber)
                               values(@ExchangeID,@UserID,@SalesNumber)";
 
-            return _db.SaveData(sql, exchange);
+                return _db.SaveData(sql, exchange);
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
         }
 
         public Task RemoveExchange(Exchange exchange, int iExchangeID)
         {
-            string sql = @"Delete from dbo.tblExchange Where ExchangeID=" + iExchangeID;
+            try
+            {
+                string sql = @"Delete from dbo.tblExchange Where ExchangeID=" + iExchangeID;
 
-            return _db.SaveData(sql, exchange);
+                return _db.SaveData(sql, exchange);
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
         }
+
+        //##############################################################################################################################################################################################################
+        //Update methods for Exchange Data Model
+        //##############################################################################################################################################################################################################
+
+        public Task UpdateExchange_All(Exchange exchange)
+        {
+            try
+            {
+                string sql = @"Update dbo.tblExchange Set UserID = " + exchange.UserID + ", SalesNumber = " + exchange.SalesNumber + "Where ExchangeID = " + exchange.ExchangeID + "";
+
+                return _db.SaveData(sql, exchange);
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
+        }
+
     }
 
 }
