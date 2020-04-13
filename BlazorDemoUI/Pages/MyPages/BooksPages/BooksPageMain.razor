@@ -9,13 +9,15 @@
 @inject NavigationManager NavigationManager
 @inject IBooksCreateService booksAdd
 @inject IBookData _db
+
+
 @*##########################################################################################################
     Code to display the button to add new books
     ##########################################################################################################*@
 
 <h1>
-    Available Book Sales
-    <button type="submit" name="btnAddNew" class="btn btn-primary" style="float: right;" @onclick="AddNav">Add New Book</button>
+    Books For Sale
+    <button type="submit" name="btnAddNew" class="btn btn-outline-primary" style="float: right;" @onclick="AddNav">Add New Book</button>
 </h1>
 
 @*##########################################################################################################
@@ -23,9 +25,9 @@
     ##########################################################################################################*@
 
 <h5>
-    Filter Search:
-    <input type="text" id="txtFilter" placeholder="Enter text to filter" @bind-value="@FilterVal" />
-    <button type="submit" for="txtFilter" name="btnSearch" class="btn btn-primary" @onclick="@SearchBooks">Search Book</button>
+    Search:
+    <input type="text" id="txtFilter" placeholder="Enter text" @bind-value="@FilterVal" />
+    <button type="submit" for="txtFilter" name="btnSearch" class="btn btn-outline-info" @onclick="@SearchBooks">Search</button>
 
     <p style="float: right;">
         <input type="checkbox" id="orderCheck" @bind="@boolValue" @onclick="@SetAsc" /> Check the box to sort the data according to price
@@ -40,11 +42,11 @@
         Code to display controls to filter according to price range
     ##########################################################################################################*@
 
-<h5>Enter a Price range for your search</h5>
 <h5>
+    Filter by Price:
     <input type="text" id="txtMinPrice" placeholder="Enter min price" @bind="@minPrice" />
     <input type="text" id="txtMaxPrice" placeholder="Enter max price" @bind="@maxPrice" />
-    <button type="submit" name="btnPriceSearch" class="btn btn-primary" @onclick="@filterPrices">Search Prices</button>
+    <button type="submit" name="btnPriceSearch" class="btn btn-outline-info" @onclick="@filterPrices">Search</button>
 </h5>
 
 
@@ -59,24 +61,20 @@
 }
 else
 {
-    <table class="table table-striped">
-        <thead>
+    <table class="table table-hover">
+        <thead class="thead-light">
             <tr>
-                <td>Book Title</td>
-                <td>Book Edition</td>
-                <td>Book Price</td>
-                <td>Module Code</td>
-                <td>Book Institute</td>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Institute</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in booksList)
             {
                 <tr>
-                    <td><NavLink href=@string.Format("/BooksPages/Main/{0}",item.SalesNumber)>@item.BookTitle</NavLink></td>
-                    <td>@item.BookEdition</td>
+                    <td href="#" data-toggle="tooltip" title="See Book Info"><NavLink href=@string.Format("/BooksPages/Main/{0}",item.SalesNumber)>@item.BookTitle</NavLink></td>
                     <td>@item.BookPrice</td>
-                    <td>@item.ModuleCode</td>
                     <td>@item.BookInstitute</td>
                 </tr>
             }
@@ -103,6 +101,39 @@ else
         }
     }
 }
+
+@*##########################################################################################################
+        Pagination Code - currently only fot display purposes 
+    ##########################################################################################################*@
+
+
+<div class="container" style="float: left;">
+    <ul class="pagination pagination-sm">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+
+    <ul class="pagination pagination-lg">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+</div>
+
+
 
 @*##########################################################################################################
     Start of c# code
