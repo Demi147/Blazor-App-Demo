@@ -1,72 +1,17 @@
-﻿@page "/TestEnviroment/test/{id:int}"
-
-@using DataAccessLibrary.Bussiness_Logic
-@using DataAccessLibrary.Bussiness_Logic.BooksLogic
-@using DataAccessLibrary.Models
-@using DataAccessLibrary
-
-@inject IBooksBussinessLogic BooksService
-@inject NavigationManager NavigationManager
-@inject IBooksBuyService BooksBuyService
+﻿@page "/TestEnviroment/test/Login"
 
 
-<h1>
-    Book Information
-    <button type="submit" name="btnBack" class="btn btn-primary" style="float: right;" @onclick="BackNav">Browse More Books</button>
-</h1>
 
+<AuthorizeView>
+    <Authorized>
+        authorized
+    </Authorized>
+    <NotAuthorized>
+        not authorized
+    </NotAuthorized>
+</AuthorizeView>
 
-<h4>Book Title</h4>
-<body>
-    @_book.BookTitle
-    @BooksBuyService.exchange.UserID
-</body>
-<br />
-<h4>Book Edition</h4>
-<body>
-    @_book.BookEdition
-</body>
-<br />
-<h4>Module Code</h4>
-<body>
-    @_book.ModuleCode
-</body>
-<br />
-<h4>Institute</h4>
-<body>
-    @_book.BookInstitute
-</body>
-<br />
-<h4>Book Price</h4>
-<body>
-    @_book.BookPrice
-</body>
-<br />
-<h4>Book Location</h4>
-<body>
-    @_book.LocationID
-</body>
-<br />
-<h4>Book Image</h4>
-<body>
-    IMAGE HERE
-</body>
-<br />
+@code
+{
 
-@code {
-
-    [Parameter]
-    public int id { get; set; }
-
-    protected Books _book;
-
-    protected override void OnInitialized()
-    {
-        _book = StaticTestData.GetSingleBook(id);
-    }
-
-    void BackNav()
-    {
-        NavigationManager.NavigateTo("/BooksPages/Main");
-    }
 }
