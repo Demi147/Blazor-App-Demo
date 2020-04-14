@@ -179,7 +179,7 @@ namespace DataAccessLibrary
         {
             try
             {
-                string sql = @"Select * from dbo.tblBookSales Where BookTitle Like '" + sSearchValue + "' or ModuleCode Like '" + sSearchValue + "' Or BookInstitute Like '" + sSearchValue + "'";
+                string sql = @"Select * from dbo.tblBookSales Where BookTitle Like '%" + sSearchValue + "%' or ModuleCode Like '%" + sSearchValue + "%' Or BookInstitute Like '%" + sSearchValue + "%'";
 
                 return _db.LoadData<Books, dynamic>(sql, new { });
             }
@@ -197,8 +197,8 @@ namespace DataAccessLibrary
         {
             try
             {
-                string sql = @"Insert into dbo.tblBookSales(SalesNumber,UserID,BookTitle,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute,DatePosted)
-                           values(@SalesNumber,@UserID,@BookTitle,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute,@DatePosted)";
+                string sql = @"Insert into dbo.tblBookSales(UserID,BookTitle,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute,DatePosted)
+                           values(@UserID,@BookTitle,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute,@DatePosted)";
 
                 return _db.SaveData(sql, book);
             }
@@ -403,7 +403,7 @@ namespace DataAccessLibrary
         {
             try
             {
-                string sql = @"Select 8 from dbo.tblBookSales Order By BookPrice " + sOrder + "";
+                string sql = @"Select * from dbo.tblBookSales Order By BookPrice " + sOrder + "";
 
                 return _db.LoadData<Books, dynamic>(sql, new { });
             }

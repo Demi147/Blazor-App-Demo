@@ -9,6 +9,7 @@
 @inject NavigationManager NavigationManager
 @inject IBooksCreateService booksAdd
 @inject IBookData _db
+
 @*##########################################################################################################
     Code to display the button to add new books
     ##########################################################################################################*@
@@ -64,17 +65,19 @@ else
             <tr>
                 <th>Title</th>
                 <th>Price</th>
+                <th>Module Code</th>
                 <th>Institute</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in booksList)
             {
-                <tr>
-                    <td href="#" data-toggle="tooltip" title="See Book Info"><NavLink href=@string.Format("/BooksPages/Main/{0}",item.SalesNumber)>@item.BookTitle</NavLink></td>
-                    <td>@item.BookPrice</td>
-                    <td>@item.BookInstitute</td>
-                </tr>
+            <tr>
+                <td href="#" data-toggle="tooltip" title="See Book Info"><NavLink href=@string.Format("/BooksPages/Main/{0}",item.SalesNumber)>@item.BookTitle</NavLink></td>
+                <td>@item.BookPrice</td>
+                <td>@item.ModuleCode</td>
+                <td>@item.BookInstitute</td>
+            </tr>
             }
         </tbody>
     </table>
@@ -150,7 +153,7 @@ else
     string minPrice { get; set; }
     string maxPrice { get; set; }
 
-    string FilterVal { get; set; } = "";
+    string FilterVal { get; set; } 
     string orderBy;
 
     protected override async Task OnInitializedAsync()
@@ -222,7 +225,7 @@ else
             toggle();
             if(boolValue == true)
             {
-                booksList = await _db.OrderBooks_Price("DESC");
+                booksList = await _db.OrderBooks_Price("ASC");
                 //isChecked = !isChecked;
             }
             else
