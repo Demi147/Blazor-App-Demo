@@ -9,6 +9,7 @@ namespace DataAccessLibrary.Models
         public int SalesNumber { get; set; }
         public int UserID { get; set; }
         public string BookTitle { get; set; }
+        public string BookAuthor { get; set; }
         public int BookEdition { get; set; }
         public double BookPrice { get; set; }
         public string ModuleCode { get; set; }

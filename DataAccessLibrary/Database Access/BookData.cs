@@ -197,8 +197,8 @@ namespace DataAccessLibrary
         {
             try
             {
-                string sql = @"Insert into dbo.tblBookSales(UserID,BookTitle,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute,DatePosted)
-                           values(@UserID,@BookTitle,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute,@DatePosted)";
+                string sql = @"Insert into dbo.tblBookSales(UserID,BookTitle,BookAuthor,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute,DatePosted)
+                           values(@UserID,@BookTitle,@BookAuthor,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute,@DatePosted)";
 
                 return _db.SaveData(sql, book);
             }
@@ -352,7 +352,7 @@ namespace DataAccessLibrary
         {
             try
             {
-                string sql = @"Update dbo.tblBookSales Set UserID = " + book.UserID + ",BookTitle = '" + book.BookTitle + "',BookEditiion = " + book.BookEdition + ",BookPrice = " + book.BookPrice +
+                string sql = @"Update dbo.tblBookSales Set UserID = " + book.UserID + ",BookTitle = '" + book.BookTitle + "',BookAuthor = '" + book.BookAuthor+ "',BookEditiion = " + book.BookEdition + ",BookPrice = " + book.BookPrice +
                              ",LocationID = " + book.LocationID + ",ModuleCode = '" + book.ModuleCode + "',BookInstitute = '" + book.BookInstitute + "',DatePosted = " + book.DatePosted +
                              " Where SalesNumber = " + book.SalesNumber + "";
 
