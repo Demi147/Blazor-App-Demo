@@ -372,7 +372,7 @@ namespace DataAccessLibrary
         {
             try
             {
-                var totalBooks = Task.FromResult(_db.Get<int>($"Select count(*) from dbo.tblBookSales", null, commandType: CommandType.Text));
+                var totalBooks = Task.FromResult(_db.Get<int>(@"Select COUNT(*) from dbo.tblBookSales", null, commandType: CommandType.Text));
 
                 return totalBooks;
             }
@@ -387,7 +387,7 @@ namespace DataAccessLibrary
         {
             try
             {
-                var books = Task.FromResult(_db.GetAll<Books>($"Select * from dbo.tblBookSales Order By {orderby} {direction} Offset {skip} Rows fetch new {take} rows only;",
+                var books = Task.FromResult(_db.GetAll<Books>($"Select * from dbo.tblBookSales Order By {orderby} {direction} Offset {skip} Rows fetch next {take} rows only;",
                             null, commandType: CommandType.Text));
 
                 return books;
