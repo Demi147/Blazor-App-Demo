@@ -168,7 +168,7 @@ else
     int pageSize;
     int startPage;
     int endPage;
-    string sortColumnName = "ID";
+    string sortColumnName = "SalesNumber";
     string sortDir = "DESC";
     //******************************************
 
@@ -182,7 +182,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        //OGlist = await _db.Get_Books();
+        OGlist = await _db.Get_Books();
         //booksList = OGlist;
 
         pagerSize = 3;

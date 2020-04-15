@@ -387,7 +387,7 @@ namespace DataAccessLibrary
         {
             try
             {
-                var books = Task.FromResult(_db.GetAll<Books>($"Select * from dbo.tblBookSales Order By {orderby} {direction} Offset {skip} Rows fetch next {take} rows only;",
+                var books = Task.FromResult(_db.GetAll<Books>($"Select * from dbo.tblBookSales ORDER BY {orderby} {direction} OFFSET {skip} ROWS FETCH NEXT {take} ROWS ONLY;",
                             null, commandType: CommandType.Text));
 
                 return books;
