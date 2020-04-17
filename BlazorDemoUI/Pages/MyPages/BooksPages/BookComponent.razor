@@ -1,31 +1,162 @@
-﻿@page "/BooksPages/Main/{BookTitle}"
+﻿@page "/BooksPages/Main/{id:int}"
 
 @using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
 @using DataAccessLibrary.Models
+@using DataAccessLibrary
 
 @inject IBooksBussinessLogic BooksService
+@inject NavigationManager NavigationManager
+@inject IBooksBuyService buyService
+@inject IBookData _db
 
 
-<h4>Book</h4>
+<style>
+    .row div {
+        border: 0.5px solid;
+    }
+</style>
 
-<h5>Book name</h5>
-<h6>@PageBook.Title</h6>
-<h5>Book Title</h5>
-<h6>@PageBook.Description</h6>
+@*##########################################################################################################
+        Code to display buttons to move fowards or go back
+    ##########################################################################################################*@
 
+<h1>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    Book Information
+    <button type="submit" name="btnBack" class="btn btn-outline-info" style="float: right;" @onclick="BackNav">Browse More Books</button>
+    <button type="submit" name="btnPurchase" class="btn btn-outline-info" style="float: right;" @onclick="NavConfirm">Request Book Purchase</button>
+</h1>
 
-<NavLink href="/BooksPages/Main">Return to Books page</NavLink>
+@*##########################################################################################################
+        Code to display the table with the book +++++STARTS++++++
+    ##########################################################################################################*@
+
+@if (_book is null)
+{
+    <p><en>Loading...</en></p>
+}
+else
+{
+    @foreach (var item in _book)
+    {
+        @*##########################################################################################################
+                Table 1
+            ##########################################################################################################*@
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Edition</th>
+                    <th>Price</th>
+                    <th>Module Code</th>
+                    <th>Institute</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@item.BookTitle</td>
+                    <td>@item.BookEdition</td>
+                    <td>@item.BookPrice</td>
+                    <td>@item.ModuleCode</td>
+                    <td>@item.BookInstitute</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br />
+
+        @*##########################################################################################################
+                Table 2
+            ##########################################################################################################*@
+        <table class="table table-hover table-responsive ">
+            <thead class="thead-light">
+                <tr>
+                    <th>Title</th>
+                    <td>@item.BookTitle</td>
+                </tr>
+                <tr>
+                    <th>Edition</th>
+                    <td>@item.BookEdition</td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td>@item.BookPrice</td>
+                </tr>
+                <tr>
+                    <th>Module Code</th>
+                    <td>@item.ModuleCode</td>
+                </tr>
+                <tr>
+                    <th>Institute</th>
+                    <td>@item.BookInstitute</td>
+                </tr>
+            </thead>
+        </table>
+
+        <br />
+
+        @*##########################################################################################################
+                Table 3
+            ##########################################################################################################*@
+        <table class="table table-hover  " >
+
+            <tbody class="thead-light">
+                <tr class="row">
+
+                    <th class="col-1">Title</th>
+                    <td class="col-3">@item.BookTitle</td>
+                </tr>
+                <tr class="row">
+                    <th class="col-1">Edition</th>
+                    <td class="col-3">@item.BookEdition</td>
+                </tr>
+                <tr class="row">
+                    <th class="col-1">Price</th>
+                    <td class="col-3">@item.BookPrice</td>
+                </tr>
+                <tr class="row">
+                    <th class="col-1">Module Code</th>
+                    <td class="col-3">@item.ModuleCode</td>
+                </tr>
+                <tr class="row">
+                    <th class="col-1">Institute</th>
+                    <td class="col-3">@item.BookInstitute</td>
+                </tr>
+            </tbody>
+        </table>
+    }
+}
+
+@*##########################################################################################################
+        Code to display the table with the book +++++ENDS++++++
+    ##########################################################################################################*@
+
 
 @code {
 
     [Parameter]
-    public string BookTitle { get; set; }
+    public int id { get; set; }
 
-    public BookTest PageBook;
+    List<Books> _book;
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        PageBook = await BooksService.GetSingleTestBook(BookTitle);
+        _book = await _db.Get_SingleBook(id);
     }
 
+    //##########################################################################################################
+    //Navigation code for the buttons
+    //##########################################################################################################
+
+    void BackNav()
+    {
+        NavigationManager.NavigateTo("/BooksPages/Main");
+    }
+
+    void NavConfirm()
+    {
+        //buyService.addSalesNumber(_book.SalesNumber);
+        NavigationManager.NavigateTo("/BooksPages/Main/RequestPurchase");
+    }
 }

@@ -1,0 +1,60 @@
+﻿@page "/TestEnviroment/UXTesting"
+
+@using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
+@using DataAccessLibrary.Models
+@using DataAccessLibrary
+
+@inject IBookData _db
+@inject NavigationManager navigationManager
+
+
+<h3>THE UX PLAY GROUND</h3>
+
+<label for="Book" class="control-label">Select a book: </label>
+<div class="row" style="padding-top:1px">
+    <div class="col-md-9">
+        <select id="selectBox" @bind="booktitle">
+            <option value="">-- Select Book --</option>
+            @if (booksList == null)
+            {
+                <option value="">Loading...</option>
+            }
+            else
+            {
+                @foreach (var item in booksList)
+                {
+                    try
+                    {
+                        <option value="@item.BookTitle, @item.BookInstitute, @item.BookPrice">@item.BookTitle.ToString(), @item.BookInstitute.ToString(), @item.BookPrice.ToString()</option>
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
+        </select>
+    </div>
+</div>
+<div class="row" style="padding-top:50px">
+    <div class="col-md-4">
+        <label class="control-label"> Book Name: @booktitle</label>
+    </div>
+</div>
+
+
+@code {
+
+    List<Books> booksList;
+    List<Books> OGlist;
+
+    public string booktitle { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        OGlist = await _db.Get_Books();
+        booksList = OGlist;
+    }
+
+}

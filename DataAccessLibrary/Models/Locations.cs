@@ -6,10 +6,10 @@ namespace DataAccessLibrary.Models
 {
     public class Locations
     {   
-        public int BookNumber { get; set; }
-        public string BookInstitute { get; set; }
-        public string BookProvince { get; set; }
-        public string BookCity { get; set; }
-        public string BookSaleLocation { get; set; }
+        public int LocationID { get; set; }
+        public string Province { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
+        public string Building { get; set; }
     }
 }

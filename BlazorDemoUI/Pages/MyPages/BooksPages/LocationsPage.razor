@@ -1,0 +1,130 @@
+﻿@page "/BooksPages/Main/AddBooks/Locations"
+
+@using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
+@using DataAccessLibrary.Models
+@using DataAccessLibrary
+
+@using BlazorDemoUI.Models
+
+@inject ILocationData _db
+@inject NavigationManager NavigationManager
+@inject IBooksCreateService booksAdd
+
+
+<h3>Reccomended Locations for book Transaction</h3>
+<br />
+<h5>Select Any of the below reccomeneded locations or enter your own.</h5>
+
+
+@*##########################################################################################################
+    Code to display locations in combox ++++++START+++++++ and to get location ID
+    ##########################################################################################################*@
+
+@if (locationList is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <label for="Locations" class="control-label">Select a Location:</label>
+        </div>
+    </div>
+    <div class="row" style="padding-top:1px">
+        <div class="col-md-4">
+            <select id="selectBox" @bind="selectedLocation" @onclick="@disableControls">
+                <option value="">-- Select Location --</option>
+
+                @foreach (var item in locationList)
+                {
+                    <option value="@item.LocationID">
+                        @item.Province.ToString(), @item.Address.ToString(),
+                        @item.City.ToString(), @item.Building.ToString()
+                    </option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row" style="padding-top:5px">
+        <div class="col-md-4">
+            <label class="control-label"> Selected Location Name: @selectedLocation</label>
+        </div>
+    </div>
+}
+
+@*##########################################################################################################
+    Code to display locations in combox ++++++END+++++++ and to get location ID
+    ##########################################################################################################*@
+
+
+
+@*##########################################################################################################
+    Code to display controls to enter own location (FIELDSET IS USED TO DISABLE CONTROLS IF COMBOBOX IS USED)
+    ##########################################################################################################*@
+
+<fieldset disabled=@isTrue>
+    <h6>Desired Transaction Location:</h6>
+    Enter Province: <input type="text" id="txtProvince" placeholder="Enter Province here" style="" />
+    <br />
+    <br />
+    Enter Physical Adress: <input type="text" id="txtPhysAdres" placeholder="Enter Physical Address here" style="" />
+    <br />
+    <br />
+    Enter City: <input type="text" id="txtCity" placeholder="Enter City here" style="" />
+    <br />
+    <br />
+    Enter Transaction Building: <input type="text" id="txtBuilding" placeholder="Enter Building here" style="" />
+    <br />
+    <br />
+</fieldset>
+
+<button type="submit" id="btnNext" class="btn btn-primary" @onclick="NextNav" style="float: left;">Submit</button>
+
+
+@*##########################################################################################################
+    Start of c# code
+    ##########################################################################################################*@
+
+@code {
+
+    public int selectedLocation { get; set; }
+
+    List<Locations> locationList;
+    List<Locations> OGlist;
+
+    bool isTrue { get; set; } = false;
+
+    int id = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        OGlist = await _db.Get_AllLocations();
+        locationList = OGlist;
+    }
+
+    //##########################################################################################################
+    //Code to disable controls to enter own adress when one has been chosen
+    //##########################################################################################################
+
+    public void disableControls()
+    {
+        if (selectedLocation < 0)
+        {
+            isTrue = false;
+        }
+        else
+        {
+            isTrue = true;
+        }
+    }
+
+    void NextNav()
+    {
+        booksAdd.AddBookLocation(selectedLocation);
+        NavigationManager.NavigateTo("/BooksPages/Main/SaleConfirm");
+
+    }
+
+}

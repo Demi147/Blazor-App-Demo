@@ -1,39 +1,352 @@
 ﻿@page "/BooksPages/Main"
 
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
 @using DataAccessLibrary.Bussiness_Logic
 @using DataAccessLibrary.Models
+@using DataAccessLibrary
+@using BlazorDemoUI.Models
 
-@inject IBooksBussinessLogic BooksService
+@inject NavigationManager NavigationManager
+@inject IBooksCreateService booksAdd
+@inject IBookData _db
+
+@*##########################################################################################################
+    Code to display the button to add new books
+    ##########################################################################################################*@
+
+<h1>
+    Books For Sale
+    <button type="submit" name="btnAddNew" class="btn btn-outline-primary" style="float: right;" @onclick="AddNav">Add New Book</button>
+</h1>
+
+@*##########################################################################################################
+        Code for the Search TextBox and Sorting CheckBox
+    ##########################################################################################################*@
+
+<h5>
+    Search:
+    <input type="text" id="txtFilter" placeholder="Enter text" @bind-value="@FilterVal" />
+    <button type="submit" for="txtFilter" name="btnSearch" class="btn btn-outline-info" @onclick="@SearchBooks">Search</button>
+
+    <p style="float: right;">
+        <input type="checkbox" id="orderCheck" @bind="@boolValue" @onclick="@SetAsc" /> Check the box to sort the data according to price
+        @*<br />
+            Boolvalue: @boolValue
+            <br />*@
+    </p>
+</h5>
+
+@*You have checked: @(isChecked?"Yes":"No")*@
+@*##########################################################################################################
+        Code to display controls to filter according to price range
+    ##########################################################################################################*@
+
+<h5>
+    Filter by Price:
+    <input type="text" id="txtMinPrice" placeholder="Enter min price" @bind="@minPrice" />
+    <input type="text" id="txtMaxPrice" placeholder="Enter max price" @bind="@maxPrice" />
+    <button type="submit" name="btnPriceSearch" class="btn btn-outline-info" @onclick="@filterPrices">Search</button>
+</h5>
 
 
-<h3>Books Main page</h3>
-
-<hr />
+@*##########################################################################################################
+        Code to display the table with the books +++++STARTS++++++
+    ##########################################################################################################*@
 
 @if (booksList is null)
 {
     <p><en>Loading...</en></p>
+
 }
 else
 {
-<div class="col-12">
-    @foreach (var item in booksList)
-    {
-        <div class="col-12 row">
-            <div class="col-2">
-                <NavLink href=@string.Format("/BooksPages/Main/{0}",item.Title)>@item.Title</NavLink>
-            </div>
-        </div>
-    }
-</div>
+    <table class="table table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>Title</th>
+                <th>Edition</th>
+                <th>Price</th>
+                <th>Module Code</th>
+                <th>Institute</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in booksList)
+            {
+            <tr>
+                <td href="#" data-toggle="tooltip" title="See Book Info"><NavLink href=@string.Format("/BooksPages/Main/{0}",item.SalesNumber)>@item.BookTitle</NavLink></td>
+                <td>@item.BookEdition</td>
+                <td>@item.BookPrice</td>
+                <td>@item.ModuleCode</td>
+                <td>@item.BookInstitute</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <div class="pagination">
+        <button class="btn btn-custom" @onclick=@(async ()=>await NavigateToPage("previous"))>Prev</button>
+        @for (int i = startPage; i <= endPage; i++)
+        {
+            var currentPage = i;
+            <button class="btn btn-custom pagebutton @(currentPage==curPage?"btn-danger":"")" @onclick=@(async () =>await refreshRecords(currentPage))>
+                @currentPage
+            </button>
+        }
+        <button class="btn btn-custom" @onclick=@(async ()=>await NavigateToPage("next"))>Next</button>
+    </div>
+
 }
+
+@*##########################################################################################################
+        Code to display the table with the books +++++ENDS++++++
+    ##########################################################################################################*@
+
+@functions
+{
+    public bool boolValue { get; set; }
+    void toggle()
+    {
+        if (boolValue)
+        {
+            boolValue = !boolValue;
+        }
+        else
+        {
+            boolValue = !boolValue;
+        }
+    }
+}
+
+@*##########################################################################################################
+        Pagination Code - currently only fot display purposes
+    ##########################################################################################################*@
+
+@*<div class="container" style="float: left;">
+        <ul class="pagination pagination-sm">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+
+        <ul class="pagination pagination-lg">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </div>*@
+
+
+@*##########################################################################################################
+    Start of c# code
+    ##########################################################################################################*@
+
 
 @code {
 
-    List<BookTest> booksList;
+    List<Books> booksList;
+    List<Books> OGlist;
+
+    private DisplayBookModel showBooks = new DisplayBookModel();
+
+    //******************************************
+    int totalPages;
+    int totalRecords;
+    int curPage;
+    int pagerSize;
+    int pageSize;
+    int startPage;
+    int endPage;
+    string sortColumnName = "SalesNumber";
+    string sortDir = "DESC";
+    //******************************************
+
+    //bool isChecked { get; set; } = false;
+
+    string minPrice { get; set; }
+    string maxPrice { get; set; }
+
+    string FilterVal { get; set; }
+    string orderBy;
 
     protected override async Task OnInitializedAsync()
     {
-        booksList = await BooksService.GetTestData();
+        OGlist = await _db.Get_Books();
+        //booksList = OGlist;
+
+        pagerSize = 3;
+        pageSize = 5;
+        curPage = 1;
+
+        OGlist = await _db.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir);
+        booksList = OGlist;
+
+        totalRecords = await _db.Count_TotalBooks();
+        totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
+        SetPagerSize("forward");
+
+
     }
+
+    //##########################################################################################################
+    //Code to filter data according to price range
+    //##########################################################################################################
+
+    private async Task SearchBooks()
+    {
+        try
+        {
+            if (FilterVal == null || FilterVal.Length == 0)
+            {
+
+                booksList = await _db.Get_Books();
+            }
+            else
+            {
+                booksList = await _db.Search_MultiChar(FilterVal);
+                FilterVal = "";
+            }
+        }
+        catch (Exception ex)
+        {
+            string stest = ex.ToString();
+        }
+    }
+
+    //##########################################################################################################
+    //Code to search for specific books
+    //##########################################################################################################
+
+    private async Task filterPrices()
+    {
+        try
+        {
+            if ((minPrice.ToString() == null || minPrice.ToString().Length == 0) || (maxPrice.ToString() == null || maxPrice.ToString().Length == 0))
+            {
+
+                booksList = await _db.Get_Books();
+            }
+            else
+            {
+                booksList = await _db.SearchBooks_PriceRange(Convert.ToDecimal(minPrice), Convert.ToDecimal(maxPrice));
+                minPrice = "";
+                maxPrice = "";
+            }
+        }
+        catch (Exception ex)
+        {
+            string stest = ex.ToString();
+        }
+    }
+
+    //##########################################################################################################
+    //Code to set data to asc/desc
+    //##########################################################################################################
+
+    private async Task SetAsc()
+    {
+        try
+        {
+            toggle();
+            if (boolValue == true)
+            {
+                booksList = await _db.OrderBooks_Price("ASC");
+                //isChecked = !isChecked;
+            }
+            else
+            {
+                toggle();
+                booksList = await _db.Get_Books();
+                //booksList = await _db.OrderBooks_Price("DESC");
+                //isChecked = !isChecked;
+            }
+        }
+        catch (Exception ex)
+        {
+            string sError = ex.ToString();
+        }
+    }
+
+    //##########################################################################################################
+    //Code to navigate to the addBooksPage
+    //##########################################################################################################
+
+    void AddNav()
+    {
+        booksAdd.flush(); //Reset booksAdd list
+        NavigationManager.NavigateTo("/BooksPages/Main/AddBooks");
+    }
+
+
+    //##########################################################################################################
+    //Code for Paging
+    //##########################################################################################################
+
+    public async Task refreshRecords(int currentPage)
+    {
+        booksList = await _db.ListAll((currentPage - 1) * pageSize, pageSize, sortColumnName, sortDir);
+        curPage = currentPage;
+        this.StateHasChanged();
+    }
+
+    public void SetPagerSize(string direction)
+    {
+        if (direction == "forward" && endPage < totalPages)
+        {
+            startPage = endPage + 1;
+            if (endPage + pagerSize < totalPages)
+            {
+                endPage = startPage + pagerSize - 1;
+            }
+            else
+            {
+                endPage = totalPages;
+            }
+            this.StateHasChanged();
+        }
+        else if (direction == "back" && startPage > 1)
+        {
+            endPage = startPage - 1;
+            startPage = startPage - pagerSize;
+        }
+    }
+
+    public async Task NavigateToPage(string direction)
+    {
+        if (direction == "next")
+        {
+            if (curPage < totalPages)
+            {
+                if (curPage == endPage)
+                {
+                    SetPagerSize("forward");
+                }
+                curPage += 1;
+            }
+        }
+        else if (direction == "previous")
+        {
+            if (curPage > 1)
+            {
+                if (curPage == startPage)
+                {
+                    SetPagerSize("back");
+                }
+                curPage -= 1;
+            }
+        }
+        await refreshRecords(curPage);
+    }
+
 }

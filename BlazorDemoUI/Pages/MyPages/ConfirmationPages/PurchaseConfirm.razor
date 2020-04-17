@@ -1,0 +1,90 @@
+﻿@page "/BooksPages/Main/RequestPurchase"
+
+@using DataAccessLibrary.Bussiness_Logic
+@using DataAccessLibrary.Bussiness_Logic.BooksLogic
+@using DataAccessLibrary.Models
+@using DataAccessLibrary
+
+@inject IBookData _db
+@inject NavigationManager NavigationManager
+@inject IBooksBuyService buyservice
+@*##########################################################################################################
+        Confirmation Message part1
+    ##########################################################################################################*@
+
+<h3>Purchase Confirmation</h3>
+<br />
+<h6>This message serves as a confirmation of your purhase request for the following book:</h6>
+<br />
+
+@*##########################################################################################################
+        Code to display the table with the book +++++STARTS++++++
+    ##########################################################################################################*@
+
+@if (_book is null)
+{
+    <p><en>Loading...</en></p>
+}
+else
+{
+    @foreach (var item in _book)
+    {
+            <h6>Title: </h6> @item.BookTitle
+            <br />
+            <h6>Edition: </h6> @item.BookEdition
+            <br />
+            <h6>Module Code: </h6> @item.ModuleCode
+            <br />
+            <h6>Institute: </h6> @item.BookInstitute
+            <br />
+            <h6>Price: </h6> @item.BookPrice
+            <br />
+            <h6>Location: </h6> @item.LocationID
+     }
+}
+
+@*##########################################################################################################
+        Code to display the table with the book +++++ENDS++++++
+    ##########################################################################################################*@
+
+
+
+@*##########################################################################################################
+        Confirmation Message part2
+    ##########################################################################################################*@
+
+<br />
+<h6>You will be contacted by the Seller to set up additional purchase and collection arrangements.</h6>
+<br />
+<br />
+<h6>Thank you for your purchase!</h6>
+<br />
+<h6>Click on the OK button to browse more books.</h6>
+<br />
+
+<button type="submit" name="btnOk" class="btn btn-primary" style="float: left;" @onclick="BackNav">Okay</button>
+
+@code {
+
+[Parameter]
+public int id { get; set; }
+
+List<Books> _book;
+
+protected override async Task OnInitializedAsync()
+{
+    _book = await _db.Get_SingleBook(id);
+}
+
+//##########################################################################################################
+//Navigation code for the buttons
+//##########################################################################################################
+
+void BackNav()
+{
+    NavigationManager.NavigateTo("/BooksPages/Main");
+
+}
+
+}
+

@@ -12,6 +12,12 @@ using Microsoft.Extensions.Hosting;
 using BlazorDemoUI.Data;
 using DataAccessLibrary;
 using DataAccessLibrary.Bussiness_Logic;
+using DataAccessLibrary.Bussiness_Logic.BooksLogic;
+using BlazorDemoUI.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
+using Blazored.SessionStorage;
 
 namespace BlazorDemoUI
 {
@@ -32,7 +38,17 @@ namespace BlazorDemoUI
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddTransient<ISqlDataAccess, SqlDataAccess>();
+            services.AddTransient<IUserData, UserData>();
+            services.AddTransient<IBookData, BookData>();
             services.AddTransient<IBooksBussinessLogic, BooksBussinessLogic>();
+            services.AddTransient < ILocationData, LocationData>();
+            services.AddScoped<IFileUpload, FileUpload>();
+            services.AddSingleton<IBooksBuyService, BooksBuyService>();
+            services.AddSingleton<IBooksCreateService, BooksCreateService>();
+
+            services.AddScoped<AuthenticationStateProvider,CustomAuthenticationStateProvider>();
+            services.AddBlazoredSessionStorage();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,8 +70,12 @@ namespace BlazorDemoUI
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

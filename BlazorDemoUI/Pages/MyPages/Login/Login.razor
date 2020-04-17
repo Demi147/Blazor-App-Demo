@@ -1,0 +1,89 @@
+﻿@page "/login"
+
+
+@using DataAccessLibrary.Models;
+@using DataAccessLibrary;
+@using Services;
+
+@inject NavigationManager navManager;
+@inject AuthenticationStateProvider authenticationService;
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject IUserData userDataService;
+
+
+<h3>Login</h3>
+
+<div class="col-8 card">
+    <div class="col-12 row">
+        <p>&nbsp;</p>
+    </div>
+    <div class="col-12 row">
+        <div class="col-6" style="border-left:groove">
+            <EditForm Model="@_user" OnValidSubmit="@ValidateUser">
+                <div>
+                    <br /><br />
+                </div>
+                <div>
+                    <h3 style="font-weight:bold"> Login</h3>
+                </div>
+                <div>
+                    <br />
+                </div>
+                <div class="col-12 row">
+                    <input class="form-control col-12" @bind="_user.UserEmail" placeholder="Email" />
+                </div>
+                <br />
+                <div class="col-12 row">
+                    <input type="password" class="form-control col-12" @bind="_user.UserPassword" placeholder="Password" />
+                </div>
+                <br />
+                <div class="col-12 row">
+                    <span class="col-12 "></span>
+                    <input type="submit" class="form-control col-12 btn btn-primary " value="Login" />
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+
+    private Users _user;
+
+    protected override Task OnInitializedAsync()
+    {
+        _user = new Users();
+        return base.OnInitializedAsync();
+    }
+
+    private async Task<bool> ValidateUser()
+    {
+        ////make the varifylogin async with all the other data methods
+        //bool isValidUser = userDataService.VarifyLogin(_user.UserEmail,Utilities.ExcryptPassword(_user.UserPassword)); // encryption rather to be called inside the varifylogin method than here
+
+        //if (isValidUser)
+        //{
+        //    ((CustomAuthenticationStateProvider)authenticationService).MarkUserAsAuthenticated(_user.UserEmail);
+
+        //    navManager.NavigateTo("/");
+
+        //    await sessionStorage.SetItemAsync("emailAddress", _user.UserEmail);
+
+        //    return await Task.FromResult(true);
+        //}
+        //else
+        //{
+        //    //do nothing
+        //}
+
+        ((CustomAuthenticationStateProvider) authenticationService).MarkUserAsAuthenticated(_user.UserEmail);
+
+        navManager.NavigateTo("/");
+
+        await sessionStorage.SetItemAsync("emailAddress", _user.UserEmail);
+
+        return await Task.FromResult(true);
+    }
+}
