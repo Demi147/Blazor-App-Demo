@@ -10,7 +10,6 @@
 @inject IBooksCreateService booksAdd
 @inject IBookData _db
 
-
 @*##########################################################################################################
     Code to display the button to add new books
     ##########################################################################################################*@
@@ -66,17 +65,19 @@ else
             <tr>
                 <th>Title</th>
                 <th>Price</th>
+                <th>Module Code</th>
                 <th>Institute</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in booksList)
             {
-                <tr>
-                    <td href="#" data-toggle="tooltip" title="See Book Info"><NavLink href=@string.Format("/BooksPages/Main/{0}",item.SalesNumber)>@item.BookTitle</NavLink></td>
-                    <td>@item.BookPrice</td>
-                    <td>@item.BookInstitute</td>
-                </tr>
+            <tr>
+                <td href="#" data-toggle="tooltip" title="See Book Info"><NavLink href=@string.Format("/BooksPages/Main/{0}",item.SalesNumber)>@item.BookTitle</NavLink></td>
+                <td>@item.BookPrice</td>
+                <td>@item.ModuleCode</td>
+                <td>@item.BookInstitute</td>
+            </tr>
             }
         </tbody>
     </table>
@@ -103,7 +104,7 @@ else
 }
 
 @*##########################################################################################################
-        Pagination Code - currently only fot display purposes 
+        Pagination Code - currently only fot display purposes
     ##########################################################################################################*@
 
 
@@ -139,6 +140,7 @@ else
     Start of c# code
     ##########################################################################################################*@
 
+
 @code {
 
     List<Books> booksList;
@@ -151,7 +153,7 @@ else
     string minPrice { get; set; }
     string maxPrice { get; set; }
 
-    string FilterVal { get; set; } = "";
+    string FilterVal { get; set; } 
     string orderBy;
 
     protected override async Task OnInitializedAsync()
@@ -160,7 +162,6 @@ else
         booksList = OGlist;
 
     }
-
 
     //##########################################################################################################
     //Code to filter data according to price range
@@ -222,23 +223,22 @@ else
         try
         {
             toggle();
-            if (boolValue == true)
+            if(boolValue == true)
             {
-                booksList = await _db.OrderPrice("ASC");
+                booksList = await _db.OrderBooks_Price("ASC");
                 //isChecked = !isChecked;
             }
             else
             {
                 toggle();
                 booksList = await _db.Get_Books();
-                //booksList = await _db.OrderPrice("DESC");
+                //booksList = await _db.OrderBooks_Price("DESC");
                 //isChecked = !isChecked;
             }
-
         }
-        catch (Exception ex)
+        catch(Exception ex)
         {
-            string stest = ex.ToString();
+            string sError = ex.ToString();
         }
     }
 
@@ -251,5 +251,4 @@ else
         booksAdd.flush(); //Reset booksAdd list
         NavigationManager.NavigateTo("/BooksPages/Main/AddBooks");
     }
-
 }

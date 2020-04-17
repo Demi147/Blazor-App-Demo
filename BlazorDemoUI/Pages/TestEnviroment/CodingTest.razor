@@ -1,76 +1,11 @@
 ﻿@page "/TestEnviroment"
 
-@using DataAccessLibrary.Bussiness_Logic
-@using DataAccessLibrary.Bussiness_Logic.BooksLogic
-@using DataAccessLibrary.Models
-@using DataAccessLibrary
 
-@inject IBooksBussinessLogic BooksService
-@inject IBooksBuyService BooksBuyService
-
-
-<h3>Books Main page</h3>
-
-<AuthorizeView Roles="Customer">
-    <Authorizing>
-        Validating
-    </Authorizing>
-
+<AuthorizeView>
     <Authorized>
-        Yes it works
+        <p>Welcome , @context.User.Identity.Name</p>
     </Authorized>
-
     <NotAuthorized>
-        HAHAHAHAHAHA
+        <p>You are signed out</p>
     </NotAuthorized>
 </AuthorizeView>
-
-<p>
-    @TestValue
-</p>
-<p>
-    @EncryptedValue
-</p>
-<p>
-    @decryptValue
-</p>
-
-@code {
-
-    List<Books> booksListOG;
-    List<Books> booksList;
-
-    BooksAtributes lastAtribute;
-
-    bool accending;
-
-    string FilterVal { get; set; }
-
-    string TestValue = "0123456789012345678901234567980123465798";
-    string EncryptedValue;
-    string decryptValue;
-
-    protected override void OnInitialized()
-    {
-        EncryptedValue = Utilities.ExcryptPassword(TestValue);
-        decryptValue = Utilities.DecryptPassword(EncryptedValue);
-    }
-
-    protected void sortAndFilter(BooksAtributes _atribute)
-    {
-        lastAtribute = _atribute;
-
-    }
-
-    void setAccending(object value)
-    {
-        accending = (bool)value;
-        sortAndFilter(lastAtribute);
-    }
-
-    void Filter(object _val)
-    {
-        FilterVal = _val.ToString();
-        booksList = BooksService.SortBooks(BooksService.MultiFilter(booksListOG, _val.ToString()), lastAtribute, accending);
-    }
-}

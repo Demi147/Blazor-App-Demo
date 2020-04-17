@@ -8,5 +8,7 @@ namespace DataAccessLibrary
     {
         Task<List<Exchange>> Get_AllExchanges();
         Task InsertExchange(Exchange exchange);
+        Task RemoveExchange(Exchange exchange, int iExchangeID);
+        Task UpdateExchange_All(Exchange exchange);
     }
 }

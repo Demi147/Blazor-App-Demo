@@ -1,5 +1,10 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<AuthorizeView>
+    <Authorized>
+        Welcome to the student online book ad service
+    </Authorized>
+    <NotAuthorized>
+        You are not singed in , please log in to get acces to the site
+    </NotAuthorized>
+</AuthorizeView>

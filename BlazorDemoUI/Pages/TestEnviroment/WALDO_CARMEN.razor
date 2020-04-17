@@ -16,7 +16,7 @@
     <div class="col-md-9">
         <select id="selectBox" @bind="booktitle">
             <option value="">-- Select Book --</option>
-            @if (booksList is null)
+            @if (booksList == null)
             {
                 <option value="">Loading...</option>
             }
@@ -24,7 +24,14 @@
             {
                 @foreach (var item in booksList)
                 {
-                    <option value="@item.BookTitle, @item.BookInstitute, @item.BookPrice">@item.BookTitle.ToString(), @item.BookInstitute.ToString(), @item.BookPrice.ToString()</option>
+                    try
+                    {
+                        <option value="@item.BookTitle, @item.BookInstitute, @item.BookPrice">@item.BookTitle.ToString(), @item.BookInstitute.ToString(), @item.BookPrice.ToString()</option>
+                    }
+                    catch
+                    {
+
+                    }
                 }
             }
         </select>

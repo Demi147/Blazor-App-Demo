@@ -13,6 +13,5 @@ namespace DataAccessLibrary
         List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         Task<List<T>> LoadData<T, U>(string sql, U parameters);
         Task SaveData<T>(string sql, T parameters);
-        T Update<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
     }
 }
