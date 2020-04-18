@@ -197,8 +197,8 @@ namespace DataAccessLibrary
         {
             try
             {
-                string sql = @"Insert into dbo.tblBookSales(UserID,BookTitle,BookAuthor,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute,DatePosted)
-                           values(@UserID,@BookTitle,@BookAuthor,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute,@DatePosted)";
+                string sql = @"Insert into dbo.tblBookSales(UserID,BookTitle,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute,DatePosted)
+                           values(@UserID,@BookTitle,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute,@DatePosted)";
 
                 return _db.SaveData(sql, book);
             }
@@ -352,7 +352,7 @@ namespace DataAccessLibrary
         {
             try
             {
-                string sql = @"Update dbo.tblBookSales Set UserID = " + book.UserID + ",BookTitle = '" + book.BookTitle + "',BookAuthor = '" + book.BookAuthor + "',BookEditiion = " + book.BookEdition + ",BookPrice = " + book.BookPrice +
+                string sql = @"Update dbo.tblBookSales Set UserID = " + book.UserID + ",BookTitle = '" + book.BookTitle + "',BookEditiion = " + book.BookEdition + ",BookPrice = " + book.BookPrice +
                              ",LocationID = " + book.LocationID + ",ModuleCode = '" + book.ModuleCode + "',BookInstitute = '" + book.BookInstitute + "',DatePosted = " + book.DatePosted +
                              " Where SalesNumber = " + book.SalesNumber + "";
 
@@ -372,7 +372,7 @@ namespace DataAccessLibrary
         {
             try
             {
-                var totalBooks = Task.FromResult(_db.Get<int>(@"Select COUNT(*) from dbo.tblBookSales", null, commandType: CommandType.Text));
+                var totalBooks = Task.FromResult(_db.Get<int>($"Select count(*) from dbo.tblBookSales", null, commandType: CommandType.Text));
 
                 return totalBooks;
             }
@@ -387,7 +387,7 @@ namespace DataAccessLibrary
         {
             try
             {
-                var books = Task.FromResult(_db.GetAll<Books>($"Select * from dbo.tblBookSales ORDER BY {orderby} {direction} OFFSET {skip} ROWS FETCH NEXT {take} ROWS ONLY;",
+                var books = Task.FromResult(_db.GetAll<Books>($"Select * from dbo.tblBookSales Order By {orderby} {direction} Offset {skip} Rows fetch new {take} rows only;",
                             null, commandType: CommandType.Text));
 
                 return books;
@@ -413,7 +413,5 @@ namespace DataAccessLibrary
                 return null;
             }
         }
-
     }
 }
-

@@ -29,25 +29,32 @@ else
 {
     @foreach (var item in _book)
     {
-            <h6>Title: </h6> @item.BookTitle
-            <br />
-            <h6>Edition: </h6> @item.BookEdition
-            <br />
-            <h6>Module Code: </h6> @item.ModuleCode
-            <br />
-            <h6>Institute: </h6> @item.BookInstitute
-            <br />
-            <h6>Price: </h6> @item.BookPrice
-            <br />
-            <h6>Location: </h6> @item.LocationID
-     }
+        <div class="container">
+            <div>
+                <div> <h6>Title: </h6> @item.BookTitle</div>
+            </div>
+            <div>
+                <div> <h6>Edition: </h6> @item.BookEdition</div>
+            </div>
+            <div>
+                <div> <h6>Module Code: </h6> @item.ModuleCode</div>
+            </div>
+            <div>
+                <div> <h6>Institute: </h6> @item.BookInstitute</div>
+            </div>
+            <div>
+                <div> <h6>Price: </h6> @item.BookPrice</div>
+            </div>
+            <div>
+                <div> <h6>Location: </h6> @item.LocationID</div>
+            </div>
+        </div>
+    }
 }
 
 @*##########################################################################################################
         Code to display the table with the book +++++ENDS++++++
     ##########################################################################################################*@
-
-
 
 @*##########################################################################################################
         Confirmation Message part2
@@ -66,25 +73,24 @@ else
 
 @code {
 
-[Parameter]
-public int id { get; set; }
+    [Parameter]
+    public int id { get; set; }
 
-List<Books> _book;
+    List<Books> _book;
 
-protected override async Task OnInitializedAsync()
-{
-    _book = await _db.Get_SingleBook(id);
-}
+    protected override async Task OnInitializedAsync()
+    {
+        _book = await _db.Get_SingleBook(id);
+    }
 
-//##########################################################################################################
-//Navigation code for the buttons
-//##########################################################################################################
+    //##########################################################################################################
+    //Navigation code for the buttons
+    //##########################################################################################################
 
-void BackNav()
-{
-    NavigationManager.NavigateTo("/BooksPages/Main");
+    void BackNav()
+    {
+        NavigationManager.NavigateTo("/BooksPages/Main");
 
-}
-
+    }
 }
 

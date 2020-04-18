@@ -63,6 +63,5 @@ namespace BlazorDemoUI.Services
             var user = new ClaimsPrincipal(identity);
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
-
     }
 }
