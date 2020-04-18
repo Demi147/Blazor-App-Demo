@@ -18,6 +18,10 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
         {
             book.UserID = id;
         }
+        public void AddAuthor(string _author)
+        {
+            book.BookAuthor = _author;
+        }
         public void AddBookTitle(string _title)
         {
             book.BookTitle = _title;
@@ -47,7 +51,7 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
         {
             book.DatePosted = _date;
         }
-        public void AddInfo(int _user, string _title, int _edition, double _price, string _code, string _institute, DateTime _date)
+        public void AddInfo(int _user, string _title, int _edition, double _price, string _code, string _institute, DateTime _date, string _author)
         {
             book.UserID = _user;
             book.BookTitle = _title;
@@ -56,9 +60,10 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
             book.ModuleCode = _code;
             book.BookInstitute = _institute;
             book.DatePosted = _date;
+            book.BookAuthor = _author;
         }
 
-        public void AddInfo(int _user, string _title, int _edition, double _price, int _loc, string _code, string _institute, DateTime _date)
+        public void AddInfo(int _user, string _title, int _edition, double _price, int _loc, string _code, string _institute, DateTime _date, string _author)
         {
             book.UserID = _user;
             book.BookTitle = _title;
@@ -68,6 +73,7 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
             book.ModuleCode = _code;
             book.BookInstitute = _institute;
             book.DatePosted = _date;
+            book.BookAuthor = _author;
         }
         public void AddInfo(Books _model)
         {
