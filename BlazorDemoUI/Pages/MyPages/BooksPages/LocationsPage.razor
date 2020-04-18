@@ -34,16 +34,15 @@ else
     </div>
     <div class="row" style="padding-top:1px">
         <div class="col-md-4">
-            <select id="selectBox" @bind="selectedLocation" @onclick="@disableControls">
+            <select id="selectBox" @bind="@selectedLocation" @onclick="@disableControls">
+
                 <option value="">-- Select Location --</option>
 
                 @foreach (var item in locationList)
                 {
-                    <option value="@item.LocationID">
-                        @item.Province.ToString(), @item.Address.ToString(),
-                        @item.City.ToString(), @item.Building.ToString()
-                    </option>
+                    <option value="@item.LocationID"> @item.Address, @item.City, @item.Province, @item.Building </option>
                 }
+
             </select>
         </div>
     </div>
@@ -91,8 +90,8 @@ else
 
     public int selectedLocation { get; set; }
 
-    List<Locations> locationList;
     List<Locations> OGlist;
+    List<Locations> locationList;
 
     bool isTrue { get; set; } = false;
 
