@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
+using System.Linq;
 
 namespace DataAccessLibrary
 {
@@ -78,6 +79,11 @@ namespace DataAccessLibrary
 
                 return ASCIIEncoding.ASCII.GetString(enc);
             }
+        }
+
+        public static List<T> Page<T>(this List<T> en, int pageSize, int page)
+        {
+            return en.Skip(page * pageSize).Take(pageSize).ToList();
         }
     }
 
