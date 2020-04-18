@@ -117,36 +117,6 @@ else
     }
 }
 
-@*##########################################################################################################
-        Pagination Code - currently only fot display purposes
-    ##########################################################################################################*@
-
-@*<div class="container" style="float: left;">
-        <ul class="pagination pagination-sm">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-
-        <ul class="pagination pagination-lg">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-    </div>*@
-
 
 @*##########################################################################################################
     Start of c# code
@@ -189,8 +159,9 @@ else
         pageSize = 5;
         curPage = 1;
 
-        OGlist = await _db.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir);
-        booksList = OGlist;
+        booksList = Utilities.Page(OGlist, 2, 0);
+
+        //booksList = OGlist;
 
         totalRecords = await _db.Count_TotalBooks();
         totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
@@ -295,7 +266,7 @@ else
 
     public async Task refreshRecords(int currentPage)
     {
-        booksList = await _db.ListAll((currentPage - 1) * pageSize, pageSize, sortColumnName, sortDir);
+        booksList = Utilities.Page(OGlist, 2, currentPage);
         curPage = currentPage;
         this.StateHasChanged();
     }
