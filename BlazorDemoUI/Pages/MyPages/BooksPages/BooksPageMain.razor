@@ -88,7 +88,7 @@ else
         @for (int i = startPage; i <= endPage; i++)
         {
             var currentPage = i;
-            <button class="btn btn-custom pagebutton @(currentPage==curPage?"btn-danger":"")" @onclick=@(async () =>await refreshRecords(currentPage))>
+            <button class="btn btn-custom pagebutton @(currentPage == curPage?"btn-danger":"")" @onclick=@(async () =>await refreshRecords(currentPage))>
                 @currentPage
             </button>
         }
@@ -139,7 +139,7 @@ else
     int startPage;
     int endPage;
     string sortColumnName = "SalesNumber";
-    string sortDir = "DESC";
+    string sortDir = "ASC";
     //******************************************
 
     //bool isChecked { get; set; } = false;
@@ -156,18 +156,18 @@ else
         //booksList = OGlist;
 
         pagerSize = 3;
-        pageSize = 5;
+        pageSize = 10;
         curPage = 1;
 
-        booksList = Utilities.Page(OGlist, 2, 0);
+        //booksList = Utilities.Page(OGlist, pageSize, curPage);
 
         //booksList = OGlist;
 
-        totalRecords = await _db.Count_TotalBooks();
+        totalRecords = OGlist.Count();
         totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
         SetPagerSize("forward");
 
-
+        refreshRecords(curPage);
     }
 
     //##########################################################################################################
@@ -259,14 +259,13 @@ else
         NavigationManager.NavigateTo("/BooksPages/Main/AddBooks");
     }
 
-
     //##########################################################################################################
     //Code for Paging
     //##########################################################################################################
 
     public async Task refreshRecords(int currentPage)
     {
-        booksList = Utilities.Page(OGlist, 2, currentPage);
+        booksList = Utilities.Page(OGlist, pageSize, currentPage - 1);
         curPage = currentPage;
         this.StateHasChanged();
     }
