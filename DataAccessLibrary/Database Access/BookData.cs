@@ -352,7 +352,7 @@ namespace DataAccessLibrary
         {
             try
             {
-                string sql = @"Update dbo.tblBookSales Set UserID = " + book.UserID + ",BookTitle = '" + book.BookTitle + "',BookAuthor = '" + book.BookAuthor+ "',BookEditiion = " + book.BookEdition + ",BookPrice = " + book.BookPrice +
+                string sql = @"Update dbo.tblBookSales Set UserID = " + book.UserID + ",BookTitle = '" + book.BookTitle + "',BookAuthor = '" + book.BookAuthor + "',BookEditiion = " + book.BookEdition + ",BookPrice = " + book.BookPrice +
                              ",LocationID = " + book.LocationID + ",ModuleCode = '" + book.ModuleCode + "',BookInstitute = '" + book.BookInstitute + "',DatePosted = " + book.DatePosted +
                              " Where SalesNumber = " + book.SalesNumber + "";
 
@@ -413,5 +413,7 @@ namespace DataAccessLibrary
                 return null;
             }
         }
+
     }
 }
+

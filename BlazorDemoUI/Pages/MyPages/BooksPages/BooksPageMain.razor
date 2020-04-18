@@ -156,7 +156,7 @@ else
         //booksList = OGlist;
 
         pagerSize = 3;
-        pageSize = 10;
+        pageSize = 5;
         curPage = 1;
 
         //booksList = Utilities.Page(OGlist, pageSize, curPage);
@@ -180,12 +180,13 @@ else
         {
             if (FilterVal == null || FilterVal.Length == 0)
             {
-
-                booksList = await _db.Get_Books();
+                OGlist = await _db.Get_Books();
+                refreshRecords(curPage);
             }
             else
             {
-                booksList = await _db.Search_MultiChar(FilterVal);
+                OGlist = await _db.Search_MultiChar(FilterVal);
+                refreshRecords(curPage);
                 FilterVal = "";
             }
         }
@@ -206,11 +207,13 @@ else
             if ((minPrice.ToString() == null || minPrice.ToString().Length == 0) || (maxPrice.ToString() == null || maxPrice.ToString().Length == 0))
             {
 
-                booksList = await _db.Get_Books();
+                OGlist = await _db.Get_Books();
+                refreshRecords(curPage);
             }
             else
             {
-                booksList = await _db.SearchBooks_PriceRange(Convert.ToDecimal(minPrice), Convert.ToDecimal(maxPrice));
+                OGlist = await _db.SearchBooks_PriceRange(Convert.ToDecimal(minPrice), Convert.ToDecimal(maxPrice));
+                refreshRecords(curPage);
                 minPrice = "";
                 maxPrice = "";
             }
@@ -232,13 +235,15 @@ else
             toggle();
             if (boolValue == true)
             {
-                booksList = await _db.OrderBooks_Price("ASC");
+                OGlist = await _db.OrderBooks_Price("ASC");
+                refreshRecords(curPage);
                 //isChecked = !isChecked;
             }
             else
             {
                 toggle();
-                booksList = await _db.Get_Books();
+                OGlist = await _db.Get_Books();
+                refreshRecords(curPage);
                 //booksList = await _db.OrderBooks_Price("DESC");
                 //isChecked = !isChecked;
             }
