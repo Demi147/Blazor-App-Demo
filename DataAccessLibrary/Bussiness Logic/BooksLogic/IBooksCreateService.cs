@@ -16,8 +16,8 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
         void AddBookPrice(double _price);
         void AddBookTitle(string _title);
         void AddInfo(Books _model);
-        void AddInfo(int _user, string _title, int _edition, double _price, int _loc, string _code, string _institute, DateTime _date, string _author);
-        void AddInfo(int _user, string _title, int _edition, double _price, string _code, string _institute, DateTime _date, string _author);
+        void AddInfo(int _user, string _title, string _author, int _edition, double _price, int _loc, string _code, string _institute, DateTime _date);
+        void AddInfo(int _user, string _title, string _author, int _edition, double _price, string _code, string _institute, DateTime _date);
         void addUser(int id);
         void flush();
     }

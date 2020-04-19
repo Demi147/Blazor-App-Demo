@@ -21,6 +21,9 @@
     <label>Title: </label>
     <input type="text" class="form-control" name="txtBookTitle" @bind="@title" />
     <br />
+    <label>Author: </label>
+    <input type="text" class="form-control" name="txtBookAuthor" @bind="@author" />
+    <br />
     <label>Edition:</label>
     <input type="text" class="form-control" name="txtBookEdition" @bind="@edition" />
     <br />
@@ -48,6 +51,7 @@
     List<Books> OGlist;
 
     string title { get; set; }
+    string author { get; set; }
     string edition { get; set; }
     string price { get; set; }
     string modCode { get; set; }
@@ -61,11 +65,12 @@
     {
         OGlist = await _db.Get_Books();
         booksList = OGlist;
+
     }
 
     void AddNav()
     {
-        //.AddInfo(id, title, Convert.ToInt32(edition), Convert.ToDouble(price), modCode, institute, datePosted); //Adding info to model
+        booksAdd.AddInfo(id, title, author, Convert.ToInt32(edition), Convert.ToDouble(price), modCode, institute, datePosted); //Adding info to model
         navigationManager.NavigateTo("/BooksPages/Main/AddBooks/Locations");
     }
     void BackNav()

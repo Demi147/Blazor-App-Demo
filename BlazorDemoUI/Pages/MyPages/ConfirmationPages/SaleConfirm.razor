@@ -42,8 +42,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        OGlist = await _db.Get_Books();
-        booksList = OGlist;
+        //OGlist = await _db.Get_Books();
+        //booksList = OGlist;
 
         _book = booksAdd.book;
     }
@@ -53,7 +53,9 @@
         try
         {
             NavigationManager.NavigateTo("/BooksPages/Main");
+
             await _db.InsertBook(_book);
+
             OGlist = await _db.Get_Books();
             booksList = OGlist;
 

@@ -51,29 +51,29 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
         {
             book.DatePosted = _date;
         }
-        public void AddInfo(int _user, string _title, int _edition, double _price, string _code, string _institute, DateTime _date, string _author)
+        public void AddInfo(int _user, string _title, string _author, int _edition, double _price, string _code, string _institute, DateTime _date)
         {
             book.UserID = _user;
             book.BookTitle = _title;
+            book.BookAuthor = _author;
             book.BookEdition = _edition;
             book.BookPrice = _price;
             book.ModuleCode = _code;
             book.BookInstitute = _institute;
             book.DatePosted = _date;
-            book.BookAuthor = _author;
         }
 
-        public void AddInfo(int _user, string _title, int _edition, double _price, int _loc, string _code, string _institute, DateTime _date, string _author)
+        public void AddInfo(int _user, string _title, string _author, int _edition, double _price, int _loc, string _code, string _institute, DateTime _date)
         {
             book.UserID = _user;
             book.BookTitle = _title;
+            book.BookAuthor = _author;
             book.BookEdition = _edition;
             book.BookPrice = _price;
             book.LocationID = _loc;
             book.ModuleCode = _code;
             book.BookInstitute = _institute;
             book.DatePosted = _date;
-            book.BookAuthor = _author;
         }
         public void AddInfo(Books _model)
         {
