@@ -27,30 +27,33 @@
 }
 else
 {
-    <div class="row">
-        <div class="col-md-4">
-            <label for="Locations" class="control-label">Select a Location:</label>
+    <fieldset disabled=@isTrueTxt>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="Locations" class="control-label">Select a Location:</label>
+            </div>
         </div>
-    </div>
-    <div class="row" style="padding-top:1px">
-        <div class="col-md-4">
-            <select id="selectBox" @bind="@selectedLocation" @onclick="@disableControls">
+        <div class="row" style="padding-top:1px">
+            <div class="col-md-4">
+                <select id="selectBox" @bind="@selectedLocation" @onclick="@disableControls">
 
-                <option value="">-- Select Location --</option>
+                    <option value="">-- Select Location --</option>
 
-                @foreach (var item in locationList)
-                {
-                    <option value="@item.LocationID"> @item.Address, @item.City, @item.Province, @item.Building </option>
-                }
+                    @foreach (var item in locationList)
+                    {
+                        <option value="@item.LocationID"> @item.Address, @item.City, @item.Province, @item.Building </option>
+                    }
 
-            </select>
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="row" style="padding-top:5px">
-        <div class="col-md-4">
-            <label class="control-label"> Selected Location Name: @selectedLocation</label>
+        <div class="row" style="padding-top:5px">
+            <div class="col-md-4">
+                <label class="control-label"> Selected Location Name: @selectedLocation</label>
+            </div>
         </div>
-    </div>
+    </fieldset>
+    
 }
 
 @*##########################################################################################################
@@ -63,24 +66,23 @@ else
     Code to display controls to enter own location (FIELDSET IS USED TO DISABLE CONTROLS IF COMBOBOX IS USED)
     ##########################################################################################################*@
 
-<fieldset disabled=@isTrue>
+<fieldset disabled=@isTrueCombo>
     <h6>Desired Transaction Location:</h6>
-    Enter Province: <input type="text" id="txtProvince" placeholder="Enter Province here" style="" />
+    Enter Province: <input type="text" id="txtProvince" @onclick="@disableCombo" @bind="@Prov" placeholder="Enter Province here" style="" />
     <br />
     <br />
-    Enter Physical Adress: <input type="text" id="txtPhysAdres" placeholder="Enter Physical Address here" style="" />
+    Enter Physical Adress: <input type="text" id="txtPhysAdres" @onclick="@disableCombo" @bind="@physAdr" placeholder="Enter Physical Address here" style="" />
     <br />
     <br />
-    Enter City: <input type="text" id="txtCity" placeholder="Enter City here" style="" />
+    Enter City: <input type="text" id="txtCity" @onclick="@disableCombo" @bind="@city" placeholder="Enter City here" style="" />
     <br />
     <br />
-    Enter Transaction Building: <input type="text" id="txtBuilding" placeholder="Enter Building here" style="" />
+    Enter Transaction Building: <input type="text" id="txtBuilding" @onclick="@disableCombo" @bind="@building" placeholder="Enter Building here" style="" />
     <br />
     <br />
 </fieldset>
 
-<button type="submit" id="btnNext" class="btn btn-primary" @onclick="NextNav" style="float: left;">Submit</button>
-
+<button type="submit" id="btnNext" class="btn btn-primary"  @onclick="NextNav" style="float: left;">Submit</button>
 
 @*##########################################################################################################
     Start of c# code
@@ -93,7 +95,13 @@ else
     List<Locations> OGlist;
     List<Locations> locationList;
 
-    bool isTrue { get; set; } = false;
+    string Prov;
+    string physAdr;
+    string city;
+    string building;
+
+    bool isTrueCombo { get; set; } = false;
+    bool isTrueTxt { get; set; } = false;
 
     int id = 1;
 
@@ -101,6 +109,37 @@ else
     {
         OGlist = await _db.Get_AllLocations();
         locationList = OGlist;
+
+    }
+
+    //##########################################################################################################
+    //Code to add own location
+    //##########################################################################################################
+
+    private async Task InsertLocation()
+    {
+        try
+        {
+            Locations loc = new Locations
+            {
+                Province = Prov,
+                Address = physAdr,
+                City = city,
+                Building = building
+
+            };
+
+            await _db.InsertLocation(loc);
+
+            //OGlist = await _db.Get_AllLocations();
+            //locationList = OGlist;
+
+        }
+        catch (Exception ex)
+        {
+            string stest = ex.ToString();
+        }
+
     }
 
     //##########################################################################################################
@@ -111,13 +150,30 @@ else
     {
         if (selectedLocation < 0)
         {
-            isTrue = false;
+            isTrueCombo = false;
         }
         else
         {
-            isTrue = true;
+            isTrueCombo = true;
         }
     }
+
+    //##########################################################################################################
+    //Code to disable combobox
+    //##########################################################################################################
+
+    public void disableCombo()
+    {
+        if (Prov != null || physAdr != null || city != null || building != null)
+        {
+            isTrueTxt = true;
+        }
+        else
+        {
+            isTrueTxt = false;
+        }
+    }
+
 
     void NextNav()
     {

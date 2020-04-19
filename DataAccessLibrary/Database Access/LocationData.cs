@@ -103,8 +103,8 @@ namespace DataAccessLibrary
         {
             try
             {
-                string sql = @"Insert into dbo.tblLocations values(LocationsID,Province,City,Address,Building)
-                          values(@LocationsID,@Province,@City,@Address,@Building)";
+                string sql = @"Insert into dbo.tblLocations (Province,City,Address,Building)
+                          values(@Province,@City,@Address,@Building)";
 
                 return _db.SaveData(sql, location);
             }
