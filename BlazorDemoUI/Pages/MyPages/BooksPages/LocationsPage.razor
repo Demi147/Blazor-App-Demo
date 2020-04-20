@@ -53,7 +53,7 @@ else
             </div>
         </div>
     </fieldset>
-    
+
 }
 
 @*##########################################################################################################
@@ -82,7 +82,7 @@ else
     <br />
 </fieldset>
 
-<button type="submit" id="btnNext" class="btn btn-primary"  @onclick="NextNav" style="float: left;">Submit</button>
+<button type="submit" id="btnNext" class="btn btn-primary" @onclick="InsertLocation" style="float: left;">Submit</button>
 
 @*##########################################################################################################
     Start of c# code
@@ -131,12 +131,10 @@ else
 
             await _db.InsertLocation(loc);
 
-            string val1 = physAdr.ToString();
-            string val2 = city.ToString();
-            selectedLocation = await _db.Get_LocationID_Address(val1, val2);
+            selectedLocation = await _db.Get_LocationID_Address(physAdr, city);
 
-            //OGlist = await _db.Get_AllLocations();
-            //locationList = OGlist;
+            booksAdd.AddBookLocation(selectedLocation);
+            NavigationManager.NavigateTo("/BooksPages/Main/SaleConfirm");
 
         }
         catch (Exception ex)
@@ -176,14 +174,6 @@ else
         {
             isTrueTxt = false;
         }
-    }
-
-
-    void NextNav()
-    {
-        booksAdd.AddBookLocation(selectedLocation);
-        NavigationManager.NavigateTo("/BooksPages/Main/SaleConfirm");
-
     }
 
 }
