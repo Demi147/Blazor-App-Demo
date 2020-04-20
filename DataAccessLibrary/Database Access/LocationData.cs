@@ -19,9 +19,8 @@ namespace DataAccessLibrary
         }
 
         //##############################################################################################################################################################################################################
-        //Get methods for Locations Data Model
-        //##############################################################################################################################################################################################################
-        public Task<List<Locations>> Get_AllLocations()
+        #region Get Methods for Locations Data Model
+        public Task<List<Locations>> Get_AllLocations()//Tested - Working
         {
             try
             {
@@ -36,12 +35,13 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task<int> Get_LocationID_Address(string SLocationAddress, string sCity)
+        public Task<int> Get_LocationID_Address(string SLocationAddress, string sCity)//Tested - Working
         {
             try
             {
-                var iLocalID = Task.FromResult(_db.Get<int>($"Select LocationID from dbo.tblLoactions Where Like '" + SLocationAddress + "' and City = '" + sCity + "'", null, commandType: CommandType.Text));
+                var iLocalID = Task.FromResult(_db.Get<int>($"Select LocationID From dbo.tblLocations Where Address = '" + SLocationAddress + "' And City = '" + sCity + "'", null, commandType: CommandType.Text));
 
+                int itest = iLocalID.Result;
                 return iLocalID;
             }
             catch (Exception ex)
@@ -51,11 +51,11 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task<List<Locations>> Get_AllProvince()
+        public Task<List<Locations>> Get_AllProvince()//Tested - Working
         {
             try
             {
-                string sql = @"Select Province from dbo.tblLocations";
+                string sql = @"Select Distinct Province from dbo.tblLocations";
 
                 return _db.LoadData<Locations, dynamic>(sql, new { });
             }
@@ -66,11 +66,11 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task<List<Locations>> Get_AllCities()
+        public Task<List<Locations>> Get_AllCities()//Tested - Working
         {
             try
             {
-                string sql = @"Select City From dbo.tblLocations";
+                string sql = @"Select Distinct City From dbo.tblLocations";
 
                 return _db.LoadData<Locations, dynamic>(sql, new { });
             }
@@ -81,7 +81,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task<string> Get_Address_LocalID(int iLocationID)
+        public Task<string> Get_Address_LocalID(int iLocationID)//Tested - Working
         {
             try
             {
@@ -95,11 +95,11 @@ namespace DataAccessLibrary
                 return null;
             }
         }
+        #endregion
 
         //##############################################################################################################################################################################################################
-        //CRUD methods for Locations Data Model
-        //##############################################################################################################################################################################################################
-        public Task InsertLocation(Locations location)
+        #region CRUD methods for Locations Data Model
+        public Task InsertLocation(Locations location)//Tested - Working
         {
             try
             {
@@ -115,11 +115,11 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task RemoveLocation(Locations location, int iLocationID)
+        public Task RemoveLocation(Locations location)//Tested - Working
         {
             try
             {
-                string sql = @"Delete from dbo.tblLocations Where LocationID=" + iLocationID;
+                string sql = @"Delete from dbo.tblLocations Where LocationID=" + location.LocationID;
 
                 return _db.SaveData(sql, location);
             }
@@ -129,11 +129,11 @@ namespace DataAccessLibrary
                 return null;
             }
         }
+        #endregion
 
         //##############################################################################################################################################################################################################
-        //Update methods for Locations Data Model
-        //##############################################################################################################################################################################################################
-        public Task UpdateLocation_All(Locations location)
+        #region Update methods for Locations Data Model
+        public Task UpdateLocation_All(Locations location)//Tested - Working
         {
             try
             {
@@ -149,7 +149,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task UpdateLocation_Province(Locations location)
+        public Task UpdateLocation_Province(Locations location)//Tested - Working
         {
             try
             {
@@ -164,7 +164,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task UpdateLocation_City(Locations location)
+        public Task UpdateLocation_City(Locations location)//Tested - Working
         {
             try
             {
@@ -179,7 +179,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task UpdateLocation_Address(Locations location)
+        public Task UpdateLocation_Address(Locations location)//Tested - Working
         {
             try
             {
@@ -195,7 +195,7 @@ namespace DataAccessLibrary
         }
 
 
-        public Task UpdateLocation_Building(Locations location)
+        public Task UpdateLocation_Building(Locations location)//Tested - Working
         {
             try
             {
@@ -209,12 +209,11 @@ namespace DataAccessLibrary
                 return null;
             }
         }
+        #endregion
 
         //##############################################################################################################################################################################################################
-        //Other methods of Location Data Model
-        //##############################################################################################################################################################################################################
-
-        public Task<int> Count_TotalLocations()
+        #region Other methods of Location Data Model
+        public Task<int> Count_TotalLocations()//Tested - Working
         {
             try
             {
@@ -231,7 +230,6 @@ namespace DataAccessLibrary
 
         public Task<List<Locations>> ListAll(int skip, int take, string orderby, string direction = "DESC")
         {
-
             try
             {
                 var locations = Task.FromResult(_db.GetAll<Locations>($"Select * from dbo.tblBookSales Order By {orderby} {direction} Offset {skip} Rows fetch new {take} rows only;",
@@ -245,5 +243,6 @@ namespace DataAccessLibrary
                 return null;
             }
         }
+        #endregion
     }
 }

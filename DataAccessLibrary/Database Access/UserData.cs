@@ -19,9 +19,8 @@ namespace DataAccessLibrary
         }
 
         //##############################################################################################################################################################################################################
-        // Get methods for User Data Model
-        //##############################################################################################################################################################################################################
-        public Task<List<Users>> Get_AllUsers()//add - remove password from sql
+        #region Get methods for User Data Model
+        public Task<List<Users>> Get_AllUsers()//Tested - Working
         {
             try
             {
@@ -36,11 +35,11 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task<List<Users>> Get_SingleUser(int iUserID)
+        public Task<List<Users>> Get_SingleUser(int iUserID)//Tested - Working
         {
             try
             {
-                string sql = @"Select * From dbo.tblUsers Where UserID =" + iUserID + "";
+                string sql = @"Select * From dbo.tblUsers Where UserID = " + iUserID + "";
 
                 return _db.LoadData<Users, dynamic>(sql, new { });
             }
@@ -51,13 +50,13 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task<List<Users>> Get_UserID_Email(string sUserEmail)
+        public Task<int> Get_UserID_Email(string sUserEmail)//Tested - Working
         {
             try
             {
-                string sql = @"Select UserID From dbo.tblUsers Where UserEmail ='" + sUserEmail + "'";
+                var iUserID = Task.FromResult(_db.Get<int>($"Select UserID From dbo.tblUsers Where UserEmail ='" + sUserEmail + "'", null, commandType: CommandType.Text));
 
-                return _db.LoadData<Users, dynamic>(sql, new { });
+                return iUserID;
             }
             catch (Exception ex)
             {
@@ -66,7 +65,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task<bool> Get_IsAdmin_UserID(int iUserID)//Method that returns true if the user is admin and false if not using the userID to find user int DB
+        public Task<bool> Get_IsAdmin_UserID(int iUserID)//Tested - Working
         {
             try
             {
@@ -81,7 +80,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task<string> Get_UserEmail_UserID(int iUserID)
+        public Task<string> Get_UserEmail_UserID(int iUserID)//Tested - Working
         {
             try
             {
@@ -96,7 +95,7 @@ namespace DataAccessLibrary
             }
         }
 
-        private Task<string> Get_UserPassword_UserID(int iUserID)
+        private Task<string> Get_UserPassword_UserID(int iUserID)//Not tested
         {
             try
             {
@@ -110,11 +109,11 @@ namespace DataAccessLibrary
                 return null;
             }
         }
+        #endregion
 
         //##############################################################################################################################################################################################################
-        // CRUD methods for User Data Model
-        //##############################################################################################################################################################################################################
-        public Task InsertUser(Users user)
+        #region CRUD methods for User Data Model
+        public Task InsertUser(Users user)//Tested - Working
         {
             try
             {
@@ -130,7 +129,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task RemoveUser(Users user)
+        public Task RemoveUser(Users user)//Tested - Working
         {
             try
             {
@@ -144,12 +143,11 @@ namespace DataAccessLibrary
                 return null;
             }
         }
+        #endregion
 
         //##############################################################################################################################################################################################################
-        // Update methods for User Data Model
-        //##############################################################################################################################################################################################################
-
-        public Task UpdateUser_All(Users user)
+        #region Update methods for User Data Model
+        public Task UpdateUser_All(Users user)//Tested - Working
         {
             try
             {
@@ -164,7 +162,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task UpdateUser_UserName(Users user)
+        public Task UpdateUser_UserName(Users user)//Tested - Working
         {
             try
             {
@@ -179,7 +177,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task UpdateUser_UserEmail(Users user)
+        public Task UpdateUser_UserEmail(Users user)//Tested - Working
         {
             try
             {
@@ -194,7 +192,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public Task UpdateUser_Admin(Users user)
+        public Task UpdateUser_Admin(Users user)//Tested - Working
         {
             try
             {
@@ -208,15 +206,15 @@ namespace DataAccessLibrary
                 return null;
             }
         }
+        #endregion
 
         //##############################################################################################################################################################################################################
-        // Other methods for User Data Model
-        //##############################################################################################################################################################################################################
-        public Task<int> Count()
+        #region Other methods for User Data Model
+        public Task<int> Count()//Tested - Working
         {
             try
             {
-                var totalUsers = Task.FromResult(_db.Get<int>($"Select count(*) From dbo.tblUsers", null, commandType: CommandType.Text));
+                var totalUsers = Task.FromResult(_db.Get<int>($"Select count(UserID) From dbo.tblUsers", null, commandType: CommandType.Text));
 
                 return totalUsers;
             }
@@ -242,7 +240,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public bool VarifyLogin(string sEmail, string sPassword)
+        public bool VarifyLogin(string sEmail, string sPassword)//Tested - Working
         {
             try
             {
@@ -250,7 +248,7 @@ namespace DataAccessLibrary
 
                 var bValidLogin = false;
 
-                int iTotal = Int32.Parse(TotalUsers.ToString());
+                int iTotal = TotalUsers.Result;
 
                 if (iTotal == 1)
                 {
@@ -269,6 +267,6 @@ namespace DataAccessLibrary
                 return false;
             }
         }
-
+        #endregion
     }
 }

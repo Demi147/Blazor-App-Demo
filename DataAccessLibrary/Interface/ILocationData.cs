@@ -14,7 +14,7 @@ namespace DataAccessLibrary
         Task<int> Get_LocationID_Address(string SLocationAddress, string sCity);
         Task InsertLocation(Locations location);
         Task<List<Locations>> ListAll(int skip, int take, string orderby, string direction = "DESC");
-        Task RemoveLocation(Locations location, int iLocationID);
+        Task RemoveLocation(Locations location);
         Task UpdateLocation_Address(Locations location);
         Task UpdateLocation_All(Locations location);
         Task UpdateLocation_Building(Locations location);
