@@ -131,6 +131,10 @@ else
 
             await _db.InsertLocation(loc);
 
+            string val1 = physAdr.ToString();
+            string val2 = city.ToString();
+            selectedLocation = await _db.Get_LocationID_Address(val1, val2);
+
             //OGlist = await _db.Get_AllLocations();
             //locationList = OGlist;
 

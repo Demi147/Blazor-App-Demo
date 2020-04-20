@@ -1,18 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataAccessLibrary.Models
 {
     public class Books
     {
+        
         public int SalesNumber { get; set; }
         public int UserID { get; set; }
+
+        [Required(ErrorMessage = "Enter the Title")]
         public string BookTitle { get; set; }
+
+        [Required(ErrorMessage = "Enter the Author")]
         public string BookAuthor { get; set; }
+
+        [Required(ErrorMessage = "Enter the Edition")]
+        [Range(typeof(int), "1", "100", ErrorMessage = "Enter a valid Edition range")]
         public int BookEdition { get; set; }
+
+        [Required(ErrorMessage = "Enter the Price")]
+        [DataType(DataType.Currency, ErrorMessage ="The book price can only be a numeric value")]
         public double BookPrice { get; set; }
+
+        [Required(ErrorMessage = "Enter the Module Code")]
+        [StringLength(7, MinimumLength = 7, ErrorMessage ="The module code cannot be shorter or longer than 7")]
         public string ModuleCode { get; set; }
+
+        [Required(ErrorMessage = "Enter the Institute")]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "That institute does not exist")]
         public string BookInstitute { get; set; }
         public int LocationID { get; set; }
         public DateTime DatePosted { get; set; }
