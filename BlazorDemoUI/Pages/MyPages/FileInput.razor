@@ -4,12 +4,16 @@
 @using DataAccessLibrary
 @using DataAccessLibrary.Models
 
+@inject IBookData _db
 @inject IFileUpload fileUpload
 
 
 <h3>FileInput</h3>
 
 <InputFile OnChange="HandelFileSelected"></InputFile>
+<button type="reset" class="btn btn-primary" @onclick="UploadImageDb">Search</button>
+<button type="reset" class="btn btn-primary" @onclick="testImage">Search</button>
+<img id="imgTest" src="@sImageData" />
 
 @*@if (file != null)
     {
@@ -19,6 +23,7 @@
     }*@
 
 @code {
+    public string sImageData = "data:image/jpeg;base64,";
     IFileListEntry file;
 
     async Task HandelFileSelected(IFileListEntry[] files)
@@ -27,17 +32,14 @@
         if (file != null)
         {
             await fileUpload.UploadAsync(file);
-            UploadImageDb(files);
         }
-
     }
 
-    void UploadImageDb(IFileListEntry[] files)
+    async Task UploadImageDb()
     {
-        file = files.FirstOrDefault();
 
         byte[] bImageByte = null;
-        bImageByte = fileUpload.UploadAsync2(file);
+        bImageByte = fileUpload.getImageBytes();
 
         Books b = new Books
         {
@@ -51,13 +53,17 @@
             BookInstitute = "NWu",
             DatePosted = DateTime.Today.Date,
             BookImage = bImageByte
-
-
-
         };
-        fileUpload.InsertImage(b);
-
+        await _db.InsertBook(b);
+        fileUpload.deleteLocal();
     }
 
+    async void loadImage()
+    {
+        byte[] dbImage = await _db.Get_ImageBytes(0);
 
+        string sImageBase64 = Convert.ToBase64String(dbImage);
+
+        sImageData = sImageData + sImageBase64;
+    }
 }

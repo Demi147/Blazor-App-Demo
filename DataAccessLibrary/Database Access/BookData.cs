@@ -112,6 +112,21 @@ namespace DataAccessLibrary
             }
         }
 
+        public Task<byte[]> Get_ImageBytes(int iSalesNumber)
+        {
+            try
+            {
+                var imageByte = Task.FromResult(_db.Get<byte[]>($"Select BookImage from dbo.tblBookSales Where SalesNumber = " + iSalesNumber + "", null, commandType: CommandType.Text));
+
+                return imageByte;
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
+        }
+
         //##############################################################################################################################################################################################################
         //Search methods for Books Data Model
         //##############################################################################################################################################################################################################
@@ -197,8 +212,8 @@ namespace DataAccessLibrary
         {
             try
             {
-                string sql = @"Insert into dbo.tblBookSales(UserID,BookTitle,BookAuthor,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute,DatePosted)
-                           values(@UserID,@BookTitle,@BookAuthor,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute,@DatePosted)";
+                string sql = @"Insert into dbo.tblBookSales(UserID,BookTitle,BookAuthor,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute,DatePosted,BookImage) 
+                             values(@UserID,@BookTitle,@BookAuthor,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute,@DatePosted,@BookImage)";
 
                 return _db.SaveData(sql, book);
             }

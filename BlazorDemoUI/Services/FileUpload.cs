@@ -5,8 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using BlazorInputFile;
 using Microsoft.AspNetCore.Hosting;
-using Dapper;
-using System.Data;
 using DataAccessLibrary.Models;
 using DataAccessLibrary;
 
@@ -16,14 +14,10 @@ namespace BlazorDemoUI.Services
     {
         private readonly IWebHostEnvironment _environment;
         private string sPath;
-        private readonly ISqlDataAccess _db;
-        private byte[] bImage2 = null;
 
-        public FileUpload(IWebHostEnvironment environment, ISqlDataAccess db)
+        public FileUpload(IWebHostEnvironment environment)
         {
             _environment = environment;
-            _db = db;
-            string stest = _db.ToString();
         }
         public async Task UploadAsync(IFileListEntry fileEntry)
         {
@@ -31,37 +25,34 @@ namespace BlazorDemoUI.Services
             sPath = path;
             var ms = new MemoryStream();
             await fileEntry.Data.CopyToAsync(ms);
-            using (FileStream file = new FileStream(path, FileMode.Create, FileAccess.Write))
+            using (FileStream copyStream = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
-                ms.WriteTo(file);
+                ms.WriteTo(copyStream);
             }
         }
 
-        public byte[] UploadAsync2(IFileListEntry fileEntry)
+        public byte[] getImageBytes()
         {
-            bImage2 = null;
+            byte[] bImageData = null;
             FileStream imageStream = new FileStream(sPath, FileMode.Open, FileAccess.Read);
 
             BinaryReader binReader = new BinaryReader(imageStream);
-            bImage2 = binReader.ReadBytes((int)imageStream.Length);
+            bImageData = binReader.ReadBytes((int)imageStream.Length);
 
-            return bImage2;
+            imageStream.Dispose();
+            binReader.Dispose();
+            return bImageData;
         }
 
-        public Task InsertImage(Books book)
+        public void deleteLocal()
         {
             try
             {
-                string sql = @"Insert into dbo.tblBookSales(SalesNumber,UserID,BookTitle,BookEdition,BookPrice,LocationID,ModuleCode,BookInstitute,DatePosted,BookImage)
-                           values(@SalesNumber,@UserID,BookTitle,@BookEdition,@BookPrice,@LocationID,@ModuleCode,@BookInstitute,@DatePosted,@BookImage)";
-
-                return _db.SaveData(sql, book);
-
+                File.Delete(sPath);
             }
             catch (Exception ex)
             {
-                string stest = ex.ToString();
-                return null;
+                string sError = ex.ToString();
             }
         }
     }
