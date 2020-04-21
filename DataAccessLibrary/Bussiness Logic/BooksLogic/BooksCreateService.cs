@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using DataAccessLibrary.Models;
 
@@ -51,7 +52,11 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
         {
             book.DatePosted = _date;
         }
-        public void AddInfo(int _user, string _title, string _author, int _edition, double _price, string _code, string _institute, DateTime _date)
+        public void AddBookImage(byte[] _img)
+        {
+            book.BookImage = _img;
+        }
+        public void AddInfo(int _user, string _title, string _author, int _edition, double _price, string _code, string _institute, DateTime _date, byte[] _img)
         {
             book.UserID = _user;
             book.BookTitle = _title;
@@ -61,9 +66,10 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
             book.ModuleCode = _code;
             book.BookInstitute = _institute;
             book.DatePosted = _date;
+            book.BookImage = _img;
         }
 
-        public void AddInfo(int _user, string _title, string _author, int _edition, double _price, int _loc, string _code, string _institute, DateTime _date)
+        public void AddInfo(int _user, string _title, string _author, int _edition, double _price, int _loc, string _code, string _institute, DateTime _date, byte[] _img)
         {
             book.UserID = _user;
             book.BookTitle = _title;
@@ -74,6 +80,7 @@ namespace DataAccessLibrary.Bussiness_Logic.BooksLogic
             book.ModuleCode = _code;
             book.BookInstitute = _institute;
             book.DatePosted = _date;
+            book.BookImage = _img;
         }
         public void AddInfo(Books _model)
         {

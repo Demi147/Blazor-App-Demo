@@ -43,7 +43,7 @@ else
         @*##########################################################################################################
                 Table 1
             ##########################################################################################################*@
-        <table class="table table-hover">
+        @*<table class="table table-hover">
             <thead class="thead-light">
                 <tr>
                     <th>Title</th>
@@ -64,7 +64,7 @@ else
             </tbody>
         </table>
 
-        <br />
+        <br />*@
 
         @*##########################################################################################################
                 Table 2
@@ -91,6 +91,11 @@ else
                     <th>Institute</th>
                     <td>@item.BookInstitute</td>
                 </tr>
+                <tr>
+                    <th>Image</th>
+                     
+                    <td><img id="imgTest" src="@sImageData" width="200" height="200" /></td>
+                </tr>
             </thead>
         </table>
 
@@ -99,7 +104,7 @@ else
         @*##########################################################################################################
                 Table 3
             ##########################################################################################################*@
-        <table class="table table-hover  " >
+        @*<table class="table table-hover  " >
 
             <tbody class="thead-light">
                 <tr class="row">
@@ -124,7 +129,7 @@ else
                     <td class="col-3">@item.BookInstitute</td>
                 </tr>
             </tbody>
-        </table>
+        </table>*@
     }
 }
 
@@ -140,9 +145,14 @@ else
 
     List<Books> _book;
 
+    public byte[] bImageByte = null;
+    public string sImageData = "data:image/jpeg;base64,";
+    IFileListEntry file;
+
     protected override async Task OnInitializedAsync()
     {
         _book = await _db.Get_SingleBook(id);
+        loadImage();
     }
 
     //##########################################################################################################
@@ -158,5 +168,13 @@ else
     {
         //buyService.addSalesNumber(_book.SalesNumber);
         NavigationManager.NavigateTo("/BooksPages/Main/RequestPurchase");
+    }
+
+    async void loadImage()
+    {
+        byte[] dbImage = await _db.Get_ImageBytes(id);
+        string sImageBase64 = Convert.ToBase64String(dbImage);
+
+        sImageData = sImageData + sImageBase64;
     }
 }
