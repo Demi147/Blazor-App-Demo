@@ -120,21 +120,29 @@ else
     {
         try
         {
-            Locations loc = new Locations
+            if (isTrueCombo == true)
             {
-                Province = Prov,
-                Address = physAdr,
-                City = city,
-                Building = building
+                booksAdd.AddBookLocation(selectedLocation);
+                NavigationManager.NavigateTo("/BooksPages/Main/SaleConfirm");
+            }
+            else
+            {
+                Locations loc = new Locations
+                {
+                    Province = Prov,
+                    Address = physAdr,
+                    City = city,
+                    Building = building
 
-            };
+                };
 
-            await _db.InsertLocation(loc);
+                await _db.InsertLocation(loc);
 
-            selectedLocation = await _db.Get_LocationID_Address(physAdr, city);
+                selectedLocation = await _db.Get_LocationID_Address(physAdr, city);
 
-            booksAdd.AddBookLocation(selectedLocation);
-            NavigationManager.NavigateTo("/BooksPages/Main/SaleConfirm");
+                booksAdd.AddBookLocation(selectedLocation);
+                NavigationManager.NavigateTo("/BooksPages/Main/SaleConfirm");
+            }
 
         }
         catch (Exception ex)
