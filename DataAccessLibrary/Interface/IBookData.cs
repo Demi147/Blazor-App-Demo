@@ -10,6 +10,7 @@ namespace DataAccessLibrary
         Task<List<Books>> Get_Books();
         Task<List<Books>> Get_DatePosted(string sDateOrder);
         Task<byte[]> Get_ImageBytes(int iSalesNumber);
+        Task<int> Get_LastSalesNumber();
         Task<int> Get_LocationID_SalesNumber(int iSalesNumber);
         Task<int> Get_SalesNumber_User_Title(int iUserId, string sBookTitle);
         Task<List<Books>> Get_SingleBook(int iSalesNumber);

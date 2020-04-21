@@ -127,6 +127,21 @@ namespace DataAccessLibrary
             }
         }
 
+        public Task<int> Get_LastSalesNumber()
+        {
+            try
+            {
+                var LastId = Task.FromResult(_db.Get<int>($"Select TOP 1 SalesNumber from dbo.tblBookSales Order By SalesNumber DESC", null, commandType: CommandType.Text));
+
+                return LastId;
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
+        }
+
         //##############################################################################################################################################################################################################
         //Search methods for Books Data Model
         //##############################################################################################################################################################################################################

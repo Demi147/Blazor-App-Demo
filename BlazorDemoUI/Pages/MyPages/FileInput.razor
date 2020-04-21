@@ -12,8 +12,8 @@
 
 <InputFile OnChange="HandelFileSelected"></InputFile>
 <button type="reset" class="btn btn-primary" @onclick="UploadImageDb">Search</button>
-<button type="reset" class="btn btn-primary" @onclick="testImage">Search</button>
-<img id="imgTest" src="@sImageData" />
+<button type="reset" class="btn btn-primary" @onclick="loadImage">Search</button>
+<img id="imgTest" src="@sImageData"/>
 
 @*@if (file != null)
     {
@@ -60,7 +60,8 @@
 
     async void loadImage()
     {
-        byte[] dbImage = await _db.Get_ImageBytes(0);
+        int iImageNumber = await _db.Get_LastSalesNumber();
+        byte[] dbImage = await _db.Get_ImageBytes(iImageNumber);
 
         string sImageBase64 = Convert.ToBase64String(dbImage);
 
