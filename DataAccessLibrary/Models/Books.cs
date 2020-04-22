@@ -19,11 +19,11 @@ namespace DataAccessLibrary.Models
         public string BookAuthor { get; set; }
 
         [Required(ErrorMessage = "Enter the Edition")]
-        [Range(typeof(int), "1", "100", ErrorMessage = "Enter a valid Edition range")]
+        [Range(1, 100, ErrorMessage = "Enter a valid Edition range")]
         public int BookEdition { get; set; }
 
         [Required(ErrorMessage = "Enter the Price")]
-        [DataType(DataType.Currency, ErrorMessage ="The book price can only be a numeric value")]
+        [Range(1, 10000, ErrorMessage ="The book price can only be a numeric value")]
         public double BookPrice { get; set; }
 
         [Required(ErrorMessage = "Enter the Module Code")]

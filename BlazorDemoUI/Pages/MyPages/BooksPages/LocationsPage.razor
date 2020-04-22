@@ -21,68 +21,81 @@
     Code to display locations in combox ++++++START+++++++ and to get location ID
     ##########################################################################################################*@
 
-@if (locationList is null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
+<EditForm Model="@locationModel" OnInvalidSubmit="@InsertLocation">
+    <DataAnnotationsValidator />
+
     <fieldset disabled=@isTrueTxt>
-        <div class="row">
-            <div class="col-md-4">
-                <label for="Locations" class="control-label">Select a Location:</label>
-            </div>
-        </div>
-        <div class="row" style="padding-top:1px">
-            <div class="col-md-4">
-                <select id="selectBox" @bind="@selectedLocation" @onclick="@disableControls">
+        @if (locationList is null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
 
-                    <option value="">-- Select Location --</option>
-
-                    @foreach (var item in locationList)
-                    {
-                        <option value="@item.LocationID"> @item.Address, @item.City, @item.Province, @item.Building </option>
-                    }
-
-                </select>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="Locations" class="control-label">Select a Location:</label>
+                </div>
             </div>
-        </div>
-        <div class="row" style="padding-top:5px">
-            <div class="col-md-4">
-                <label class="control-label"> Selected Location Name: @selectedLocation</label>
+            <div class="row" style="padding-top:1px">
+                <div class="col-md-4">
+                    <select id="selectBox" @bind="@selectedLocation">
+
+                        <option value="">-- Select Location --</option>
+
+                        @foreach (var item in locationList)
+                        {
+                            <option value="@item.LocationID"> @item.Address, @item.City, @item.Province, @item.Building </option>
+                        }
+
+                    </select>
+                </div>
             </div>
-        </div>
+            <div class="row" style="padding-top:5px">
+                <div class="col-md-4">
+                    <label class="control-label"> Selected Location Name: @selectedLocation</label>
+                </div>
+            </div>
+        }
+
+        <button type="reset" id="btnOwn" class="btn btn-primary" @onclick="@disableControls" style="float: left;">Enter Own</button>
     </fieldset>
 
-}
+    @*##########################################################################################################
+        Code to display controls to enter own location (FIELDSET IS USED TO DISABLE CONTROLS IF COMBOBOX IS USED)
+        ##########################################################################################################*@
 
-@*##########################################################################################################
-    Code to display locations in combox ++++++END+++++++ and to get location ID
-    ##########################################################################################################*@
+    <fieldset disabled=@isTrueCombo>
+        <div class="col-12 row">
+            <label for="txtProvince" class="col-2 font-weight-bold">Province: </label>
+            <InputText id="txtProvince" class="form-control col-3" @bind-Value="@locationModel.Province" placeholder="province" />
+            &nbsp;<ValidationMessage For="@(() => locationModel.Province)" />
+        </div>
+        <br />
+        <div class="col-12 row">
+            <label for="txtPhysAdr" class="col-2 font-weight-bold">Physical Address: </label>
+            <InputText id="txtPhysAdr" class="form-control col-3" @bind-Value="@locationModel.Address" placeholder="physical address" />
+            &nbsp;<ValidationMessage For="@(() => locationModel.Address)" />
+        </div>
+        <br />
+        <div class="col-12 row">
+            <label for="txtCity" class="col-2 font-weight-bold">City:</label>
+            <InputText id="txtCity" class="form-control col-3" @bind-Value="@locationModel.City" placeholder="city" />
+            &nbsp;<ValidationMessage For="@(() => locationModel.City)" />
+        </div>
+        <br />
+        <div class="col-12 row">
+            <label for="txtBuilding" class="col-2 font-weight-bold">Building:</label>
+            <InputText id="txtBuilding" class="form-control col-3" @bind-Value="@locationModel.Building" placeholder="building" />
+            &nbsp;<ValidationMessage For="@(() => locationModel.Building)" />
+        </div>
+        <br />
+    </fieldset>
 
+    <button type="submit" name="btnNext" class="btn btn-primary" style="float: left;">Submit</button>
 
+</EditForm>
 
-@*##########################################################################################################
-    Code to display controls to enter own location (FIELDSET IS USED TO DISABLE CONTROLS IF COMBOBOX IS USED)
-    ##########################################################################################################*@
-
-<fieldset disabled=@isTrueCombo>
-    <h6>Desired Transaction Location:</h6>
-    Enter Province: <input type="text" id="txtProvince" @onclick="@disableCombo" @bind="@Prov" placeholder="Enter Province here" style="" />
-    <br />
-    <br />
-    Enter Physical Adress: <input type="text" id="txtPhysAdres" @onclick="@disableCombo" @bind="@physAdr" placeholder="Enter Physical Address here" style="" />
-    <br />
-    <br />
-    Enter City: <input type="text" id="txtCity" @onclick="@disableCombo" @bind="@city" placeholder="Enter City here" style="" />
-    <br />
-    <br />
-    Enter Transaction Building: <input type="text" id="txtBuilding" @onclick="@disableCombo" @bind="@building" placeholder="Enter Building here" style="" />
-    <br />
-    <br />
-</fieldset>
-
-<button type="submit" id="btnNext" class="btn btn-primary" @onclick="InsertLocation" style="float: left;">Submit</button>
 
 @*##########################################################################################################
     Start of c# code
@@ -90,17 +103,14 @@ else
 
 @code {
 
+    Locations locationModel = new Locations();
+
     public int selectedLocation { get; set; }
 
     List<Locations> OGlist;
     List<Locations> locationList;
 
-    string Prov;
-    string physAdr;
-    string city;
-    string building;
-
-    bool isTrueCombo { get; set; } = false;
+    bool isTrueCombo { get; set; } = true;
     bool isTrueTxt { get; set; } = false;
 
     int id = 1;
@@ -129,16 +139,16 @@ else
             {
                 Locations loc = new Locations
                 {
-                    Province = Prov,
-                    Address = physAdr,
-                    City = city,
-                    Building = building
+                    Province = locationModel.Province,
+                    Address = locationModel.Address,
+                    City = locationModel.City,
+                    Building = locationModel.Building
 
                 };
 
                 await _db.InsertLocation(loc);
 
-                selectedLocation = await _db.Get_LocationID_Address(physAdr, city);
+                selectedLocation = await _db.Get_LocationID_Address(locationModel.Address, locationModel.City);
 
                 booksAdd.AddBookLocation(selectedLocation);
                 NavigationManager.NavigateTo("/BooksPages/Main/SaleConfirm");
@@ -158,30 +168,8 @@ else
 
     public void disableControls()
     {
-        if (selectedLocation < 0)
-        {
-            isTrueCombo = false;
-        }
-        else
-        {
-            isTrueCombo = true;
-        }
-    }
-
-    //##########################################################################################################
-    //Code to disable combobox
-    //##########################################################################################################
-
-    public void disableCombo()
-    {
-        if (Prov != null || physAdr != null || city != null || building != null)
-        {
-            isTrueTxt = true;
-        }
-        else
-        {
-            isTrueTxt = false;
-        }
+        isTrueCombo = false;
+        isTrueTxt = true;
     }
 
 }

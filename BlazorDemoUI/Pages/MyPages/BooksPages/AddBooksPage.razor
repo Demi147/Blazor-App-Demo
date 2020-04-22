@@ -12,104 +12,121 @@
 @inject IBooksCreateService booksAdd
 @inject IFileUpload fileUpload
 
-    <h1>
-        Enter Applicable Information
-        <button type="submit" name="btnAddBookLoc" class="btn btn-outline-primary" style="float: right;" @onclick="AddNav">Submit Sale Request</button>
-        <button type="submit" name="btnCancelSale" class="btn btn-outline-primary" style="float: right;" @onclick="BackNav">Cancel Sale Request</button>
-    </h1>
+<h1>
+    Enter Applicable Information
+    <button type="submit" name="btnCancelSale" class="btn btn-outline-primary" style="float: right;" @onclick="BackNav">Cancel Sale Request</button>
+</h1>
 
-    <p>
-        <br />
-        <label>Title: </label>
-        <input type="text" class="form-control" name="txtBookTitle" @bind="@title" />
-        <br />
-        <label>Author: </label>
-        <input type="text" class="form-control" name="txtBookAuthor" @bind="@author" />
-        <br />
-        <label>Edition:</label>
-        <input type="text" class="form-control" name="txtBookEdition" @bind="@edition" />
-        <br />
-        <label>Price:</label>
-        <input type="text" class="form-control" name="txtBookPrice" @bind="@price" />
-        <br />
-        <label>Module Code:</label>
-        <input type="text" class="form-control" name="txtModuleCode" @bind="@modCode" />
-        <br />
-        <label>Institute:</label>
-        <input type="text" class="form-control" name="txtBookInstitute" @bind="@institute" />
-        <br />
-        <label>Image:</label>
-        <InputFile OnChange="HandelFileSelected"></InputFile>
+<EditForm Model="@bookModel" OnValidSubmit="@AddNav">
+    <DataAnnotationsValidator />
+
+    <div class="col-12 row">
+        <label for="txtTitle" class="col-2 font-weight-bold">Title: </label>
+        <InputText id="txtTitle" class="form-control col-3" @bind-Value="@bookModel.BookTitle" placeholder="title"/>
+        &nbsp;<ValidationMessage For="@(() => bookModel.BookTitle)"/>
+    </div>
+    <br />
+    <div class="col-12 row">
+        <label for="txtAuthor" class="col-2 font-weight-bold">Author: </label>
+        <InputText id="txtAuthor" class="form-control col-3" @bind-Value="@bookModel.BookAuthor" placeholder="author" />
+        &nbsp;<ValidationMessage For="@(() => bookModel.BookAuthor)" />
+    </div>
+    <br />
+    <div class="col-12 row">
+        <label class="col-2 font-weight-bold">Edition:</label>
+        <InputNumber id="txtEdition" class="form-control col-3" @bind-Value="@bookModel.BookEdition" placeholder="edition" />
+        &nbsp;<ValidationMessage For="@(() => bookModel.BookEdition)" />
+    </div>
+    <br />
+    <div class="col-12 row">
+        <label for="txtPrice" class="col-2 font-weight-bold">Price:</label>
+        <InputNumber id="txtPrice" class="form-control col-3" @bind-Value="@bookModel.BookPrice" placeholder="price" />
+        &nbsp;<ValidationMessage For="@(() => bookModel.BookPrice)" />
+    </div>
+    <br />
+    <div class="col-12 row">
+        <label for="txtModCode" class="col-2 font-weight-bold">Module Code:</label>
+        <InputText id="txtModCode" class="form-control col-3" @bind-Value="@bookModel.ModuleCode" placeholder="module code" />
+        &nbsp;<ValidationMessage For="@(() => bookModel.ModuleCode)" />
+    </div>
+    <br />
+    <div class="col-12 row">
+        <label for="txtInstitute" class="col-2 font-weight-bold">Institute:</label>
+        <InputText id="txtInstitute" class="form-control col-3" @bind-Value="@bookModel.BookInstitute" placeholder="institute" />
+        &nbsp;<ValidationMessage For="@(() => bookModel.BookInstitute)" />
+    </div>
+    <br />
+    <div>
+        <label for="imgBook" class="col-2 font-weight-bold">Image:</label>
+        <InputFile id="imgBook" OnChange="HandelFileSelected"></InputFile>
         <button type="reset" class="btn btn-primary" @onclick="UploadImageDb">Upload Image</button>
         <br />
-        <img id="imgTest" src="@sImageData" width="200" height="200"/>
-    </p>
+        <img id="imgTest" src="@sImageData" width="200" height="200" />
+        <button type="submit" name="btnAddBookLoc" class="btn btn-outline-primary" style="float: right;">Submit Sale Request</button>
+    </div>
+</EditForm>
+       
 
-    @*##########################################################################################################
-        Start of c# code
-        ##########################################################################################################*@
+@*##########################################################################################################
+    Start of c# code
+    ##########################################################################################################*@
 
-    @code {
+@code {
 
-        List<Books> booksList;
-        List<Books> OGlist;
+    Books bookModel = new Books();
 
-        string title { get; set; }
-        string author { get; set; }
-        string edition { get; set; }
-        string price { get; set; }
-        string modCode { get; set; }
-        string institute { get; set; }
+    List<Books> booksList;
+    List<Books> OGlist;
 
-        int id = 1;
+    int id = 1;
 
-        DateTime datePosted = DateTime.Today.Date;
+    DateTime datePosted = DateTime.Today.Date;
 
-        //Image variables
-        public string sImageData = "data:image/jpeg;base64,";
-        public byte[] bImageByte = null;
+    //Image variables
+    public string sImageData = "data:image/jpeg;base64,";
+    public byte[] bImageByte = null;
 
-        IFileListEntry file;
+    IFileListEntry file;
 
-        protected override async Task OnInitializedAsync()
-        {
-            OGlist = await _db.Get_Books();
-            booksList = OGlist;
-
-        }
-
-        void AddNav()
-        {
-            booksAdd.AddInfo(id, title, author, Convert.ToInt32(edition), Convert.ToDouble(price), modCode, institute, datePosted, bImageByte); //Adding info to model
-            navigationManager.NavigateTo("/BooksPages/Main/AddBooks/Locations");
-        }
-
-        void BackNav()
-        {
-            navigationManager.NavigateTo("BooksPages/Main");
-        }
-
-        //#######################################################################################################
-        //Image methods
-        //#######################################################################################################
-
-        async Task HandelFileSelected(IFileListEntry[] files)
-        {
-            file = files.FirstOrDefault();
-            if (file != null)
-            {
-                await fileUpload.UploadAsync(file);
-            }
-        }
-
-        void UploadImageDb()
-        {
-            bImageByte = fileUpload.getImageBytes();
-
-            string sImageBase64 = Convert.ToBase64String(bImageByte);
-
-            sImageData = sImageData + sImageBase64;
-            fileUpload.deleteLocal();
-        }
+    protected override async Task OnInitializedAsync()
+    {
+        OGlist = await _db.Get_Books();
+        booksList = OGlist;
 
     }
+
+    void AddNav()
+    {
+        booksAdd.AddInfo(id, bookModel.BookTitle, bookModel.BookAuthor, Convert.ToInt32(bookModel.BookEdition), Convert.ToDouble(bookModel.BookPrice), bookModel.ModuleCode, bookModel.BookInstitute, datePosted, bImageByte); //Adding info to model
+        navigationManager.NavigateTo("/BooksPages/Main/AddBooks/Locations");
+    }
+
+    void BackNav()
+    {
+        navigationManager.NavigateTo("BooksPages/Main");
+    }
+
+    //#######################################################################################################
+    //Image methods
+    //#######################################################################################################
+
+    async Task HandelFileSelected(IFileListEntry[] files)
+    {
+        file = files.FirstOrDefault();
+        if (file != null)
+        {
+            await fileUpload.UploadAsync(file);
+        }
+    }
+
+    void UploadImageDb()
+    {
+        bImageByte = fileUpload.getImageBytes();
+
+        string sImageBase64 = Convert.ToBase64String(bImageByte);
+
+        sImageData = sImageData + sImageBase64;
+        fileUpload.deleteLocal();
+    }
+
+}
