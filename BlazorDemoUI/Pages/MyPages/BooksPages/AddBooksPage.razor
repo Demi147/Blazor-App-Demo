@@ -59,7 +59,6 @@
     <div>
         <label for="imgBook" class="col-2 font-weight-bold">Image:</label>
         <InputFile id="imgBook" OnChange="HandelFileSelected"></InputFile>
-        <button type="reset" class="btn btn-primary" @onclick="UploadImageDb">Upload Image</button>
         <br />
         <img id="imgTest" src="@sImageData" width="200" height="200" />
         <button type="submit" name="btnAddBookLoc" class="btn btn-outline-primary" style="float: right;">Submit Sale Request</button>
@@ -117,10 +116,7 @@
         {
             await fileUpload.UploadAsync(file);
         }
-    }
 
-    void UploadImageDb()
-    {
         bImageByte = fileUpload.getImageBytes();
 
         string sImageBase64 = Convert.ToBase64String(bImageByte);
