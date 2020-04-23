@@ -27,7 +27,7 @@ namespace DataAccessLibrary.Models
         public double BookPrice { get; set; }
 
         [Required(ErrorMessage = "Enter the Module Code")]
-        [StringLength(7, MinimumLength = 7, ErrorMessage ="The module code cannot be shorter or longer than 7")]
+        [StringLength(10, MinimumLength = 5, ErrorMessage ="The module code cannot be shorter or longer than 7")]
         public string ModuleCode { get; set; }
 
         [Required(ErrorMessage = "Enter the Institute")]
