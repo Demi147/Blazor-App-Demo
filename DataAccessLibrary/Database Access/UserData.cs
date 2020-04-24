@@ -117,8 +117,8 @@ namespace DataAccessLibrary
         {
             try
             {
-                string sql = @"Insert Into dbo.tblUsers(UserID,UserName,UserEmail,UserPassword,IsAdmin)
-                          values(@UserID,@UserName,@UserEmail,@UserPassword,@IsAdmin)";
+                string sql = @"Insert Into dbo.tblUsers(UserName,UserEmail,UserPassword,IsAdmin)
+                          values(@UserName,@UserEmail,@UserPassword,@IsAdmin)";
 
                 return _db.SaveData(sql, user);
             }
