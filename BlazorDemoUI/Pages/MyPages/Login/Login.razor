@@ -42,6 +42,7 @@
                     <input type="submit" class="form-control col-12 btn btn-primary " value="Login" />
                 </div>
             </EditForm>
+            Not a user? Click here to <a href="/registerUser">REGISTER</a>
         </div>
     </div>
 </div>
@@ -58,32 +59,22 @@
         return base.OnInitializedAsync();
     }
 
-    private async Task<bool> ValidateUser()
+    private async void ValidateUser()
     {
-        ////make the varifylogin async with all the other data methods
-        //bool isValidUser = userDataService.VarifyLogin(_user.UserEmail,Utilities.ExcryptPassword(_user.UserPassword)); // encryption rather to be called inside the varifylogin method than here
+        //make the varifylogin async with all the other data methods
+        bool isValidUser = await userDataService.VarifyLogin(_user.UserEmail, _user.UserPassword); // encryption rather to be called inside the varifylogin method than here
 
-        //if (isValidUser)
-        //{
-        //    ((CustomAuthenticationStateProvider)authenticationService).MarkUserAsAuthenticated(_user.UserEmail);
+        if (isValidUser)
+        {
+            ((CustomAuthenticationStateProvider)authenticationService).MarkUserAsAuthenticated(_user.UserEmail);
 
-        //    navManager.NavigateTo("/");
+            navManager.NavigateTo("/");
 
-        //    await sessionStorage.SetItemAsync("emailAddress", _user.UserEmail);
-
-        //    return await Task.FromResult(true);
-        //}
-        //else
-        //{
-        //    //do nothing
-        //}
-
-        ((CustomAuthenticationStateProvider) authenticationService).MarkUserAsAuthenticated(_user.UserEmail);
-
-        navManager.NavigateTo("/");
-
-        await sessionStorage.SetItemAsync("emailAddress", _user.UserEmail);
-
-        return await Task.FromResult(true);
+            await sessionStorage.SetItemAsync("emailAddress", _user.UserEmail);
+        }
+        else
+        {
+            //error message
+        }
     }
 }

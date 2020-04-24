@@ -1,0 +1,41 @@
+﻿@page "/registerUser"
+
+@using DataAccessLibrary.Models 
+@using DataAccessLibrary
+
+@inject IUserData userdata
+
+<h3>Register User</h3>
+
+<h4> Insert new user </h4>
+<EditForm Model="@newUser" OnValidSubmit="@InsertUser">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    REGISTER
+    <br />
+    <InputText id="userName" @bind-Value="newUser.UserName" placeholder="UserName" />
+    <ValidationMessage For="@(() => newUser.UserName)" />
+    <br />
+    <InputText id="userEmail" @bind-Value="newUser.UserEmail" placeholder="Email Adress" />
+    <ValidationMessage For="@(() => newUser.UserEmail)" />
+    <br />
+    <InputText type="password" id="userPassword" @bind-Value="newUser.UserPassword" placeholder="Password" />
+    <ValidationMessage For="@(() => newUser.UserPassword)" />
+    <br />
+    @*<InputText placeholder="Confirm Password" />*@
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+
+@code {
+
+    private Users newUser = new Users();
+
+
+    async void InsertUser()
+    {
+        //insert data to data base
+        await userdata.InsertUser(newUser);
+    }
+}

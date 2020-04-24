@@ -19,6 +19,6 @@ namespace DataAccessLibrary
         Task UpdateUser_All(Users user);
         Task UpdateUser_UserEmail(Users user);
         Task UpdateUser_UserName(Users user);
-        bool VarifyLogin(string sEmail, string sPassword);
+        Task<bool> VarifyLogin(string sEmail, string sPassword);
     }
 }

@@ -8,7 +8,7 @@ using Dapper;
 
 namespace DataAccessLibrary
 {
-    public class UserData : IUserData
+    public class UserData :IUserData
     {
         private readonly ISqlDataAccess _db;
         private string sError = "";
@@ -240,7 +240,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public bool VarifyLogin(string sEmail, string sPassword)//Tested - Working
+        public Task<bool> VarifyLogin(string sEmail, string sPassword)//Tested - Working
         {
             try
             {
@@ -259,12 +259,12 @@ namespace DataAccessLibrary
                     bValidLogin = false;
                 }
 
-                return bValidLogin;
+                return Task.FromResult(bValidLogin);
             }
             catch (Exception ex)
             {
                 sError = ex.ToString();
-                return false;
+                return Task.FromResult(false); ;
             }
         }
         #endregion

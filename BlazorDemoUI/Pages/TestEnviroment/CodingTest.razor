@@ -1,111 +1,104 @@
 ﻿@page "/TestEnviroment"
-@attribute [Authorize]
 
-<h3>User Page</h3>
 
 @using DataAccessLibrary.Models;
+@using DataAccessLibrary;
 @using Services;
 
-@inject AuthenticationStateProvider authenticationService
+@inject NavigationManager navManager;
+@inject AuthenticationStateProvider authenticationService;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject IUserData userDataService;
 
 
-<div>
-    @if (editing)
-    {
-        <EditForm Model="@UserInfo" OnValidSubmit="@ValidateUser">
-            <div>
-                <h3 style="font-weight:bold"> User Info</h3>
-            </div>
-            <div>
+<h3>Login</h3>
+
+<div class="col-8 card">
+    <div class="col-12 row">
+        <p>&nbsp;</p>
+    </div>
+    <div class="col-12 row">
+        <div class="col-6" style="border-left:groove">
+            <EditForm Model="@_user" OnValidSubmit="@ValidateUser">
+                <div>
+                    <br /><br />
+                </div>
+                <div>
+                    <h3 style="font-weight:bold"> Login</h3>
+                </div>
+                <div>
+                    <br />
+                </div>
+                <div class="col-12 row">
+                    <input class="form-control col-12" @bind="_user.UserEmail" placeholder="Email" />
+                </div>
                 <br />
-            </div>
-            <div class="col-12 row">
-                <input class="form-control col-12" @bind="UserInfo.UserName" placeholder="Name" />
-            </div>
-            <br />
-            <div class="col-12 row">
-                <input class="form-control col-12" @bind="UserInfo.UserEmail" placeholder="Email" />
-            </div>
-            <br />
-            <div class="col-12 row">
-                <span class="col-12 "></span>
-                <input type="submit" class="form-control col-12 btn btn-primary " value="Change user info" />
-            </div>
-        </EditForm>
-    }
-    else
-    {
-        <table class="table table-hover table-responsive ">
-            <thead class="thead-light">
-                <tr>
-                    <th>User name</th>
-                    <td>@UserInfo.UserName</td>
-                </tr>
-                <tr>
-                    <th>User email</th>
-                    <td>@UserInfo.UserEmail</td>
-                </tr>
-                <tr>
-                    <th>Is admin</th>
-                    <td>@UserInfo.IsAdmin</td>
-                </tr>
-            </thead>
-        </table>
-    }
-</div>
-
-<div>
-    <br />
-    <button class="btn btn-secondary" @onclick="toggleEditing"> @if (editing)
-    {<span>Dont edit</span> }
-    else
-    {<span>Edit</span>}</button>
+                <div class="col-12 row">
+                    <input type="password" class="form-control col-12" @bind="_user.UserPassword" placeholder="Password" />
+                </div>
+                <br />
+                <div class="col-12 row">
+                    <span class="col-12 "></span>
+                    <input type="submit" class="form-control col-12 btn btn-primary " value="Login" />
+                </div>
+            </EditForm>
+        </div>
+    </div>
 </div>
 
 
-Test: @test
+<br />
+Test : @isValidUser
+<br />
+Test : @TestUser.UserID
+<br />
+Test : @TestUser.UserEmail
+<br />
+Test : @TestUser.UserPassword
+
 
 @code {
-    private Users UserInfo = new Users();
 
-    bool editing = false;
+    private Users _user;
+    bool isValidUser;
 
-    string test;
+    Users TestUser;
 
-    void UpdateUserData()
+    protected override Task OnInitializedAsync()
     {
-
+        _user = new Users();
+        TestUser = new Users();
+        return base.OnInitializedAsync();
     }
 
-    void ValidateUser()
+    private async Task<bool> ValidateUser()
     {
+        //isValidUser = userDataService.VarifyLogin(_user.UserEmail,_user.UserPassword); // encryption rather to be called inside the varifylogin method than here
+        //TestUser.UserID = await userDataService.Get_UserID_Email("CarelFLC@vodamail.com");
+        //var x = await userDataService.Get_SingleUser(TestUser.UserID);
+        //TestUser = x[0];
+        //if (isValidUser)
+        //{
+        //    ((CustomAuthenticationStateProvider)authenticationService).MarkUserAsAuthenticated(_user.UserEmail);
 
+        //    navManager.NavigateTo("/");
+
+        //    await sessionStorage.SetItemAsync("emailAddress", _user.UserEmail);
+
+        //    return await Task.FromResult(true);
+        //}
+        //else
+        //{
+        //    //do nothing
+        //}
+
+        //((CustomAuthenticationStateProvider)authenticationService).MarkUserAsAuthenticated(_user.UserEmail);
+
+        //navManager.NavigateTo("/");
+
+        //await sessionStorage.SetItemAsync("emailAddress", _user.UserEmail);
+
+        return await Task.FromResult(true);
     }
-
-    void toggleEditing()
-    {
-        if (editing == true)
-        {
-            editing = false;
-        }
-        else
-        {
-            editing = true;
-        }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var user = await sessionStorage.GetItemAsync<string>("emailAddress");
-
-        //get user from db
-        //display revelant info
-        test = user;
-    }
-    //todo
-    //make a change password function
-    //make a viable user data service
-    //data anotations for the user model
 }
 
