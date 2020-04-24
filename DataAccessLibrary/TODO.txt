@@ -1,1 +1,1 @@
-﻿
+﻿"Default": "Data Source=sys-paradaigm.database.windows.net;Initial Catalog=SP;User ID=Paradigm;Password=Sp2020sP;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
