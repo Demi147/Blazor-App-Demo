@@ -18,7 +18,7 @@ namespace DataAccessLibrary.Models
 
         [Required]
         [MaxLength(16)]
-        [MinLength(5)]
+        [MinLength(6)]
         public string UserPassword { get; set; }
         public bool IsAdmin { get; set; }
     }

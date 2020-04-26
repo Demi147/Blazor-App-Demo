@@ -8,7 +8,7 @@ using Dapper;
 
 namespace DataAccessLibrary
 {
-    public class UserData :IUserData
+    public class UserData : IUserData
     {
         private readonly ISqlDataAccess _db;
         private string sError = "";

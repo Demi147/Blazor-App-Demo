@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAccessLibrary.Models
 {
-    public class LoginTest:TestInterface
+    public class LoginTest
     {
         public int ID { get; set; }
         public string Name { get; set; }

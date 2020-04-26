@@ -6,7 +6,7 @@ namespace DataAccessLibrary.Models
 {
     //TODO implement better book search capability
 
-    public class BookTest:TestInterface
+    public class BookTest
     {
         public string Title { get; set; }
         public string Description { get; set; }

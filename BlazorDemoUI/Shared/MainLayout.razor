@@ -15,7 +15,8 @@
 
         <AuthorizeView>
             <Authorized>
-                <a href="/" @onclick="(() => Logout())">Logout of @context.User.Identity.Name</a>
+                <a href="/" @onclick="(() => Logout())">Logout</a>
+                <a href="/UserInfoPage">My Profile</a>
             </Authorized>
             <NotAuthorized>
                 <a href="/Login">Login</a>

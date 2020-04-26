@@ -1,4 +1,68 @@
-﻿@page "/UserTestPage"
+﻿@page "/UserInfoPage"
 @attribute [Authorize]
 
+@using DataAccessLibrary
+@using DataAccessLibrary.Models
+@using Services;
+
+@inject AuthenticationStateProvider authenticationService;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject IUserData userdata
+@inject NavigationManager navManager;
+
+
+<h2>
+    User info
+</h2>
+<br />
+<br />
+@_user.UserName
+@_user.UserEmail
+
+@Test
+
+
+<br />
+<button class="btn btn-primary" @onclick="@DeleteUser">Delete User</button>
+<button class="btn btn-primary" @onclick="@ChangePassword">Change Password</button>
+@code{
+    private Users _user = new Users();
+
+    string Test = "not tits";
+
+    protected override async Task OnInitializedAsync()
+    {
+        string email = await sessionStorage.GetItemAsync<string>("emailAddress");
+        int id = await userdata.Get_UserID_Email(email);
+
+        var list = await userdata.Get_SingleUser(id);
+
+        _user = list[0];
+
+        if (_user == null)
+        {
+            Test = "Soggy tits";
+        }
+    }
+
+    void DeleteUser()
+    {
+        //todo
+        //popup to confirm delete user
+        userdata.RemoveUser(_user);
+        Utilities.SendMail(_user.UserEmail, "deregistration", Utilities.GenerateDeRegisterMessage(_user.UserName, _user.UserEmail), true);
+        //logout
+        ((CustomAuthenticationStateProvider)authenticationService).MarkUserAsLoggedOut();
+        navManager.NavigateTo("/");
+    }
+
+    void ChangeInfo()
+    {
+        Test = "Super Tits";
+    }
+
+    void ChangePassword()
+    {
+        Test = "Lazer Tits";
+    }
+}

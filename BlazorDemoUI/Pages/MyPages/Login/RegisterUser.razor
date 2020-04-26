@@ -1,9 +1,11 @@
 ﻿@page "/registerUser"
 
-@using DataAccessLibrary.Models 
+@using DataAccessLibrary.Models
 @using DataAccessLibrary
 
 @inject IUserData userdata
+@inject NavigationManager navManager
+
 
 <h3>Register User</h3>
 
@@ -35,7 +37,13 @@
 
     async void InsertUser()
     {
+        //TODO check if user email is unique in data base
         //insert data to data base
         await userdata.InsertUser(newUser);
+
+        //send email to new user
+        Utilities.SendMail(newUser.UserEmail, "Register", Utilities.GenerateRegisterMessage(newUser.UserName, newUser.UserEmail, newUser.UserPassword), true);
+
+        navManager.NavigateTo("/login");
     }
 }
