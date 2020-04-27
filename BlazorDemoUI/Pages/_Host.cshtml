@@ -35,5 +35,30 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
+
+    @*PDF stuff*@
+    <script type="text/javascript">
+        function saveAsFile(filename, byteBase64) {
+            if (navigator.msSaveBlob) {
+                var data = window.atob(byteBase64);
+                var byte = new Uint8Array(data.length);
+                for (var i = 0; i < data.length; i++) {
+                    byte[i] = data.charCodeAt(i);
+                }
+                var blob = new Blob([byte.buffer], { type: "applications/octet-stream" });
+                navigator.msSaveBlob(blob, filename);
+            }
+            else {
+                var link = document.createElement('a');
+                link.download = filename;
+                link.href = "data:applications/octet-stream;base64," + byteBase64;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+        }
+
+    </script>
 </body>
 </html>

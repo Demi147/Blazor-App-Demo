@@ -267,6 +267,13 @@ namespace DataAccessLibrary
                 return Task.FromResult(false); ;
             }
         }
+
+        public Task<List<Users>> Get_ReviewerDetails(int[] iArrUserID)
+        {
+            string sql = @"Select UserName,UserEmail from dbo.tblUsers Where UserID IN (" + iArrUserID[0] + "," + iArrUserID[1] + "," + iArrUserID[2] + "," + iArrUserID[3] +
+                         "," + iArrUserID[4] + "," + iArrUserID[5] + "," + iArrUserID[6] + "," + iArrUserID[7] + "," + iArrUserID[8] + "," + iArrUserID[9] + ")";
+            return _db.LoadData<Users, dynamic>(sql, new { });
+        }
         #endregion
     }
 }

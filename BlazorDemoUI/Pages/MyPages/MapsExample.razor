@@ -1,0 +1,130 @@
+﻿@page "/Maps"
+
+@using Syncfusion.Blazor.Maps
+@using BlazorDemoUI.Services
+
+@inject ILocationWeb _web
+
+
+@if (arrLong[0] == null)
+{
+
+}
+else
+{
+    <SfMaps>
+        <MapsLayers>
+            @*<MapsZoomSettings  Enable="true" Toolbars='new string[] { "Zoom", "Zoomin", "ZoomOut", "Pan", "Reset" }'></MapsZoomSettings>*@
+            <MapsZoomSettings ZoomFactor="10"></MapsZoomSettings>
+
+            <MapsCenterPosition Latitude="-26.69764" Longitude="27.8394"></MapsCenterPosition>
+            @*<MapsCenterPosition Latitude="29.394708" Longitude="-94.954653"></MapsCenterPosition>*@
+
+            <MapsLayer LayerType="ShapeLayerType.Bing"
+                       BingMapType="BingMapType.CanvasLight"
+                       Key="AqDcSaScIrV4hlXytWo9qijSha2Ga2yRWVJ-Ajwv1h9ysY_kLvk7GJzMmJDkoTPm">
+
+                <MapsMarkerSettings>
+                    <MapsMarker Visible="true"
+                                Height="25"
+                                Width="15"
+                                DataSource="Cities">
+                    </MapsMarker>
+                </MapsMarkerSettings>
+
+                <MapsNavigationLines>
+                    <MapsNavigationLine Visible="true"
+                                        Width="5"
+                                        Color="blue"
+                                        Angle="0.1"
+                                        Latitude="arrLat"
+                                        Longitude="arrLong">
+
+                        @*@*Latitude="@arrLocations"*@
+                        @**@
+                    </MapsNavigationLine>
+                </MapsNavigationLines>
+            </MapsLayer>
+
+            @*<MapsZoomSettings Enable="true" Toolbars='new string[] {"Zoom","Zoomin","ZoomOut","Pan","Reset"}'></MapsZoomSettings>
+                <MapsCenterPosition Latitude="-26.726382" Longitude="27.884202"></MapsCenterPosition>*@
+        </MapsLayers>
+    </SfMaps>
+}
+
+<h3>Maps</h3>
+
+<button type="reset" class="btn btn-primary" @onclick="@test">Test</button>
+<label></label>
+<label></label>
+<label>Estiamted distance: @sDistance</label>
+<label></label>
+<label></label>
+<label>Esitmated time: @sTime</label>
+
+
+@*<InputText id="userSearch"/>*@
+
+@functions{
+    public double[] arrLat { get; set; }
+    public double[] arrLong { get; set; }
+    public string sDistance { get; set; }
+    public string sTime { get; set; }
+}
+
+@code {
+
+
+
+
+    public class City
+    {
+        public double Latitude;
+        public double Longitude;
+        public string Name;
+    }
+    private List<City> Cities = new List<City> {
+        new City { Latitude = -26.7142, Longitude = 27.84914,  Name="Vanderbijlpark" },
+        new City{ Latitude = -26.66187, Longitude = 27.92822,  Name="Vereemiging"}
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        arrLat = _web.Get_lat_Long("ZA", "GT", "Vanderbijlpark", "Colonel Blake street");
+
+        arrLong = _web.Get_lat_Long("ZA", "FS", "Vereeniging", "Abie street");
+
+        double dlong = arrLong[0];
+
+        double dlat = arrLat[1];
+
+        arrLat[1] = dlong;
+        arrLong[0] = dlat;
+
+    }
+
+    public void test()
+    {
+        double dlat = deg2rand(arrLat[0] - arrLat[1]);
+        double dlong = deg2rand(arrLong[0] - arrLong[1]);
+
+        double a;
+        double c;
+        double dDistance;
+
+        int iTime = 0;
+
+        a = Math.Pow((Math.Sin(dlat / 2)), 2) + Math.Cos(deg2rand(arrLat[0])) * Math.Cos(deg2rand(arrLat[1])) * Math.Pow((Math.Sin(dlong / 2)), 2);
+        c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+        dDistance = 6373 * c;
+
+        sDistance = dDistance.ToString("F2") + " km";
+        sTime = dDistance.ToString("F0") + " minutes";
+
+    }
+
+    public double deg2rand(double lat)
+    {
+        return lat * (Math.PI / 180);
+    }
+}

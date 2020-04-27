@@ -9,6 +9,7 @@ namespace DataAccessLibrary
         Task<int> Count();
         Task<List<Users>> Get_AllUsers();
         Task<bool> Get_IsAdmin_UserID(int iUserID);
+        Task<List<Users>> Get_ReviewerDetails(int[] iArrUserID);
         Task<List<Users>> Get_SingleUser(int iUserID);
         Task<string> Get_UserEmail_UserID(int iUserID);
         Task<int> Get_UserID_Email(string sUserEmail);

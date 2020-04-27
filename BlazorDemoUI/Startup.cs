@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Blazored.SessionStorage;
+using Syncfusion.Blazor;
 
 namespace BlazorDemoUI
 {
@@ -45,10 +46,14 @@ namespace BlazorDemoUI
             services.AddScoped<IFileUpload, FileUpload>();
             services.AddSingleton<IBooksBuyService, BooksBuyService>();
             services.AddSingleton<IBooksCreateService, BooksCreateService>();
+            services.AddSingleton<ISiteReviewData, SiteReviewData>();
+            services.AddScoped<ILocationWeb, LocationWeb>();
 
             services.AddScoped<AuthenticationStateProvider,CustomAuthenticationStateProvider>();
             services.AddBlazoredSessionStorage();
 
+            //Maps shit
+            services.AddSyncfusionBlazor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
