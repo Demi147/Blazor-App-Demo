@@ -18,6 +18,8 @@ namespace DataAccessLibrary
             _db = db;
         }
 
+        //###############################################################################################################################################################################################
+        #region Get Methods for Site Review Data Model
         public Task<double> Get_AVG_UserReview()
         {
             try
@@ -39,5 +41,55 @@ namespace DataAccessLibrary
 
             return _db.LoadData<SiteReview, dynamic>(sql, new { });
         }
+        #endregion
+
+        //###############################################################################################################################################################################################
+
+        public Task InsertReview(SiteReview sitereview)
+        {
+            try
+            {
+                string sql = @"Insert into dbo.tblSiteReview(UserID,Rating,ReviewText,ReviewDate)
+                             values(@UserID,@Rating,@ReviewText,@ReviewDate)";
+
+                return _db.SaveData(sql, sitereview);
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
+        }
+
+        public Task RemoveReview(SiteReview sitereview)
+        {
+            try
+            {
+                string sql = @"Delete from dbo.tblSiteReview Where ReviewID =" + sitereview.ReviewID + "";
+                return _db.SaveData(sql, sitereview);
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
+        }
+
+        public Task UpdateReview(SiteReview sitereview)
+        {
+            try
+            {
+                string sql = @"Update dbo.tblSiteReview Set Rating = " + sitereview.Rating + ",ReviewText = '" + sitereview.ReviewText + "',ReviewDate = " + sitereview.ReviewDate +
+                             "Where ReviewID = " + sitereview.ReviewID + "";
+
+                return _db.SaveData(sql, sitereview);
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
+        }
     }
 }
+
