@@ -4,6 +4,9 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Linq;
 using System.Net.Mail;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using System.IO;
 
 namespace DataAccessLibrary
 {
@@ -54,9 +57,9 @@ namespace DataAccessLibrary
                 endec.Padding = PaddingMode.PKCS7;
                 endec.Mode = CipherMode.CBC;
 
-                var incrypt = endec.CreateEncryptor(endec.Key,endec.IV);
+                var incrypt = endec.CreateEncryptor(endec.Key, endec.IV);
 
-                byte[] enc = incrypt.TransformFinalBlock(textbytes,0,textbytes.Length);
+                byte[] enc = incrypt.TransformFinalBlock(textbytes, 0, textbytes.Length);
                 incrypt.Dispose();
 
                 return Convert.ToBase64String(enc);
@@ -92,7 +95,7 @@ namespace DataAccessLibrary
 
         public static void SendMail()
         {
-            
+
 
             try
             {
@@ -120,7 +123,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public static void SendMail(string _to,string _subject,string _body,bool _isbodyHtml)
+        public static void SendMail(string _to, string _subject, string _body, bool _isbodyHtml)
         {
 
 
@@ -150,7 +153,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public static string GenerateRegisterMessage(string _name,string _email,string _password)
+        public static string GenerateRegisterMessage(string _name, string _email, string _password)
         {
             string message = string.Format(
                 "<h1>Welcome {0}</h1><br><br>" +
@@ -158,7 +161,7 @@ namespace DataAccessLibrary
                 "Email {1} <br>" +
                 "Password {2}"
 
-                ,_name,_email,_password);
+                , _name, _email, _password);
             return message;
         }
 
@@ -171,6 +174,26 @@ namespace DataAccessLibrary
 
                 , _name, _email);
             return message;
+        }
+
+        public static byte[] CreatePDF(string _body)
+        {
+            PdfDocument document = new PdfDocument();
+
+            PdfPage page = document.Pages.Add();
+
+            PdfGraphics graphics = page.Graphics;
+
+            PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 12);
+
+            graphics.DrawString(_body, font, PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 0));
+
+            MemoryStream pdfstream = new MemoryStream();
+
+            document.Save(pdfstream);
+            document.Close(true);
+
+            return pdfstream.ToArray();
         }
     }
 
