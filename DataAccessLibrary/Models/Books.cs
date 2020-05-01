@@ -8,7 +8,7 @@ namespace DataAccessLibrary.Models
 {
     public class Books
     {
-        
+
         public int SalesNumber { get; set; }
         public int UserID { get; set; }
 
@@ -23,11 +23,11 @@ namespace DataAccessLibrary.Models
         public int BookEdition { get; set; }
 
         [Required(ErrorMessage = "Enter the Price")]
-        [Range(1, 10000, ErrorMessage ="The book price can only be a numeric value")]
+        [Range(1, 10000, ErrorMessage = "The book price can only be a numeric value")]
         public double BookPrice { get; set; }
 
         [Required(ErrorMessage = "Enter the Module Code")]
-        [StringLength(10, MinimumLength = 5, ErrorMessage ="The module code cannot be shorter or longer than 7")]
+        [StringLength(10, MinimumLength = 5, ErrorMessage = "The module code cannot be shorter or longer than 7")]
         public string ModuleCode { get; set; }
 
         [Required(ErrorMessage = "Enter the Institute")]
@@ -37,6 +37,7 @@ namespace DataAccessLibrary.Models
         public DateTime DatePosted { get; set; }
         public byte[] BookImage { get; set; }
 
+        public int Total { get; set; }//Used to get the total sales for reports
         public bool CheckIfContains(string _val)
         {
             if (BookTitle.ToLower().Contains(_val.ToLower()))

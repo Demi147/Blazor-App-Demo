@@ -15,13 +15,13 @@ else
     <SfMaps>
         <MapsLayers>
             @*<MapsZoomSettings  Enable="true" Toolbars='new string[] { "Zoom", "Zoomin", "ZoomOut", "Pan", "Reset" }'></MapsZoomSettings>*@
-            <MapsZoomSettings ZoomFactor="10"></MapsZoomSettings>
+            <MapsZoomSettings ZoomFactor="12"></MapsZoomSettings>
 
             <MapsCenterPosition Latitude="-26.69764" Longitude="27.8394"></MapsCenterPosition>
             @*<MapsCenterPosition Latitude="29.394708" Longitude="-94.954653"></MapsCenterPosition>*@
 
             <MapsLayer LayerType="ShapeLayerType.Bing"
-                       BingMapType="BingMapType.CanvasLight"
+                       BingMapType="BingMapType.Road"
                        Key="AqDcSaScIrV4hlXytWo9qijSha2Ga2yRWVJ-Ajwv1h9ysY_kLvk7GJzMmJDkoTPm">
 
                 <MapsMarkerSettings>
@@ -90,6 +90,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+
         arrLat = _web.Get_lat_Long("ZA", "GT", "Vanderbijlpark", "Colonel Blake street");
 
         arrLong = _web.Get_lat_Long("ZA", "FS", "Vereeniging", "Abie street");

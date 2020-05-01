@@ -7,6 +7,7 @@ namespace DataAccessLibrary
     public interface IBookData
     {
         Task<int> Count_TotalBooks();
+        Task<List<Books>> Get_10TopInstitute_Sales();
         Task<List<Books>> Get_Books();
         Task<List<Books>> Get_DatePosted(string sDateOrder);
         Task<byte[]> Get_ImageBytes(int iSalesNumber);
@@ -14,6 +15,7 @@ namespace DataAccessLibrary
         Task<int> Get_LocationID_SalesNumber(int iSalesNumber);
         Task<int> Get_SalesNumber_User_Title(int iUserId, string sBookTitle);
         Task<List<Books>> Get_SingleBook(int iSalesNumber);
+        Task<int> Get_TotalSales_Province(string sProvince);
         Task<int> Get_UserID_SalesNumber_Title(int iSalesNumber, string sBookTitle);
         Task InsertBook(Books book);
         Task<List<Books>> ListAll(int skip, int take, string orderby, string direction = "DESC");

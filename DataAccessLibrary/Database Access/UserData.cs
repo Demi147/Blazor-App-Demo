@@ -274,6 +274,35 @@ namespace DataAccessLibrary
                          "," + iArrUserID[4] + "," + iArrUserID[5] + "," + iArrUserID[6] + "," + iArrUserID[7] + "," + iArrUserID[8] + "," + iArrUserID[9] + ")";
             return _db.LoadData<Users, dynamic>(sql, new { });
         }
+
+        public Task<bool> Check_Email(string sEmail)
+        {
+            try
+            {
+                var totalEmails = Task.FromResult(_db.Get<int>("Select count(*) from dbo.tblUsers Where UserEmail = '" + sEmail + "", null, commandType: CommandType.Text));
+
+                var bValidEmail = false;
+
+                int iTotal = totalEmails.Result;
+
+                if (iTotal > 0)
+                {
+                    bValidEmail = false;
+                }
+                else
+                {
+                    bValidEmail = true;
+                }
+
+                return Task.FromResult(bValidEmail);
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return Task.FromResult(false);
+            }
+        }
+
         #endregion
     }
 }

@@ -1,126 +1,86 @@
 ﻿@page "/reports"
 
-@using Syncfusion.Pdf;
-@using Syncfusion.Pdf.Graphics;
-@using System.IO;
 @using BlazorDemoUI.Services;
 @using DataAccessLibrary
 @using DataAccessLibrary.Models
 
 @inject ISiteReviewData _db
 @inject IUserData _db2
+@inject ILocationData _db3
+@inject IBookData _db4
+@inject IGenerate_SiteReport _report
+@inject IGenerate_LocationsReport _report2
 @inject Microsoft.JSInterop.IJSRuntime JS
 
 <h3>Reports</h3>
 
-<button class="btn btn-primary" @onclick="@TestPDF">Create</button>
+<button class="btn btn-primary" @onclick="@CompilePDF_Site">Generate site report</button>
+<button class="btn btn-primary" @onclick="@CompilePDF_Report">Generate lcoations report</button>
 
 @functions{
-    void CreatePDF(string sInfo)
+    void CreatePDF()
     {
-        PdfDocument document = new PdfDocument();
-
-        PdfPage page = document.Pages.Add();
-
-        PdfGraphics graphics = page.Graphics;
-
-        PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 12);
-
-        graphics.DrawString(sInfo, font, PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 0));
-
-        MemoryStream pdfstream = new MemoryStream();
-
-        document.Save(pdfstream);
-        document.Close(true);
-
-        JS.SaveAs("sample.pdf", pdfstream.ToArray());
+        if (iReportType == 0)
+        {
+            JS.SaveAs(DateTime.Today.Date.ToShortDateString() + "Site report.pdf", _report.Completed_PDF());
+        }
+        else if(iReportType == 1)
+        {
+            JS.SaveAs(DateTime.Today.Date.ToShortDateString() + "Locations report.pdf", _report2.Completed_PDF());
+        }
     }
 }
 
 @code {
-    private List<Users> _user;
-    private List<SiteReview> _review;
-
-    public async Task TestPDF()
+    private int iReportType = -1;
+    public async Task CompilePDF_Report()
     {
+        List<Books> _book = await _db4.Get_10TopInstitute_Sales();
+        List<Locations> _locations = await _db3.Get_AllProvince();
+
+        List<string> lProvince = new List<string>();
+        List<int> lTotals = new List<int>();
+        List<string> lInstitute = new List<string>();
+        List<int> lTotalsInstitute = new List<int>();
+
+        foreach (var book in _book)
+        {
+            lInstitute.Add(book.BookInstitute);
+            lTotalsInstitute.Add(book.Total);
+        }
+
+        foreach (var location in _locations)
+        {
+            lProvince.Add(location.Province);
+            lTotals.Add(await _db4.Get_TotalSales_Province(location.Province));
+        }
+
+        string[] arrProvince = lProvince.ToArray();
+        int[] arrTotals = lTotals.ToArray();
+        string[] arrInstitute = lInstitute.ToArray();
+        int[] arrTotalsInstitute = lTotalsInstitute.ToArray();
+
+        _report2.CompilePDF_Body(arrTotals, arrProvince, arrTotalsInstitute, arrInstitute);
+        iReportType = 1;
+        CreatePDF();
+    }
+
+    public async Task CompilePDF_Site()
+    {
+        List<SiteReview> _review;
+        List<Users> _user;
+
         double dSiteAverage = await _db.Get_AVG_UserReview();
         _review = await _db.Get_10LatestReveiws();
 
-        string sSatRating = "";
-        if ((dSiteAverage * 20) <= 20.00)
-        {
-            sSatRating = "Bad";
-        }
-        else if (((dSiteAverage * 20) < 20.00) && ((dSiteAverage * 20) >= 40.00))
-        {
-            sSatRating = "less bad";
-        }
-        else if (((dSiteAverage * 20) < 40.00) && ((dSiteAverage * 20) >= 60.00))
-        {
-            sSatRating = "ok";
-        }
-        else if (((dSiteAverage * 20) < 60.00) && ((dSiteAverage * 20) >= 80.00))
-        {
-            sSatRating = "more ok";
-        }
-        else
-        {
-            sSatRating = "good";
-        }
+        int[] arrUserID = _report.Get_UserID(_review, dSiteAverage);
 
-        int iCount = 0;
-        int[] arrUserID = new int[10];
-        string[] arrReviewText = new string[10];
-        double[] arrUserRatings = new double[10];
-        string[] arrUserName = new string[10];
-        string[] arrUserEmail = new string[10];
-
-
-        foreach (var siteReview in _review)
-        {
-            arrUserID[iCount] = siteReview.UserID;
-            arrReviewText[iCount] = siteReview.ReviewText;
-            arrUserRatings[iCount] = siteReview.Rating;
-
-            string stest1 = arrUserID[iCount].ToString();
-            string stest2 = arrReviewText[iCount];
-            string stest3 = arrUserRatings[iCount].ToString();
-            iCount++;
-        }
-
-        int itest = arrUserID.Length;
         _user = await _db2.Get_ReviewerDetails(arrUserID);
-        iCount = 0;
-        foreach (var user in _user)
-        {
-            string stest1 = user.UserName;
-            string stest2 = user.UserEmail;
-            arrUserName[iCount] = user.UserName;
-            arrUserEmail[iCount] = user.UserEmail;
-            iCount++;
-        }
 
-        string stest = sCompilePDF(dSiteAverage * 20, arrUserName, arrUserEmail, arrUserRatings, arrReviewText, sSatRating);
+        _report.Get_ReviewerDetails(_user);
 
-        CreatePDF(stest);
-    }
+        iReportType = 0;
+        CreatePDF();
 
-
-    public string sCompilePDF(double dRating, string[] UserNames, string[] UserEmails, double[] UserRatings, string[] ReviewText, string sSiteStatus)
-    {
-        string sPDF = "User rating " + Environment.NewLine + "============================================" + Environment.NewLine + Environment.NewLine + "Overall recommendation factor: " + sSiteStatus
-                     + Environment.NewLine + Environment.NewLine + "User satifdaction rating : " + dRating.ToString("F2") + "%" + Environment.NewLine + Environment.NewLine + "Summerized user recommendation: Yes"
-                     + Environment.NewLine + Environment.NewLine + "============================================" + Environment.NewLine + Environment.NewLine + "Top 10 latest user reviews" +
-                     Environment.NewLine + Environment.NewLine;
-
-        for (int i = 0; i < 10; i++)
-        {
-            string sReviewDetails = (i + 1).ToString() + ": " + UserNames[i].ToString() + " (" + UserEmails[i].ToString() + ") - Site rating:" + UserRatings[i].ToString() + Environment.NewLine + Environment.NewLine
-                                    + "     " + ReviewText[i].ToString() + Environment.NewLine + Environment.NewLine;
-
-            sPDF = sPDF + sReviewDetails;
-        }
-
-        return sPDF;
     }
 }

@@ -20,6 +20,22 @@ namespace DataAccessLibrary
 
         //###############################################################################################################################################################################################
         #region Get Methods for Site Review Data Model
+
+        public Task<List<SiteReview>> Get_SingleReview_UserID(int iUserID)
+        {
+            try
+            {
+                string sql = "Select * from dbo.tblSiteReview Where UserID = " + iUserID + "";
+
+                return _db.LoadData<SiteReview, dynamic>(sql, new { });
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
+        }
+
         public Task<double> Get_AVG_UserReview()
         {
             try
@@ -44,7 +60,7 @@ namespace DataAccessLibrary
         #endregion
 
         //###############################################################################################################################################################################################
-
+        #region CRUD Methods for Site Review Data Model
         public Task InsertReview(SiteReview sitereview)
         {
             try
@@ -90,6 +106,39 @@ namespace DataAccessLibrary
                 return null;
             }
         }
+        #endregion
+
+        //###############################################################################################################################################################################################
+        #region Other Methods for Site Review Data Model
+
+        public Task<bool> Check_Reviews_UserID(int iUserID)
+        {
+            try
+            {
+                var TotalReviews = Task.FromResult(_db.Get<int>("Select count(*) from dbo.tblSiteReview Where UserID = " + iUserID + "", null, commandType: CommandType.Text));
+
+                var bFirstReview = false;
+
+                int iTotal = TotalReviews.Result;
+                if (iTotal >= 1)
+                {
+                    bFirstReview = false;
+                }
+                else
+                {
+                    bFirstReview = true;
+                }
+
+                return Task.FromResult(bFirstReview);
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return Task.FromResult(false);
+            }
+        }
+
+        #endregion
     }
 }
 

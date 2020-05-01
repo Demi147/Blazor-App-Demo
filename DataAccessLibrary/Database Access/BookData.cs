@@ -141,6 +141,36 @@ namespace DataAccessLibrary
                 return null;
             }
         }
+
+        public Task<int> Get_TotalSales_Province(string sProvince)
+        {
+            try
+            {
+                var Total = Task.FromResult(_db.Get<int>("Select Count(*) From dbo.tblBookSales Where LocationID IN (Select LocationID From dbo.tblLocations Where Province = '" + sProvince + "')", null, commandType: CommandType.Text));
+
+                return Total;
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
+        }
+
+        public Task<List<Books>> Get_10TopInstitute_Sales()
+        {
+            try
+            {
+                string sql = $"Select Top (10) BookInstitute,Count(SalesNumber) AS Total From dbo.tblBookSales Group By BookInstitute Order By Count(SalesNumber) DESC";
+
+                return _db.LoadData<Books, dynamic>(sql, new { });
+            }
+            catch (Exception ex)
+            {
+                sError = ex.ToString();
+                return null;
+            }
+        }
         #endregion
 
         //##############################################################################################################################################################################################################
@@ -443,7 +473,9 @@ namespace DataAccessLibrary
                 return null;
             }
         }
-        #endregion  
+
+
+        #endregion
     }
 }
 

@@ -96,6 +96,7 @@ namespace DataAccessLibrary
                 }
                 return _db.Query<T>(sp, parms, commandType: commandType).ToList();
             }
+
             catch (Exception ex)
             {
                 sError = ex.ToString();

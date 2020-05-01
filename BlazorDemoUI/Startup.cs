@@ -42,14 +42,16 @@ namespace BlazorDemoUI
             services.AddTransient<IUserData, UserData>();
             services.AddTransient<IBookData, BookData>();
             services.AddTransient<IBooksBussinessLogic, BooksBussinessLogic>();
-            services.AddTransient < ILocationData, LocationData>();
+            services.AddTransient<ILocationData, LocationData>();
             services.AddScoped<IFileUpload, FileUpload>();
             services.AddSingleton<IBooksBuyService, BooksBuyService>();
             services.AddSingleton<IBooksCreateService, BooksCreateService>();
             services.AddSingleton<ISiteReviewData, SiteReviewData>();
             services.AddScoped<ILocationWeb, LocationWeb>();
+            services.AddScoped<IGenerate_SiteReport, Generate_SiteReport>();
+            services.AddScoped<IGenerate_LocationsReport, Generate_LocationsReport>();
 
-            services.AddScoped<AuthenticationStateProvider,CustomAuthenticationStateProvider>();
+            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             services.AddBlazoredSessionStorage();
 
             //Maps shit
