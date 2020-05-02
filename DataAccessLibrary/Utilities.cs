@@ -123,58 +123,7 @@ namespace DataAccessLibrary
             }
         }
 
-        public static void SendMail(string _to, string _subject, string _body, bool _isbodyHtml)
-        {
 
-
-            try
-            {
-                using (MailMessage mail = new MailMessage())
-                {
-                    mail.From = new MailAddress("sys.paradigm@gmail.com");//sys.paradigm@gmail.com Sp2020sP
-                    mail.To.Add(_to);
-                    mail.Subject = _subject;
-                    mail.Body = _body;
-                    mail.IsBodyHtml = _isbodyHtml;
-
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new System.Net.NetworkCredential("sys.paradigm@gmail.com", "Sp2020sP");
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-
-                        Message = "Mail sent";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Message = ex.ToString();
-            }
-        }
-
-        public static string GenerateRegisterMessage(string _name, string _email, string _password)
-        {
-            string message = string.Format(
-                "<h1>Welcome {0}</h1><br><br>" +
-                "You have registeredededed to our service with the following info.<br>" +
-                "Email {1} <br>" +
-                "Password {2}"
-
-                , _name, _email, _password);
-            return message;
-        }
-
-        public static string GenerateDeRegisterMessage(string _name, string _email)
-        {
-            string message = string.Format(
-                "<h1>Hello {0}</h1><br><br>" +
-                "You have deregisteredededed to our service and deleted the following account.<br>" +
-                "Email {1} <br>"
-
-                , _name, _email);
-            return message;
-        }
 
         public static byte[] CreatePDF(string _body)
         {
@@ -194,6 +143,72 @@ namespace DataAccessLibrary
             document.Close(true);
 
             return pdfstream.ToArray();
+        }
+
+        public static class Email
+        {
+            public static void SendMail(string _to, string _subject, string _body, bool _isbodyHtml)
+            {
+
+
+                try
+                {
+                    using (MailMessage mail = new MailMessage())
+                    {
+                        mail.From = new MailAddress("sys.paradigm@gmail.com");//sys.paradigm@gmail.com Sp2020sP
+                        mail.To.Add(_to);
+                        mail.Subject = _subject;
+                        mail.Body = _body;
+                        mail.IsBodyHtml = _isbodyHtml;
+
+                        using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                        {
+                            smtp.Credentials = new System.Net.NetworkCredential("sys.paradigm@gmail.com", "Sp2020sP");
+                            smtp.EnableSsl = true;
+                            smtp.Send(mail);
+
+                            Message = "Mail sent";
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Message = ex.ToString();
+                }
+            }
+
+            public static string GenerateRegisterMessage(string _name, string _email, string _password)
+            {
+                string message = string.Format(
+                    "<h1>Welcome {0}</h1><br><br>" +
+                    "You have registeredededed to our service with the following info.<br>" +
+                    "Email {1} <br>" +
+                    "Password {2}"
+
+                    , _name, _email, _password);
+                return message;
+            }
+
+            public static string GenerateDeRegisterMessage(string _name, string _email)
+            {
+                string message = string.Format(
+                    "<h1>Hello {0}</h1><br><br>" +
+                    "You have deregisteredededed to our service and deleted the following account.<br>" +
+                    "Email {1} <br>"
+
+                    , _name, _email);
+                return message;
+            }
+
+            public static string GenerateForgotPasswordMessage(string _name, string _password)
+            {
+                string message = string.Format(
+                    "<h1>Welcome {0}</h1><br><br>" +
+                    "Your password is {1}"
+
+                    ,_name ,_password);
+                return message;
+            }
         }
     }
 

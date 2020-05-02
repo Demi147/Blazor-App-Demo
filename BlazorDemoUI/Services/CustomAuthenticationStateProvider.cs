@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using Blazored.SessionStorage;
+using DataAccessLibrary.Models;
 
 namespace BlazorDemoUI.Services
 {
@@ -43,14 +44,10 @@ namespace BlazorDemoUI.Services
             return await Task.FromResult(new AuthenticationState(user));
         }
 
-        public void MarkUserAsAuthenticated(string _emailAdress)
+        public void MarkUserAsAuthenticated(Users _user)
         {
             //get identitiy
-            var identity = new ClaimsIdentity(new[]
-            {
-                new Claim(ClaimTypes.Name,_emailAdress),
-            }
-                , "apiauth_type");
+            var identity = GetClaimsIdentity(_user);
             var user = new ClaimsPrincipal(identity);
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
@@ -62,6 +59,30 @@ namespace BlazorDemoUI.Services
             var identity = new ClaimsIdentity();
             var user = new ClaimsPrincipal(identity);
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
+        }
+
+        public ClaimsIdentity GetClaimsIdentity(Users _user)
+        {
+            ClaimsIdentity identity;
+
+
+            if (_user.IsAdmin)
+            {
+                identity = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Name,_user.UserEmail),
+                new Claim(ClaimTypes.Role,"admin")
+            }, "apiauth_type");
+            }
+            else
+            {
+                identity = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Name,_user.UserEmail),
+            }, "apiauth_type");
+            }
+
+            return identity;
         }
 
     }

@@ -3,12 +3,13 @@
 
 @using DataAccessLibrary
 @using DataAccessLibrary.Models
+@using BlazorDemoUI.Models
 @using Services;
 
-@inject AuthenticationStateProvider authenticationService;
+@inject AuthenticationStateProvider authenticationService
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 @inject IUserData userdata
-@inject NavigationManager navManager;
+@inject NavigationManager navManager
 
 
 <h2>
@@ -16,17 +17,52 @@
 </h2>
 <br />
 <br />
-@_user.UserName
-@_user.UserEmail
+@if (edit)
+{
+    <span>yeeeeeeeeeeeeeeeeeeee</span>
+    <EditForm Model="@_user" OnValidSubmit="@Save">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <br />
+        <InputText id="userName" @bind-Value="_user.UserName" placeholder="UserName" />
+        <ValidationMessage For="@(() => _user.UserName)" />
+        <br />
+        <InputText id="userEmail" @bind-Value="_user.UserEmail" placeholder="Email Adress" />
+        <ValidationMessage For="@(() => _user.UserEmail)" />
+        <br />
+        <button type="submit" class="btn btn-primary">Save</button>
 
-@Test
+    </EditForm>
+    <button @onclick="@toggleEdit" class="btn btn-primary">Cancel</button>
+    <br />
+
+}
+else
+{
+    @_user.UserName
+    @_user.UserEmail
+
+    <br />
+    <button class="btn btn-primary" @onclick="@toggleEdit">Edit my data</button>
+}
+
+<p>
+    @_user.UserPassword
+</p>
+
 
 
 <br />
-<button class="btn btn-primary" @onclick="@DeleteUser">Delete User</button>
-<button class="btn btn-primary" @onclick="@ChangePassword">Change Password</button>
+<p><button class="btn btn-primary" @onclick="@DeleteUser">Delete User</button></p>
+<br />
+<p><button class="btn btn-primary" @onclick="@ChangePassword">Change Password</button></p>
 @code{
+
+    bool edit;
+
     private Users _user = new Users();
+
+    private FrontEndUser _eh = new FrontEndUser();
 
     string Test = "not tits";
 
@@ -43,6 +79,8 @@
         {
             Test = "Soggy tits";
         }
+
+        //_user.UserPassword = "123456";
     }
 
     void DeleteUser()
@@ -64,5 +102,17 @@
     void ChangePassword()
     {
         Test = "Lazer Tits";
+    }
+
+    void toggleEdit()
+    {
+        edit = !edit;
+    }
+
+    void Save()
+    {
+        toggleEdit();
+        userdata.UpdateUser_All(_user);
+        //save the shit
     }
 }

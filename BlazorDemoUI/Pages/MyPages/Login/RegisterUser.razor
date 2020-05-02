@@ -42,7 +42,7 @@
         await userdata.InsertUser(newUser);
 
         //send email to new user
-        Utilities.SendMail(newUser.UserEmail, "Register", Utilities.GenerateRegisterMessage(newUser.UserName, newUser.UserEmail, newUser.UserPassword), true);
+        Utilities.Email.SendMail(newUser.UserEmail, "Register", Utilities.Email.GenerateRegisterMessage(newUser.UserName, newUser.UserEmail, newUser.UserPassword), true);
 
         navManager.NavigateTo("/login");
     }

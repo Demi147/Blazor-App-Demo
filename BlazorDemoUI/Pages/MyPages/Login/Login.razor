@@ -43,6 +43,7 @@
                 </div>
             </EditForm>
             Not a user? Click here to <a href="/registerUser">REGISTER</a>
+            Forgot pasword , "insert get password via email here"
         </div>
     </div>
 </div>
@@ -57,16 +58,22 @@
     {
         _user = new Users();
         return base.OnInitializedAsync();
+        
     }
 
     private async void ValidateUser()
     {
-        //make the varifylogin async with all the other data methods
-        bool isValidUser = await userDataService.VarifyLogin(_user.UserEmail, _user.UserPassword); // encryption rather to be called inside the varifylogin method than here
+        bool isValidUser = await userDataService.VarifyLogin(_user.UserEmail, _user.UserPassword);
 
         if (isValidUser)
         {
-            ((CustomAuthenticationStateProvider)authenticationService).MarkUserAsAuthenticated(_user.UserEmail);
+            int x = await userDataService.Get_UserID_Email(_user.UserEmail);
+
+            var y = await userDataService.Get_SingleUser(x);
+
+            var temp = y[0];
+
+            ((CustomAuthenticationStateProvider)authenticationService).MarkUserAsAuthenticated(temp);
 
             navManager.NavigateTo("/");
 
