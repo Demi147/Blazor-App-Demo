@@ -19,39 +19,35 @@
 <br />
 @if (edit)
 {
-    <span>yeeeeeeeeeeeeeeeeeeee</span>
-    <EditForm Model="@_user" OnValidSubmit="@Save">
+<p>
+    <EditForm Model="@_userCopy" OnValidSubmit="@Save">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <br />
-        <InputText id="userName" @bind-Value="_user.UserName" placeholder="UserName" />
-        <ValidationMessage For="@(() => _user.UserName)" />
+        <InputText id="userName" @bind-Value="_userCopy.UserName" placeholder="UserName" />
+        <ValidationMessage For="@(() => _userCopy.UserName)" />
         <br />
-        <InputText id="userEmail" @bind-Value="_user.UserEmail" placeholder="Email Adress" />
-        <ValidationMessage For="@(() => _user.UserEmail)" />
+        <InputText id="userEmail" @bind-Value="_userCopy.UserEmail" placeholder="Email Adress" />
+        <ValidationMessage For="@(() => _userCopy.UserEmail)" />
         <br />
         <button type="submit" class="btn btn-primary">Save</button>
 
     </EditForm>
-    <button @onclick="@toggleEdit" class="btn btn-primary">Cancel</button>
+</p>
+    <button @onclick="@Cancel" class="btn btn-primary">Cancel</button>
     <br />
-
 }
 else
 {
+<p>
     @_user.UserName
+    <br />
     @_user.UserEmail
 
     <br />
     <button class="btn btn-primary" @onclick="@toggleEdit">Edit my data</button>
-}
-
-<p>
-    @_user.UserPassword
 </p>
-
-
-
+}
 <br />
 <p><button class="btn btn-primary" @onclick="@DeleteUser">Delete User</button></p>
 <br />
@@ -62,25 +58,13 @@ else
 
     private Users _user = new Users();
 
-    private FrontEndUser _eh = new FrontEndUser();
+    private Users _userCopy = new Users();
 
     string Test = "not tits";
 
     protected override async Task OnInitializedAsync()
     {
-        string email = await sessionStorage.GetItemAsync<string>("emailAddress");
-        int id = await userdata.Get_UserID_Email(email);
-
-        var list = await userdata.Get_SingleUser(id);
-
-        _user = list[0];
-
-        if (_user == null)
-        {
-            Test = "Soggy tits";
-        }
-
-        //_user.UserPassword = "123456";
+        await login();
     }
 
     void DeleteUser()
@@ -88,7 +72,7 @@ else
         //todo
         //popup to confirm delete user
         userdata.RemoveUser(_user);
-        Utilities.SendMail(_user.UserEmail, "deregistration", Utilities.GenerateDeRegisterMessage(_user.UserName, _user.UserEmail), true);
+        Utilities.Email.SendMail(_user.UserEmail, "deregistration", Utilities.Email.GenerateDeRegisterMessage(_user.UserName, _user.UserEmail), true);
         //logout
         ((CustomAuthenticationStateProvider)authenticationService).MarkUserAsLoggedOut();
         navManager.NavigateTo("/");
@@ -112,7 +96,31 @@ else
     void Save()
     {
         toggleEdit();
-        userdata.UpdateUser_All(_user);
+        userdata.UpdateUser_All(_userCopy);
         //save the shit
+        //navigate to something?
+    }
+
+    void Cancel()
+    {
+        toggleEdit();
+        _userCopy = _user;
+    }
+
+    async Task login()
+    {
+        string email = await sessionStorage.GetItemAsync<string>("emailAddress");
+        int id = await userdata.Get_UserID_Email(email);
+
+        var list = await userdata.Get_SingleUser(id);
+
+        _user = list[0];
+
+        if (_user == null)
+        {
+            //error
+        }
+
+        _userCopy = _user;
     }
 }
